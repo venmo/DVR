@@ -1,0 +1,19 @@
+{
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "url": "http://example.com"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Length": "438",
+          "Content-Type": "text/plain"
+        },
+        "body": "hello"
+      },
+      "recorded_at": 1434656124
+    }
+  ]
+}

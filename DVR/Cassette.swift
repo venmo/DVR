@@ -1,3 +1,5 @@
+import Foundation
+
 struct Cassette {
     let name: String
     let interactions: [Interaction]
@@ -5,6 +7,15 @@ struct Cassette {
     init(name: String, interactions: [Interaction]) {
         self.name = name
         self.interactions = interactions
+    }
+
+    func interactionForRequest(request: NSURLRequest) -> Interaction? {
+        for interaction in interactions {
+            if interaction.request == request {
+                return interaction
+            }
+        }
+        return nil
     }
 }
 

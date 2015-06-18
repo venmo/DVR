@@ -4,12 +4,14 @@ public class Session: NSURLSession {
 
     // MARK: - Properties
 
+    public let cassettesDirectory: String
     public let cassetteName: String
 
 
     // MARK: - Initializers
 
-    public init(cassetteName: String) {
+    public init(cassettesDirectory: String, cassetteName: String) {
+        self.cassettesDirectory = cassettesDirectory
         self.cassetteName = cassetteName
         super.init()
     }
@@ -17,7 +19,11 @@ public class Session: NSURLSession {
 
     // MARK: - NSURLSession
 
+    public override func dataTaskWithRequest(request: NSURLRequest) -> NSURLSessionDataTask? {
+        return SessionDataTask(cassettesDirectory: cassettesDirectory, cassetteName: cassetteName, request: request)
+    }
+
     public override func dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask? {
-        return SessionDataTask(cassetteName: cassetteName, request: request, completion: completionHandler)
+        return SessionDataTask(cassettesDirectory: cassettesDirectory, cassetteName: cassetteName, request: request, completion: completionHandler)
     }
 }
