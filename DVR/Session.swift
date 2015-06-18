@@ -10,7 +10,7 @@ public class Session: NSURLSession {
 
     // MARK: - Initializers
 
-    public init(cassettesDirectory: String, cassetteName: String) {
+    public init(cassettesDirectory: String = "Cassettes", cassetteName: String) {
         self.cassettesDirectory = cassettesDirectory
         self.cassetteName = cassetteName
         super.init()
