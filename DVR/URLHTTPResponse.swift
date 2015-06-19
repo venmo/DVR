@@ -1,5 +1,6 @@
 import Foundation
 
+// There isn't a mutable NSHTTPURLResponse, so we have to make our own.
 class URLHTTPResonse: NSHTTPURLResponse {
     private var _URL: NSURL?
     override var URL: NSURL? {
@@ -50,7 +51,11 @@ extension URLHTTPResonse {
 
 extension URLHTTPResonse {
     convenience init(dictionary: [String: AnyObject]) {
-        self.init(dictionary: dictionary)
+        self.init()
+
+        if let string = dictionary["url"] as? String, url = NSURL(string: string) {
+            URL = url
+        }
 
         if let headers = dictionary["headers"] as? [String: String] {
             allHeaderFields = headers

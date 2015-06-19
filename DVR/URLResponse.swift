@@ -1,5 +1,6 @@
 import Foundation
 
+// There isn't a mutable NSURLResponse, so we have to make our own.
 class URLResonse: NSURLResponse {
     private var _URL: NSURL?
     override var URL: NSURL? {

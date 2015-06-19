@@ -19,13 +19,14 @@ extension Interaction {
     var dictionary: [String: AnyObject] {
         var dictionary: [String: AnyObject] = [
             "request": request.dictionary,
-            "response": response.dictionary,
             "recorded_at": recordedAt.timeIntervalSince1970
         ]
 
+        var response = self.response.dictionary
         if let string = responseData?.base64EncodedStringWithOptions([]) {
-            dictionary["response_data"] = string
+            response["body"] = string
         }
+        dictionary["response"] = response
 
         return dictionary
     }
@@ -33,13 +34,13 @@ extension Interaction {
     init?(dictionary: [String: AnyObject]) {
         guard let request = dictionary["request"] as? [String: AnyObject],
             response = dictionary["response"] as? [String: AnyObject],
-            recordedAt = dictionary["recored_at"] as? Int else { return nil }
+            recordedAt = dictionary["recorded_at"] as? Int else { return nil }
 
         self.request = NSMutableURLRequest(dictionary: request)
         self.response = URLHTTPResonse(dictionary: response)
         self.recordedAt = NSDate(timeIntervalSince1970: NSTimeInterval(recordedAt))
 
-        if let string = dictionary["response_data"] as? String {
+        if let string = response["body"] as? String {
             self.responseData = NSData(base64EncodedString: string, options: [])
         } else {
             self.responseData = nil

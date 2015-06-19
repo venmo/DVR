@@ -4,17 +4,15 @@ class SessionDataTask: NSURLSessionDataTask {
 
     // MARK: - Properties
 
-    let cassettesDirectory: String
-    let cassetteName: String
+    weak var session: Session!
     let request: NSURLRequest
     let completion: ((NSData?, NSURLResponse?, NSError?) -> Void)?
 
 
     // MARK: - Initializers
 
-    init(cassettesDirectory: String, cassetteName: String, request: NSURLRequest, completion: ((NSData?, NSURLResponse?, NSError?) -> Void)? = nil) {
-        self.cassettesDirectory = cassettesDirectory
-        self.cassetteName = cassetteName
+    init(session: Session, request: NSURLRequest, completion: ((NSData?, NSURLResponse?, NSError?) -> Void)? = nil) {
+        self.session = session
         self.request = request
         self.completion = completion
     }
@@ -23,7 +21,7 @@ class SessionDataTask: NSURLSessionDataTask {
     // MARK: - NSURLSessionDataTask
 
     override func resume() {
-        let cassette = self.cassette
+        let cassette = session.cassette
 
         // Find interaction
         if let interaction = cassette?.interactionForRequest(request) {
@@ -32,45 +30,38 @@ class SessionDataTask: NSURLSessionDataTask {
             return
         }
 
+        assert(cassette == nil, "[DVR] Invalid request. The request was not found in the cassette.")
+
         // Cassette is missing. Record.
-        if cassette == nil {
-            let session = NSURLSession.sharedSession()
-            let task = session.dataTaskWithRequest(request) { data, response, error in
-                // Create cassette
-                let interaction = Interaction(request: self.request, response: response!, responseData: data)
-                let cassette = Cassette(name: self.cassetteName, interactions: [interaction])
+        assert(session.recordingEnabled, "[DVR] Recording is disabled.")
 
-                // Persist
-                do {
-                    let data = try NSJSONSerialization.dataWithJSONObject(cassette.dictionary, options: [.PrettyPrinted])
-                    data.writeToFile(self.cassettePath, atomically: true)
-                } catch {
-                    assert(false, "Failed to persist cassette.")
-                }
-
-                // Forward completion
-                self.completion?(data, response, error)
-            }
-            task?.resume()
+        // Create directory
+        let outputDirectory = session.outputDirectory.stringByExpandingTildeInPath
+        let fileManager = NSFileManager.defaultManager()
+        if !fileManager.fileExistsAtPath(outputDirectory) {
+            try! fileManager.createDirectoryAtPath(outputDirectory, withIntermediateDirectories: true, attributes: nil)
         }
-    }
 
+        print("[DVR] Recording '\(session.cassetteName)'")
 
-    // MARK: - Private
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+            // Create cassette
+            let interaction = Interaction(request: self.request, response: response!, responseData: data)
+            let cassette = Cassette(name: self.session.cassetteName, interactions: [interaction])
 
-    private var cassettePath: String! {
-        return cassettesDirectory.stringByAppendingPathComponent(cassetteName).stringByAppendingPathExtension("json")
-    }
-
-    private var cassette: Cassette? {
-        guard let data = NSData(contentsOfFile: cassettePath) else { return nil }
-        do {
-            if let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
-                return Cassette(dictionary: json)
+            // Persist
+            do {
+                let outputPath = outputDirectory.stringByAppendingPathComponent(self.session.cassetteName).stringByAppendingPathExtension("json")!
+                let data = try NSJSONSerialization.dataWithJSONObject(cassette.dictionary, options: [.PrettyPrinted])
+                data.writeToFile(outputPath, atomically: true)
+                assert(false, "[DVR] Persisted casset at \(outputPath). Please add this file to your test target")
+            } catch {
+                assert(false, "[DVR] Failed to persist cassette.")
             }
-        } catch {
-            return nil
+
+            // Forward completion
+            self.completion?(data, response, error)
         }
-        return nil
+        task?.resume()
     }
 }

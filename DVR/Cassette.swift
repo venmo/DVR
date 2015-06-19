@@ -11,7 +11,10 @@ struct Cassette {
 
     func interactionForRequest(request: NSURLRequest) -> Interaction? {
         for interaction in interactions {
-            if interaction.request == request {
+            let r = interaction.request
+
+            // Note: We don't check headers right now
+            if r.HTTPMethod == request.HTTPMethod && r.URL == request.URL && r.HTTPBody == request.HTTPBody {
                 return interaction
             }
         }
