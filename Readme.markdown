@@ -7,6 +7,11 @@ DVR is a simple Swift framework for making fake `NSURLSession` requests based on
 Easy [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) is the main design goal. The API is the same as `NSURLSession`. `DVR.Session` is a subclass of `NSURLSession` so you can use it as a drop in replacement anywhere. (Currently only data tasks are supported.)
 
 
+## Building
+
+Xcode 7 is required since DVR is written in Swift 2.
+
+
 ## Usage
 
 ```swift
