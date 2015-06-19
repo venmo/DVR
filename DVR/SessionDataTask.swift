@@ -54,7 +54,7 @@ class SessionDataTask: NSURLSessionDataTask {
                 let outputPath = outputDirectory.stringByAppendingPathComponent(self.session.cassetteName).stringByAppendingPathExtension("json")!
                 let data = try NSJSONSerialization.dataWithJSONObject(cassette.dictionary, options: [.PrettyPrinted])
                 data.writeToFile(outputPath, atomically: true)
-                assert(false, "[DVR] Persisted casset at \(outputPath). Please add this file to your test target")
+                assert(false, "[DVR] Persisted cassette at \(outputPath). Please add this file to your test target")
             } catch {
                 assert(false, "[DVR] Failed to persist cassette.")
             }
