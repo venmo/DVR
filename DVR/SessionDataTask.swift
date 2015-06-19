@@ -30,10 +30,16 @@ class SessionDataTask: NSURLSessionDataTask {
             return
         }
 
-        assert(cassette == nil, "[DVR] Invalid request. The request was not found in the cassette.")
+		if cassette != nil {
+			print("[DVR] Invalid request. The request was not found in the cassette.")
+			abort()
+		}
 
         // Cassette is missing. Record.
-        assert(session.recordingEnabled, "[DVR] Recording is disabled.")
+		if session.recordingEnabled == false {
+			print("[DVR] Recording is disabled.")
+			abort()
+		}
 
         // Create directory
         let outputDirectory = session.outputDirectory.stringByExpandingTildeInPath
@@ -54,13 +60,14 @@ class SessionDataTask: NSURLSessionDataTask {
                 let outputPath = outputDirectory.stringByAppendingPathComponent(self.session.cassetteName).stringByAppendingPathExtension("json")!
                 let data = try NSJSONSerialization.dataWithJSONObject(cassette.dictionary, options: [.PrettyPrinted])
                 data.writeToFile(outputPath, atomically: true)
-                assert(false, "[DVR] Persisted cassette at \(outputPath). Please add this file to your test target")
+                print("[DVR] Persisted cassette at \(outputPath). Please add this file to your test target")
+				abort()
             } catch {
-                assert(false, "[DVR] Failed to persist cassette.")
+                // Do nothing
             }
 
-            // Forward completion
-            self.completion?(data, response, error)
+			print("[DVR] Failed to persist cassette.")
+			abort()
         }
         task?.resume()
     }

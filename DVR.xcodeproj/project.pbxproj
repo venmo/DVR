@@ -59,7 +59,7 @@
 /* Begin PBXFileReference section */
 		3647AF9B1B335D5500EF10D4 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3647AF9E1B335D5500EF10D4 /* DVR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVR.h; sourceTree = "<group>"; };
-		3647AFA51B335D5500EF10D4 /* DVRiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DVRiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3647AFA51B335D5500EF10D4 /* DVRTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVRTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3647AFB51B335E4A00EF10D4 /* Cassette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cassette.swift; sourceTree = "<group>"; };
 		3647AFB61B335E4A00EF10D4 /* Interaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interaction.swift; sourceTree = "<group>"; };
 		3647AFB71B335E4A00EF10D4 /* URLRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
@@ -73,7 +73,7 @@
 		3647AFD01B33693F00EF10D4 /* example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = example.json; sourceTree = "<group>"; };
 		3690A06E1B33AA0900731222 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3690A07B1B33AA3B00731222 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3690A0841B33AA3C00731222 /* DVR-OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVR-OSXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3690A0841B33AA3C00731222 /* DVRTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVRTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,10 +129,10 @@
 			isa = PBXGroup;
 			children = (
 				3647AF9B1B335D5500EF10D4 /* DVR.framework */,
-				3647AFA51B335D5500EF10D4 /* DVRiOSTests.xctest */,
+				3647AFA51B335D5500EF10D4 /* DVRTests-iOS.xctest */,
 				3690A06E1B33AA0900731222 /* DVR.framework */,
 				3690A07B1B33AA3B00731222 /* DVR.framework */,
-				3690A0841B33AA3C00731222 /* DVR-OSXTests.xctest */,
+				3690A0841B33AA3C00731222 /* DVRTests-OSX.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -229,9 +229,9 @@
 			productReference = 3647AF9B1B335D5500EF10D4 /* DVR.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		3647AFA41B335D5500EF10D4 /* DVRiOSTests */ = {
+		3647AFA41B335D5500EF10D4 /* DVRTests-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3647AFB21B335D5500EF10D4 /* Build configuration list for PBXNativeTarget "DVRiOSTests" */;
+			buildConfigurationList = 3647AFB21B335D5500EF10D4 /* Build configuration list for PBXNativeTarget "DVRTests-iOS" */;
 			buildPhases = (
 				3647AFA11B335D5500EF10D4 /* Sources */,
 				3647AFA21B335D5500EF10D4 /* Frameworks */,
@@ -242,9 +242,9 @@
 			dependencies = (
 				3647AFA81B335D5500EF10D4 /* PBXTargetDependency */,
 			);
-			name = DVRiOSTests;
+			name = "DVRTests-iOS";
 			productName = DVRTests;
-			productReference = 3647AFA51B335D5500EF10D4 /* DVRiOSTests.xctest */;
+			productReference = 3647AFA51B335D5500EF10D4 /* DVRTests-iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		3690A06D1B33AA0900731222 /* DVR-watchOS */ = {
@@ -283,9 +283,9 @@
 			productReference = 3690A07B1B33AA3B00731222 /* DVR.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		3690A0831B33AA3C00731222 /* DVR-OSXTests */ = {
+		3690A0831B33AA3C00731222 /* DVRTests-OSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3690A08F1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVR-OSXTests" */;
+			buildConfigurationList = 3690A08F1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVRTests-OSX" */;
 			buildPhases = (
 				3690A0801B33AA3C00731222 /* Sources */,
 				3690A0811B33AA3C00731222 /* Frameworks */,
@@ -296,9 +296,9 @@
 			dependencies = (
 				3690A0871B33AA3C00731222 /* PBXTargetDependency */,
 			);
-			name = "DVR-OSXTests";
+			name = "DVRTests-OSX";
 			productName = "DVR-OSXTests";
-			productReference = 3690A0841B33AA3C00731222 /* DVR-OSXTests.xctest */;
+			productReference = 3690A0841B33AA3C00731222 /* DVRTests-OSX.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -341,10 +341,10 @@
 			projectRoot = "";
 			targets = (
 				3647AF9A1B335D5500EF10D4 /* DVR-iOS */,
-				3647AFA41B335D5500EF10D4 /* DVRiOSTests */,
+				3647AFA41B335D5500EF10D4 /* DVRTests-iOS */,
 				3690A06D1B33AA0900731222 /* DVR-watchOS */,
 				3690A07A1B33AA3B00731222 /* DVR-OSX */,
-				3690A0831B33AA3C00731222 /* DVR-OSXTests */,
+				3690A0831B33AA3C00731222 /* DVRTests-OSX */,
 			);
 		};
 /* End PBXProject section */
@@ -735,7 +735,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3647AFB21B335D5500EF10D4 /* Build configuration list for PBXNativeTarget "DVRiOSTests" */ = {
+		3647AFB21B335D5500EF10D4 /* Build configuration list for PBXNativeTarget "DVRTests-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3647AFB31B335D5500EF10D4 /* Debug */,
@@ -751,6 +751,7 @@
 				3690A0751B33AA0900731222 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3690A08C1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVR-OSX" */ = {
 			isa = XCConfigurationList;
@@ -759,14 +760,16 @@
 				3690A08E1B33AA3C00731222 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		3690A08F1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVR-OSXTests" */ = {
+		3690A08F1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVRTests-OSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3690A0901B33AA3C00731222 /* Debug */,
 				3690A0911B33AA3C00731222 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

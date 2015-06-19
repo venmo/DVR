@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3690A0831B33AA3C00731222"
-               BuildableName = "DVR-OSXTests.xctest"
-               BlueprintName = "DVR-OSXTests"
+               BuildableName = "DVRTests-OSX.xctest"
+               BlueprintName = "DVRTests-OSX"
                ReferencedContainer = "container:DVR.xcodeproj">
             </BuildableReference>
          </TestableReference>
