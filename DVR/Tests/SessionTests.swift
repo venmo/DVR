@@ -21,6 +21,10 @@ class SessionTests: XCTestCase {
 
         let task = session.dataTaskWithRequest(request) { data, response, error in
             XCTAssertEqual("hello", String(NSString(data: data!, encoding: NSUTF8StringEncoding)!))
+
+			let HTTPResponse = response as! NSHTTPURLResponse
+			XCTAssertEqual(200, HTTPResponse.statusCode)
+
             expectation.fulfill()
         }
         task?.resume()

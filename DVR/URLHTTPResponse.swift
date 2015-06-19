@@ -2,6 +2,9 @@ import Foundation
 
 // There isn't a mutable NSHTTPURLResponse, so we have to make our own.
 class URLHTTPResonse: NSHTTPURLResponse {
+
+	// MARK: - Properties
+
     private var _URL: NSURL?
     override var URL: NSURL? {
         get {
@@ -37,7 +40,7 @@ class URLHTTPResonse: NSHTTPURLResponse {
 }
 
 
-extension URLHTTPResonse {
+extension NSHTTPURLResponse {
     override var dictionary: [String: AnyObject] {
         var dictionary = super.dictionary
 
