@@ -1,6 +1,6 @@
 # DVR
 
-⚠️ This is a work in progress. ⚠️
+[![Version](https://img.shields.io/github/release/venmo/DVR.svg)](https://github.com/venmo/DVR/releases) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 DVR is a simple Swift framework for making fake `NSURLSession` requests based on [VCR](https://github.com/vcr/vcr) for iOS, watchOS, and OS X.
 
