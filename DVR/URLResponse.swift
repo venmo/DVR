@@ -17,13 +17,11 @@ class URLResonse: NSURLResponse {
 
 extension NSURLResponse {
     var dictionary: [String: AnyObject] {
-        var dictionary = [String: AnyObject]()
-
         if let url = URL?.absoluteString {
-            dictionary["url"] = url
+            return ["url": url]
         }
 
-        return dictionary
+        return [:]
     }
 }
 

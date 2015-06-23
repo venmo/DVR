@@ -6,7 +6,7 @@ public class Session: NSURLSession {
 
     public var outputDirectory: String
     public let cassetteName: String
-	public var recordingEnabled: Bool = true
+    public var recordingEnabled = true
     private let testBundle: NSBundle
 
 
@@ -39,9 +39,7 @@ public class Session: NSURLSession {
             if let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
                 return Cassette(dictionary: json)
             }
-        } catch {
-            return nil
-        }
+        } catch {}
         return nil
     }
 }
