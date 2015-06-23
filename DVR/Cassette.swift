@@ -27,7 +27,7 @@ extension Cassette {
     var dictionary: [String: AnyObject] {
         return [
             "name": name,
-            "interactions": interactions.map() { $0.dictionary }
+            "interactions": interactions.map { $0.dictionary }
         ]
     }
 
