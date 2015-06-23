@@ -39,9 +39,7 @@ public class Session: NSURLSession {
             if let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
                 return Cassette(dictionary: json)
             }
-        } catch {
-            return nil
-        }
+        } catch {}
         return nil
     }
 }
