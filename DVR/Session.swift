@@ -6,7 +6,7 @@ public class Session: NSURLSession {
 
     public var outputDirectory: String
     public let cassetteName: String
-	public var recordingEnabled: Bool = true
+    public var recordingEnabled = true
     private let testBundle: NSBundle
 
 
