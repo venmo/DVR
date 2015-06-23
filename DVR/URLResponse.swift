@@ -1,7 +1,7 @@
 import Foundation
 
 // There isn't a mutable NSURLResponse, so we have to make our own.
-class URLResonse: NSURLResponse {
+class URLResponse: NSURLResponse {
     private var _URL: NSURL?
     override var URL: NSURL? {
         get {
@@ -26,7 +26,7 @@ extension NSURLResponse {
 }
 
 
-extension URLResonse {
+extension URLResponse {
     convenience init(dictionary: [String: AnyObject]) {
         self.init()
 
