@@ -36,14 +36,10 @@ extension Cassette {
 
         self.name = name
 
-        var interactions = [Interaction]()
         if let array = dictionary["interactions"] as? [[String: AnyObject]] {
-            for dictionary in array {
-                if let interaction = Interaction(dictionary: dictionary) {
-                    interactions.append(interaction)
-                }
-            }
+            interactions = array.flatMap { Interaction(dictionary: $0) }
+        } else {
+            interactions = []
         }
-        self.interactions = interactions
     }
 }
