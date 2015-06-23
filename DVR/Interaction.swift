@@ -37,7 +37,7 @@ extension Interaction {
             recordedAt = dictionary["recorded_at"] as? Int else { return nil }
 
         self.request = NSMutableURLRequest(dictionary: request)
-        self.response = URLHTTPResonse(dictionary: response)
+        self.response = URLHTTPResponse(dictionary: response)
         self.recordedAt = NSDate(timeIntervalSince1970: NSTimeInterval(recordedAt))
 
         if let string = response["body"] as? String {

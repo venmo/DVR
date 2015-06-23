@@ -1,7 +1,7 @@
 import Foundation
 
 // There isn't a mutable NSHTTPURLResponse, so we have to make our own.
-class URLHTTPResonse: NSHTTPURLResponse {
+class URLHTTPResponse: NSHTTPURLResponse {
 
 	// MARK: - Properties
 
@@ -52,7 +52,7 @@ extension NSHTTPURLResponse {
 }
 
 
-extension URLHTTPResonse {
+extension URLHTTPResponse {
     convenience init(dictionary: [String: AnyObject]) {
         self.init()
 
