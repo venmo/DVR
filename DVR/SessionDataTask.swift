@@ -49,8 +49,14 @@ class SessionDataTask: NSURLSessionDataTask {
         print("[DVR] Recording '\(session.cassetteName)'")
 
         let task = session.backingSession.dataTaskWithRequest(request) { data, response, error in
+            
+            //Ensure we have a response
+            guard let response = response else {
+                fatalError("[DVR] Failed to persist cassette, because the task returned a nil response.")
+            }
+            
             // Create cassette
-            let interaction = Interaction(request: self.request, response: response!, responseData: data)
+            let interaction = Interaction(request: self.request, response: response, responseData: data)
             let cassette = Cassette(name: self.session.cassetteName, interactions: [interaction])
 
             // Persist
