@@ -6,16 +6,18 @@ public class Session: NSURLSession {
 
     public var outputDirectory: String
     public let cassetteName: String
+    public let backingSession: NSURLSession
     public var recordingEnabled = true
     private let testBundle: NSBundle
 
 
     // MARK: - Initializers
 
-    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: NSBundle = NSBundle.allBundles().filter() { $0.bundlePath.hasSuffix(".xctest") }.first!) {
+    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: NSBundle = NSBundle.allBundles().filter() { $0.bundlePath.hasSuffix(".xctest") }.first!, backingSession: NSURLSession = NSURLSession.sharedSession()) {
         self.outputDirectory = outputDirectory
         self.cassetteName = cassetteName
         self.testBundle = testBundle
+        self.backingSession = backingSession
         super.init()
     }
 
