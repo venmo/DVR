@@ -48,7 +48,7 @@ class SessionDataTask: NSURLSessionDataTask {
 
         print("[DVR] Recording '\(session.cassetteName)'")
 
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+        let task = session.realSession.dataTaskWithRequest(request) { data, response, error in
             // Create cassette
             let interaction = Interaction(request: self.request, response: response!, responseData: data)
             let cassette = Cassette(name: self.session.cassetteName, interactions: [interaction])
