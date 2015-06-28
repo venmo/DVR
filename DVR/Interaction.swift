@@ -14,42 +14,6 @@ struct Interaction {
     }
 }
 
-// Body data serialization
-extension Interaction {
-    
-    // Identifies the way data was persisted on disk
-    enum SerializationFormat: String {
-        case JSON = "json"
-        case Base64String = "base64_string" //legacy default
-    }
-    
-    static func serializeBodyData(data: NSData) -> (format: SerializationFormat, object: AnyObject) {
-        
-        //try to parse and save as json to make it more readable on disk.
-        do {
-            let json = try NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments])
-            return (format: .JSON, json)
-        } catch { /* nope, not a valid json. nevermind. */ }
-        
-        //no prettier representation, fall back to base64 string
-        let string = data.base64EncodedStringWithOptions([])
-        return (format: .Base64String, object: string)
-    }
-    
-    static func deserializeBodyData(format: SerializationFormat, object: AnyObject) -> NSData {
-        
-        switch format {
-        case .JSON:
-            do {
-                return try NSJSONSerialization.dataWithJSONObject(object, options: [])
-            } catch { fatalError("Failed to convert JSON object \(object) into data") }
-            
-        case .Base64String:
-            return NSData(base64EncodedString: object as! String, options: [])!
-        }
-    }
-}
-
 extension Interaction {
     
     var dictionary: [String: AnyObject] {
@@ -57,10 +21,15 @@ extension Interaction {
             "request": request.dictionary,
             "recorded_at": recordedAt.timeIntervalSince1970
         ]
-
+        
+        var contentType: String?
+        if let httpResponse = self.response as? NSHTTPURLResponse {
+            contentType = httpResponse.allHeaderFields["Content-Type"] as? String
+        }
+        
         var response = self.response.dictionary
         if let data = responseData {
-            let (format, body) = Interaction.serializeBodyData(data)
+            let (format, body) = Interaction.serializeBodyData(data, contentType: contentType)
             response["body"] = body
             response["body_format"] = format.rawValue
         }
@@ -84,6 +53,54 @@ extension Interaction {
             self.responseData = Interaction.deserializeBodyData(format, object: body)
         } else {
             self.responseData = nil
+        }
+    }
+}
+
+// Body data serialization
+extension Interaction {
+    
+    // Identifies the way data was persisted on disk
+    enum SerializationFormat: String {
+        case JSON = "json"
+        case PlainText = "plain_text"
+        case Base64String = "base64_string" //legacy default
+    }
+    
+    static func serializeBodyData(data: NSData, contentType: String?) -> (format: SerializationFormat, object: AnyObject) {
+        
+        //JSON
+        if let contentType = contentType where contentType.hasPrefix("application/json") {
+            do {
+                let json = try NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments])
+                return (format: .JSON, json)
+            } catch { /* nope, not a valid json. nevermind. */ }
+        }
+        
+        //Plain Text
+        if let contentType = contentType where contentType.hasPrefix("text") {
+            if let string = NSString(data: data, encoding: NSUTF8StringEncoding) {
+                return (format: .PlainText, object: string)
+            }
+        }
+        
+        //nope, might be image data or something else
+        //no prettier representation, fall back to base64 string
+        let string = data.base64EncodedStringWithOptions([])
+        return (format: .Base64String, object: string)
+    }
+    
+    static func deserializeBodyData(format: SerializationFormat, object: AnyObject) -> NSData {
+        
+        switch format {
+        case .JSON:
+            do {
+                return try NSJSONSerialization.dataWithJSONObject(object, options: [])
+            } catch { fatalError("Failed to convert JSON object \(object) into data") }
+        case .PlainText:
+            return (object as! String).dataUsingEncoding(NSUTF8StringEncoding)!
+        case .Base64String:
+            return NSData(base64EncodedString: object as! String, options: [])!
         }
     }
 }
