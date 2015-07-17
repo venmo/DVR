@@ -29,7 +29,10 @@ public class Session: NSURLSession {
     public override func dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask? {
         return SessionDataTask(session: self, request: request, completion: completionHandler)
     }
-
+    
+    public override func invalidateAndCancel() {
+        // Don't do anything
+    }
 
     // MARK: - Internal
 
