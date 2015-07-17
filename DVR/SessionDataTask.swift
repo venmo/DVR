@@ -19,6 +19,10 @@ class SessionDataTask: NSURLSessionDataTask {
 
 
     // MARK: - NSURLSessionDataTask
+    
+    override func cancel() {
+        // Don't do anything
+    }
 
     override func resume() {
         let cassette = session.cassette
