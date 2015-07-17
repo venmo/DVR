@@ -38,7 +38,7 @@ class SessionDataTask: NSURLSessionDataTask {
             else
             {
                 let error = NSError(domain: (request.URL?.absoluteString)!, code: response.statusCode, userInfo: nil)
-                completion?(interaction.responseData, interaction.response, error)
+                completion?(nil, interaction.response, error)
             }
             
             return
