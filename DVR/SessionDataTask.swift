@@ -2,23 +2,28 @@ import Foundation
 
 class SessionDataTask: NSURLSessionDataTask {
 
+    // MARK: - Types
+
+    typealias Completion = (NSData?, NSURLResponse?, NSError?) -> Void
+
+
     // MARK: - Properties
 
     weak var session: Session!
     let request: NSURLRequest
-    let completion: ((NSData?, NSURLResponse?, NSError?) -> Void)?
+    let completion: Completion?
 
 
     // MARK: - Initializers
 
-    init(session: Session, request: NSURLRequest, completion: ((NSData?, NSURLResponse?, NSError?) -> Void)? = nil) {
+    init(session: Session, request: NSURLRequest, completion: (Completion)? = nil) {
         self.session = session
         self.request = request
         self.completion = completion
     }
 
 
-    // MARK: - NSURLSessionDataTask
+    // MARK: - NSURLSessionTask
     
     override func cancel() {
         // Don't do anything

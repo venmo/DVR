@@ -31,6 +31,14 @@ public class Session: NSURLSession {
     public override func dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask? {
         return SessionDataTask(session: self, request: request, completion: completionHandler)
     }
+
+    public override func downloadTaskWithRequest(request: NSURLRequest) -> NSURLSessionDownloadTask? {
+        return SessionDownloadTask(session: self, request: request)
+    }
+
+    public override func downloadTaskWithRequest(request: NSURLRequest, completionHandler: (NSURL?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDownloadTask? {
+        return SessionDownloadTask(session: self, request: request, completion: completionHandler)
+    }
     
     public override func invalidateAndCancel() {
         // Don't do anything
