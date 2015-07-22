@@ -24,11 +24,11 @@ public class Session: NSURLSession {
 
     // MARK: - NSURLSession
 
-    public override func dataTaskWithRequest(request: NSURLRequest) -> NSURLSessionDataTask? {
+    public override func dataTaskWithRequest(request: NSURLRequest) -> NSURLSessionDataTask {
         return SessionDataTask(session: self, request: request)
     }
 
-    public override func dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask? {
+    public override func dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
         return SessionDataTask(session: self, request: request, completion: completionHandler)
     }
     
