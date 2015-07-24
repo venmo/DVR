@@ -75,6 +75,6 @@ class SessionDataTask: NSURLSessionDataTask {
 
 			fatalError("[DVR] Failed to persist cassette.")
         }
-        task?.resume()
+        task.resume()
     }
 }
