@@ -79,7 +79,7 @@ class SessionDataTask: NSURLSessionDataTask {
             
             fatalError("[DVR] Failed to persist cassette.")
         }
-        task?.resume()
+        task.resume()
     }
     
     private func validResponse(response: NSHTTPURLResponse) -> Bool {
