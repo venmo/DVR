@@ -37,6 +37,13 @@
 		3690A0A01B33AA9400731222 /* URLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647AFBF1B33602A00EF10D4 /* URLResponse.swift */; };
 		3690A0A11B33AA9400731222 /* URLHTTPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647AFC11B3363C400EF10D4 /* URLHTTPResponse.swift */; };
 		3690A0A21B33AA9E00731222 /* SessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647AFCB1B33689000EF10D4 /* SessionTests.swift */; };
+		3AA8597C1B473EB500B66772 /* DataSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA8597B1B473EB500B66772 /* DataSerialization.swift */; };
+		3AA8597D1B473EB500B66772 /* DataSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA8597B1B473EB500B66772 /* DataSerialization.swift */; };
+		3AA8597E1B473EB500B66772 /* DataSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA8597B1B473EB500B66772 /* DataSerialization.swift */; };
+		3AA859801B4740CB00B66772 /* RequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA8597F1B4740CB00B66772 /* RequestTests.swift */; };
+		3AA859811B4740CB00B66772 /* RequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA8597F1B4740CB00B66772 /* RequestTests.swift */; };
+		3AFCECC21B3F64170060BE1A /* ResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFCECC11B3F64170060BE1A /* ResponseTests.swift */; };
+		3AFCECC31B3F64170060BE1A /* ResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFCECC11B3F64170060BE1A /* ResponseTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +81,9 @@
 		3690A06E1B33AA0900731222 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3690A07B1B33AA3B00731222 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3690A0841B33AA3C00731222 /* DVRTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVRTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AA8597B1B473EB500B66772 /* DataSerialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSerialization.swift; sourceTree = "<group>"; };
+		3AA8597F1B4740CB00B66772 /* RequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTests.swift; sourceTree = "<group>"; };
+		3AFCECC11B3F64170060BE1A /* ResponseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,13 +151,14 @@
 			isa = PBXGroup;
 			children = (
 				3647AF9E1B335D5500EF10D4 /* DVR.h */,
+				3647AFB51B335E4A00EF10D4 /* Cassette.swift */,
+				3AA8597B1B473EB500B66772 /* DataSerialization.swift */,
+				3647AFB61B335E4A00EF10D4 /* Interaction.swift */,
 				3647AFB81B335E4A00EF10D4 /* Session.swift */,
 				3647AFB91B335E4A00EF10D4 /* SessionDataTask.swift */,
-				3647AFB51B335E4A00EF10D4 /* Cassette.swift */,
-				3647AFB61B335E4A00EF10D4 /* Interaction.swift */,
+				3647AFC11B3363C400EF10D4 /* URLHTTPResponse.swift */,
 				3647AFB71B335E4A00EF10D4 /* URLRequest.swift */,
 				3647AFBF1B33602A00EF10D4 /* URLResponse.swift */,
-				3647AFC11B3363C400EF10D4 /* URLHTTPResponse.swift */,
 				3647AFC71B33688A00EF10D4 /* Resources */,
 				3647AFCA1B33689000EF10D4 /* Tests */,
 			);
@@ -165,9 +176,11 @@
 		3647AFCA1B33689000EF10D4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				3647AFCF1B33693F00EF10D4 /* Fixtures */,
-				3647AFCB1B33689000EF10D4 /* SessionTests.swift */,
 				3647AFCC1B33689000EF10D4 /* Info.plist */,
+				3AA8597F1B4740CB00B66772 /* RequestTests.swift */,
+				3AFCECC11B3F64170060BE1A /* ResponseTests.swift */,
+				3647AFCB1B33689000EF10D4 /* SessionTests.swift */,
+				3647AFCF1B33693F00EF10D4 /* Fixtures */,
 			);
 			name = Tests;
 			path = DVR/Tests;
@@ -396,6 +409,7 @@
 			files = (
 				3647AFC01B33602A00EF10D4 /* URLResponse.swift in Sources */,
 				3647AFBE1B335E4A00EF10D4 /* SessionDataTask.swift in Sources */,
+				3AA8597C1B473EB500B66772 /* DataSerialization.swift in Sources */,
 				3647AFBD1B335E4A00EF10D4 /* Session.swift in Sources */,
 				3647AFBC1B335E4A00EF10D4 /* URLRequest.swift in Sources */,
 				3647AFBB1B335E4A00EF10D4 /* Interaction.swift in Sources */,
@@ -408,6 +422,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AA859801B4740CB00B66772 /* RequestTests.swift in Sources */,
+				3AFCECC21B3F64170060BE1A /* ResponseTests.swift in Sources */,
 				3647AFCD1B33689000EF10D4 /* SessionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +434,7 @@
 			files = (
 				3690A09E1B33AA9400731222 /* Interaction.swift in Sources */,
 				3690A09D1B33AA9400731222 /* Cassette.swift in Sources */,
+				3AA8597D1B473EB500B66772 /* DataSerialization.swift in Sources */,
 				3690A0A01B33AA9400731222 /* URLResponse.swift in Sources */,
 				3690A09B1B33AA9400731222 /* Session.swift in Sources */,
 				3690A09C1B33AA9400731222 /* SessionDataTask.swift in Sources */,
@@ -432,6 +449,7 @@
 			files = (
 				3690A0961B33AA9400731222 /* Interaction.swift in Sources */,
 				3690A0951B33AA9400731222 /* Cassette.swift in Sources */,
+				3AA8597E1B473EB500B66772 /* DataSerialization.swift in Sources */,
 				3690A0981B33AA9400731222 /* URLResponse.swift in Sources */,
 				3690A0931B33AA9400731222 /* Session.swift in Sources */,
 				3690A0941B33AA9400731222 /* SessionDataTask.swift in Sources */,
@@ -444,6 +462,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AA859811B4740CB00B66772 /* RequestTests.swift in Sources */,
+				3AFCECC31B3F64170060BE1A /* ResponseTests.swift in Sources */,
 				3690A0A21B33AA9E00731222 /* SessionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -595,16 +615,19 @@
 		3647AFB31B335D5500EF10D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = DVR/Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.iostests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		3647AFB41B335D5500EF10D4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = DVR/Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.iostests;
@@ -691,18 +714,21 @@
 		3690A0901B33AA3C00731222 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = DVR/Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.osxtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		3690A0911B33AA3C00731222 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = DVR/Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";

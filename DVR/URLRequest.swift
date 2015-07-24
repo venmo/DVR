@@ -12,12 +12,16 @@ extension NSURLRequest {
             dictionary["url"] = url
         }
 
+        var contentType: String?
         if let headers = allHTTPHeaderFields {
             dictionary["headers"] = headers
+            contentType = headers["Content-Type"]
         }
 
         if let body = HTTPBody {
-            dictionary["body"] = body.base64EncodedStringWithOptions([])
+            let (format, bodyObject) = DataSerialization.serializeBodyData(body, contentType: contentType)
+            dictionary["body"] = bodyObject
+            dictionary["body_format"] = format.rawValue
         }
 
         return dictionary
@@ -41,8 +45,10 @@ extension NSMutableURLRequest {
             allHTTPHeaderFields = headers
         }
 
-        if let body = dictionary["body"] as? String {
-            HTTPBody = NSData(base64EncodedString: body, options: [])
+        if let body = dictionary["body"] {
+            let formatString = dictionary["body_format"] as? String ?? ""
+            let format = SerializationFormat(rawValue: formatString) ?? .Base64String
+            HTTPBody = DataSerialization.deserializeBodyData(format, object: body)
         }
     }
 }

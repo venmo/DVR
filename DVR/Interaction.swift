@@ -14,20 +14,27 @@ struct Interaction {
     }
 }
 
-
 extension Interaction {
+    
     var dictionary: [String: AnyObject] {
         var dictionary: [String: AnyObject] = [
             "request": request.dictionary,
             "recorded_at": recordedAt.timeIntervalSince1970
         ]
-
+        
+        var contentType: String?
+        if let httpResponse = self.response as? NSHTTPURLResponse {
+            contentType = httpResponse.allHeaderFields["Content-Type"] as? String
+        }
+        
         var response = self.response.dictionary
-        if let string = responseData?.base64EncodedStringWithOptions([]) {
-            response["body"] = string
+        if let data = responseData {
+            let (format, body) = DataSerialization.serializeBodyData(data, contentType: contentType)
+            response["body"] = body
+            response["body_format"] = format.rawValue
         }
         dictionary["response"] = response
-
+        
         return dictionary
     }
 
@@ -40,10 +47,13 @@ extension Interaction {
         self.response = URLHTTPResponse(dictionary: response)
         self.recordedAt = NSDate(timeIntervalSince1970: NSTimeInterval(recordedAt))
 
-        if let string = response["body"] as? String {
-            self.responseData = NSData(base64EncodedString: string, options: [])
+        if let body = response["body"] {
+            let formatString = response["body_format"] as? String ?? ""
+            let format = SerializationFormat(rawValue: formatString) ?? .Base64String
+            self.responseData = DataSerialization.deserializeBodyData(format, object: body)
         } else {
             self.responseData = nil
         }
     }
 }
+
