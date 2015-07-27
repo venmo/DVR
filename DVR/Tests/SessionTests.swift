@@ -27,7 +27,7 @@ class SessionTests: XCTestCase {
 
             expectation.fulfill()
         }
-        task?.resume()
+        task.resume()
         waitForExpectationsWithTimeout(1, handler: nil)
     }
 
@@ -44,7 +44,7 @@ class SessionTests: XCTestCase {
 
             expectation.fulfill()
         }
-        task?.resume()
+        task.resume()
         waitForExpectationsWithTimeout(1, handler: nil)
     }
 }

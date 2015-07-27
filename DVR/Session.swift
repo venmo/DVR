@@ -32,11 +32,11 @@ public class Session: NSURLSession {
         return SessionDataTask(session: self, request: request, completion: completionHandler)
     }
 
-    public override func downloadTaskWithRequest(request: NSURLRequest) -> NSURLSessionDownloadTask? {
+    public override func downloadTaskWithRequest(request: NSURLRequest) -> NSURLSessionDownloadTask {
         return SessionDownloadTask(session: self, request: request)
     }
 
-    public override func downloadTaskWithRequest(request: NSURLRequest, completionHandler: (NSURL?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDownloadTask? {
+    public override func downloadTaskWithRequest(request: NSURLRequest, completionHandler: (NSURL?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDownloadTask {
         return SessionDownloadTask(session: self, request: request, completion: completionHandler)
     }
     
