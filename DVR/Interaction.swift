@@ -45,6 +45,8 @@ struct Interaction {
     }
 
     static func dencodeBody(body: AnyObject?, headers: [String: String]? = nil) -> NSData? {
+        guard let body = body else { return nil }
+
         if let contentType = headers?["Content-Type"] {
             // Text
             if let string = body as? String where contentType.hasPrefix("text/") {
@@ -53,7 +55,7 @@ struct Interaction {
             }
 
             // JSON
-            if let body = body where contentType == "application/json" {
+            if contentType == "application/json" {
                 do {
                     return try NSJSONSerialization.dataWithJSONObject(body, options: [])
                 } catch {
