@@ -32,12 +32,20 @@ class SessionTests: XCTestCase {
     }
 
     func testDownload() {
-        session.recordingEnabled = false
         let expectation = expectationWithDescription("Network")
 
+        let session = Session(cassetteName: "json-example")
+        session.recordingEnabled = false
+        let request = NSURLRequest(URL: NSURL(string: "https://www.howsmyssl.com/a/check")!)
+        
         let task = session.downloadTaskWithRequest(request) { location, response, error in
             let data = NSData(contentsOfURL: location!)!
-            XCTAssertEqual("hello", String(NSString(data: data, encoding: NSUTF8StringEncoding)!))
+            do {
+                let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! [String: AnyObject]
+                XCTAssertEqual("TLS 1.2", JSON["tls_version"]! as! String)
+            } catch {
+                XCTFail("Failed to read JSON.")
+            }
 
             let HTTPResponse = response as! NSHTTPURLResponse
             XCTAssertEqual(200, HTTPResponse.statusCode)

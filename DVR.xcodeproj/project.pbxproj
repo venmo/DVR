@@ -40,6 +40,8 @@
 		3690A0A01B33AA9400731222 /* URLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647AFBF1B33602A00EF10D4 /* URLResponse.swift */; };
 		3690A0A11B33AA9400731222 /* URLHTTPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647AFC11B3363C400EF10D4 /* URLHTTPResponse.swift */; };
 		3690A0A21B33AA9E00731222 /* SessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647AFCB1B33689000EF10D4 /* SessionTests.swift */; };
+		36BDDB891B6716AB00878665 /* json-example.json in Resources */ = {isa = PBXBuildFile; fileRef = 36BDDB881B6716AB00878665 /* json-example.json */; };
+		36BDDB8A1B6716AB00878665 /* json-example.json in Resources */ = {isa = PBXBuildFile; fileRef = 36BDDB881B6716AB00878665 /* json-example.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,7 @@
 		3690A06E1B33AA0900731222 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3690A07B1B33AA3B00731222 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3690A0841B33AA3C00731222 /* DVRTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVRTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		36BDDB881B6716AB00878665 /* json-example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "json-example.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +184,7 @@
 		3647AFCF1B33693F00EF10D4 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				36BDDB881B6716AB00878665 /* json-example.json */,
 				215F927C1B33D46C00EDC60F /* example.json */,
 			);
 			path = Fixtures;
@@ -366,6 +370,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36BDDB891B6716AB00878665 /* json-example.json in Resources */,
 				215F927D1B33D46C00EDC60F /* example.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,6 +393,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36BDDB8A1B6716AB00878665 /* json-example.json in Resources */,
 				215F927E1B33D46C00EDC60F /* example.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
