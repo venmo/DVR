@@ -56,25 +56,3 @@ public class Session: NSURLSession {
         return nil
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
