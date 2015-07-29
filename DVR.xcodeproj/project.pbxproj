@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		215F927D1B33D46C00EDC60F /* example.json in Resources */ = {isa = PBXBuildFile; fileRef = 215F927C1B33D46C00EDC60F /* example.json */; };
 		215F927E1B33D46C00EDC60F /* example.json in Resources */ = {isa = PBXBuildFile; fileRef = 215F927C1B33D46C00EDC60F /* example.json */; };
+		360F5F731B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */; };
+		360F5F741B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */; };
+		360F5F751B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */; };
 		3647AF9F1B335D5500EF10D4 /* DVR.h in Headers */ = {isa = PBXBuildFile; fileRef = 3647AF9E1B335D5500EF10D4 /* DVR.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3647AFA61B335D5500EF10D4 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3647AF9B1B335D5500EF10D4 /* DVR.framework */; };
 		3647AFBA1B335E4A00EF10D4 /* Cassette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647AFB51B335E4A00EF10D4 /* Cassette.swift */; };
@@ -58,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		215F927C1B33D46C00EDC60F /* example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = example.json; sourceTree = "<group>"; };
+		360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDownloadTask.swift; sourceTree = "<group>"; };
 		3647AF9B1B335D5500EF10D4 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3647AF9E1B335D5500EF10D4 /* DVR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVR.h; sourceTree = "<group>"; };
 		3647AFA51B335D5500EF10D4 /* DVRTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVRTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +147,7 @@
 				3647AF9E1B335D5500EF10D4 /* DVR.h */,
 				3647AFB81B335E4A00EF10D4 /* Session.swift */,
 				3647AFB91B335E4A00EF10D4 /* SessionDataTask.swift */,
+				360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */,
 				3647AFB51B335E4A00EF10D4 /* Cassette.swift */,
 				3647AFB61B335E4A00EF10D4 /* Interaction.swift */,
 				3647AFB71B335E4A00EF10D4 /* URLRequest.swift */,
@@ -397,6 +402,7 @@
 				3647AFC01B33602A00EF10D4 /* URLResponse.swift in Sources */,
 				3647AFBE1B335E4A00EF10D4 /* SessionDataTask.swift in Sources */,
 				3647AFBD1B335E4A00EF10D4 /* Session.swift in Sources */,
+				360F5F731B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */,
 				3647AFBC1B335E4A00EF10D4 /* URLRequest.swift in Sources */,
 				3647AFBB1B335E4A00EF10D4 /* Interaction.swift in Sources */,
 				3647AFBA1B335E4A00EF10D4 /* Cassette.swift in Sources */,
@@ -419,6 +425,7 @@
 				3690A09E1B33AA9400731222 /* Interaction.swift in Sources */,
 				3690A09D1B33AA9400731222 /* Cassette.swift in Sources */,
 				3690A0A01B33AA9400731222 /* URLResponse.swift in Sources */,
+				360F5F741B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */,
 				3690A09B1B33AA9400731222 /* Session.swift in Sources */,
 				3690A09C1B33AA9400731222 /* SessionDataTask.swift in Sources */,
 				3690A09F1B33AA9400731222 /* URLRequest.swift in Sources */,
@@ -433,6 +440,7 @@
 				3690A0961B33AA9400731222 /* Interaction.swift in Sources */,
 				3690A0951B33AA9400731222 /* Cassette.swift in Sources */,
 				3690A0981B33AA9400731222 /* URLResponse.swift in Sources */,
+				360F5F751B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */,
 				3690A0931B33AA9400731222 /* Session.swift in Sources */,
 				3690A0941B33AA9400731222 /* SessionDataTask.swift in Sources */,
 				3690A0971B33AA9400731222 /* URLRequest.swift in Sources */,
@@ -502,7 +510,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -545,7 +554,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -660,7 +670,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/DVR/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR;
 				PRODUCT_NAME = DVR;
 				SDKROOT = macosx;
@@ -680,7 +689,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/DVR/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR;
 				PRODUCT_NAME = DVR;
 				SDKROOT = macosx;
@@ -694,7 +702,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = DVR/Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.osxtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -707,7 +714,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = DVR/Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.osxtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

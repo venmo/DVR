@@ -27,7 +27,24 @@ class SessionTests: XCTestCase {
 
             expectation.fulfill()
         }
-        task?.resume()
+        task.resume()
+        waitForExpectationsWithTimeout(1, handler: nil)
+    }
+
+    func testDownload() {
+        session.recordingEnabled = false
+        let expectation = expectationWithDescription("Network")
+
+        let task = session.downloadTaskWithRequest(request) { location, response, error in
+            let data = NSData(contentsOfURL: location!)!
+            XCTAssertEqual("hello", String(NSString(data: data, encoding: NSUTF8StringEncoding)!))
+
+            let HTTPResponse = response as! NSHTTPURLResponse
+            XCTAssertEqual(200, HTTPResponse.statusCode)
+
+            expectation.fulfill()
+        }
+        task.resume()
         waitForExpectationsWithTimeout(1, handler: nil)
     }
 }

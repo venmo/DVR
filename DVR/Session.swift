@@ -6,16 +6,18 @@ public class Session: NSURLSession {
 
     public var outputDirectory: String
     public let cassetteName: String
+    public let backingSession: NSURLSession
     public var recordingEnabled = true
     private let testBundle: NSBundle
 
 
     // MARK: - Initializers
 
-    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: NSBundle = NSBundle.allBundles().filter() { $0.bundlePath.hasSuffix(".xctest") }.first!) {
+    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: NSBundle = NSBundle.allBundles().filter() { $0.bundlePath.hasSuffix(".xctest") }.first!, backingSession: NSURLSession = NSURLSession.sharedSession()) {
         self.outputDirectory = outputDirectory
         self.cassetteName = cassetteName
         self.testBundle = testBundle
+        self.backingSession = backingSession
         super.init()
     }
 
@@ -28,6 +30,14 @@ public class Session: NSURLSession {
 
     public override func dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
         return SessionDataTask(session: self, request: request, completion: completionHandler)
+    }
+
+    public override func downloadTaskWithRequest(request: NSURLRequest) -> NSURLSessionDownloadTask {
+        return SessionDownloadTask(session: self, request: request)
+    }
+
+    public override func downloadTaskWithRequest(request: NSURLRequest, completionHandler: (NSURL?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDownloadTask {
+        return SessionDownloadTask(session: self, request: request, completion: completionHandler)
     }
     
     public override func invalidateAndCancel() {
