@@ -84,6 +84,7 @@ class SessionDataTask: NSURLSessionDataTask {
     
     private func validResponse(response: NSHTTPURLResponse) -> Bool {
         switch response.statusCode {
+        case 304: return true
         case 200..<300: return true
         default : return false
         }
