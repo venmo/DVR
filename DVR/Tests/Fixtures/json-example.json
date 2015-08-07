@@ -1,0 +1,93 @@
+{
+  "interactions" : [
+    {
+      "recorded_at" : 1438048018.179753,
+      "response" : {
+        "body" : {
+          "rating" : "Bad",
+          "insecure_cipher_suites" : {
+            "TLS_RSA_WITH_RC4_128_SHA" : [
+              "use RC4 which has insecure biases in its output"
+            ],
+            "TLS_ECDHE_ECDSA_WITH_RC4_128_SHA" : [
+              "use RC4 which has insecure biases in its output"
+            ],
+            "TLS_ECDH_ECDSA_WITH_RC4_128_SHA" : [
+              "use RC4 which has insecure biases in its output"
+            ],
+            "TLS_ECDH_RSA_WITH_RC4_128_SHA" : [
+              "use RC4 which has insecure biases in its output"
+            ],
+            "TLS_ECDHE_RSA_WITH_RC4_128_SHA" : [
+              "use RC4 which has insecure biases in its output"
+            ],
+            "TLS_RSA_WITH_RC4_128_MD5" : [
+              "use RC4 which has insecure biases in its output"
+            ]
+          },
+          "tls_compression_supported" : false,
+          "given_cipher_suites" : [
+            "TLS_EMPTY_RENEGOTIATION_INFO_SCSV",
+            "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384",
+            "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256",
+            "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA",
+            "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA",
+            "TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA",
+            "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384",
+            "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
+            "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+            "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+            "TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA",
+            "TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384",
+            "TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256",
+            "TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA",
+            "TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA",
+            "TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA",
+            "TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384",
+            "TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256",
+            "TLS_ECDH_RSA_WITH_AES_256_CBC_SHA",
+            "TLS_ECDH_RSA_WITH_AES_128_CBC_SHA",
+            "TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA",
+            "TLS_DHE_RSA_WITH_AES_256_CBC_SHA256",
+            "TLS_DHE_RSA_WITH_AES_128_CBC_SHA256",
+            "TLS_DHE_RSA_WITH_AES_256_CBC_SHA",
+            "TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
+            "TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA",
+            "TLS_RSA_WITH_AES_256_CBC_SHA256",
+            "TLS_RSA_WITH_AES_128_CBC_SHA256",
+            "TLS_RSA_WITH_AES_256_CBC_SHA",
+            "TLS_RSA_WITH_AES_128_CBC_SHA",
+            "TLS_RSA_WITH_3DES_EDE_CBC_SHA",
+            "TLS_ECDHE_ECDSA_WITH_RC4_128_SHA",
+            "TLS_ECDHE_RSA_WITH_RC4_128_SHA",
+            "TLS_ECDH_ECDSA_WITH_RC4_128_SHA",
+            "TLS_ECDH_RSA_WITH_RC4_128_SHA",
+            "TLS_RSA_WITH_RC4_128_SHA",
+            "TLS_RSA_WITH_RC4_128_MD5"
+          ],
+          "session_ticket_supported" : false,
+          "unknown_cipher_suite_supported" : false,
+          "beast_vuln" : false,
+          "able_to_detect_n_minus_one_splitting" : false,
+          "tls_version" : "TLS 1.2",
+          "ephemeral_keys_supported" : true
+        },
+        "status" : 200,
+        "url" : "https:\/\/www.howsmyssl.com\/a\/check",
+        "headers" : {
+          "Date" : "Tue, 28 Jul 2015 01:46:57 GMT",
+          "Strict-Transport-Security" : "max-age=631138519; includeSubdomains; preload",
+          "Content-Length" : "2139",
+          "Connection" : "close",
+          "Content-Type" : "application\/json",
+          "Access-Control-Allow-Origin" : "*"
+        }
+      },
+      "request" : {
+        "method" : "GET",
+        "url" : "https:\/\/www.howsmyssl.com\/a\/check"
+      }
+    }
+  ],
+  "name" : "json-example"
+}

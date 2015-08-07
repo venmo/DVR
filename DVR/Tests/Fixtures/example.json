@@ -3,7 +3,7 @@
     {
       "recorded_at" : 1434688721.440751,
       "response" : {
-        "body" : "aGVsbG8=",
+        "body" : "hello",
         "status" : 200,
         "url" : "http:\/\/example.com\/",
         "headers" : {
