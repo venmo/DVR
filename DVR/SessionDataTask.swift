@@ -49,7 +49,7 @@ class SessionDataTask: NSURLSessionDataTask {
 		}
 
         // Create directory
-        let outputDirectory = session.outputDirectory.stringByExpandingTildeInPath
+        let outputDirectory = (session.outputDirectory as NSString).stringByExpandingTildeInPath
         let fileManager = NSFileManager.defaultManager()
         if !fileManager.fileExistsAtPath(outputDirectory) {
             try! fileManager.createDirectoryAtPath(outputDirectory, withIntermediateDirectories: true, attributes: nil)
@@ -70,7 +70,7 @@ class SessionDataTask: NSURLSessionDataTask {
 
             // Persist
             do {
-                let outputPath = outputDirectory.stringByAppendingPathComponent(self.session.cassetteName).stringByAppendingPathExtension("json")!
+                let outputPath = ((outputDirectory as NSString).stringByAppendingPathComponent(self.session.cassetteName) as NSString).stringByAppendingPathExtension("json")!
                 let data = try NSJSONSerialization.dataWithJSONObject(cassette.dictionary, options: [.PrettyPrinted])
                 data.writeToFile(outputPath, atomically: true)
                 fatalError("[DVR] Persisted cassette at \(outputPath). Please add this file to your test target")
