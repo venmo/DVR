@@ -9,7 +9,7 @@ Easy [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) 
 
 ## Building
 
-Xcode 7 beta 4 is required since DVR is written in Swift 2.
+Xcode 7 beta 5 is required since DVR is written in Swift 2.
 
 
 ## Usage
