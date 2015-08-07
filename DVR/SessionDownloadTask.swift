@@ -30,7 +30,8 @@ class SessionDownloadTask: NSURLSessionDownloadTask {
             let location: NSURL?
             if let data = data {
                 // Write data to temporary file
-                let tempURL = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingPathComponent(NSUUID().UUIDString))
+                let tempDirectory = NSTemporaryDirectory() as NSString
+                let tempURL = NSURL(fileURLWithPath: tempDirectory.stringByAppendingPathComponent(NSUUID().UUIDString))
                 data.writeToURL(tempURL, atomically: true)
                 location = tempURL
             } else {
