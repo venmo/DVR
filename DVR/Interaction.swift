@@ -31,7 +31,7 @@ struct Interaction {
             }
 
             // JSON
-            if contentType == "application/json" {
+            if contentType.hasPrefix("application/json") {
                 do {
                     return try NSJSONSerialization.JSONObjectWithData(body, options: [])
                 } catch {
@@ -55,7 +55,7 @@ struct Interaction {
             }
 
             // JSON
-            if contentType == "application/json" {
+            if contentType.hasPrefix("application/json") {
                 do {
                     return try NSJSONSerialization.dataWithJSONObject(body, options: [])
                 } catch {
