@@ -1,13 +1,22 @@
 import Foundation
 
 struct Cassette {
+
+    // MARK: - Properties
+
     let name: String
     let interactions: [Interaction]
+
+
+    // MARK: - Initializers
 
     init(name: String, interactions: [Interaction]) {
         self.name = name
         self.interactions = interactions
     }
+
+
+    // MARK: - Functions
 
     func interactionForRequest(request: NSURLRequest) -> Interaction? {
         for interaction in interactions {
@@ -20,6 +29,9 @@ struct Cassette {
         }
         return nil
     }
+
+
+    // MARK: - Private
 
     private func equalHTTPBody(request request1: NSURLRequest, request request2: NSURLRequest) -> Bool {
         if let body1 = request1.HTTPBody,
