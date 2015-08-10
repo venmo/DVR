@@ -1,20 +1,29 @@
 import Foundation
 
 struct Cassette {
+
+    // MARK: - Properties
+
     let name: String
     let interactions: [Interaction]
+
+
+    // MARK: - Initializers
 
     init(name: String, interactions: [Interaction]) {
         self.name = name
         self.interactions = interactions
     }
 
+
+    // MARK: - Functions
+
     func interactionForRequest(request: NSURLRequest) -> Interaction? {
         for interaction in interactions {
-            let r = interaction.request
+            let interactionRequest = interaction.request
 
             // Note: We don't check headers right now
-            if r.HTTPMethod == request.HTTPMethod && r.URL == request.URL && r.HTTPBody == request.HTTPBody {
+            if interactionRequest.HTTPMethod == request.HTTPMethod && interactionRequest.URL == request.URL && interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)  {
                 return interaction
             }
         }
@@ -40,6 +49,20 @@ extension Cassette {
             interactions = array.flatMap { Interaction(dictionary: $0) }
         } else {
             interactions = []
+        }
+    }
+}
+
+private extension NSURLRequest {
+    func hasHTTPBodyEqualToThatOfRequest(request: NSURLRequest) -> Bool {
+        if let body1 = self.HTTPBody,
+            body2 = request.HTTPBody,
+            encoded1 = Interaction.encodeBody(body1, headers: self.allHTTPHeaderFields),
+            encoded2 = Interaction.encodeBody(body2, headers: request.allHTTPHeaderFields) {
+
+                return encoded1.isEqual(encoded2)
+        } else {
+            return self.HTTPBody == request.HTTPBody
         }
     }
 }
