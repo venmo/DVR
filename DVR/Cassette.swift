@@ -23,26 +23,11 @@ struct Cassette {
             let interactionRequest = interaction.request
 
             // Note: We don't check headers right now
-            if interactionRequest.HTTPMethod == request.HTTPMethod && interactionRequest.URL == request.URL && equalHTTPBody(request: interactionRequest, request: request) {
+            if interactionRequest.HTTPMethod == request.HTTPMethod && interactionRequest.URL == request.URL && interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)  {
                 return interaction
             }
         }
         return nil
-    }
-
-
-    // MARK: - Private
-
-    private func equalHTTPBody(request request1: NSURLRequest, request request2: NSURLRequest) -> Bool {
-        if let body1 = request1.HTTPBody,
-            body2 = request2.HTTPBody,
-            encoded1 = Interaction.encodeBody(body1, headers: request1.allHTTPHeaderFields),
-            encoded2 = Interaction.encodeBody(body2, headers: request2.allHTTPHeaderFields) {
-
-                return encoded1.isEqual(encoded2)
-        } else {
-            return request1.HTTPBody == request2.HTTPBody
-        }
     }
 }
 
@@ -64,6 +49,20 @@ extension Cassette {
             interactions = array.flatMap { Interaction(dictionary: $0) }
         } else {
             interactions = []
+        }
+    }
+}
+
+private extension NSURLRequest {
+    func hasHTTPBodyEqualToThatOfRequest(request: NSURLRequest) -> Bool {
+        if let body1 = self.HTTPBody,
+            body2 = request.HTTPBody,
+            encoded1 = Interaction.encodeBody(body1, headers: self.allHTTPHeaderFields),
+            encoded2 = Interaction.encodeBody(body2, headers: request.allHTTPHeaderFields) {
+
+                return encoded1.isEqual(encoded2)
+        } else {
+            return self.HTTPBody == request.HTTPBody
         }
     }
 }
