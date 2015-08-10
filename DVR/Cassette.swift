@@ -13,8 +13,20 @@ struct Cassette {
         for interaction in interactions {
             let r = interaction.request
 
+            let equivalentBody: Bool
+
+            if let rBody = r.HTTPBody,
+                requestBody = request.HTTPBody,
+                rEncoded = Interaction.encodeBody(rBody, headers: r.allHTTPHeaderFields),
+                requestEncoded = Interaction.encodeBody(requestBody, headers: request.allHTTPHeaderFields) {
+
+                equivalentBody = rEncoded.isEqual(requestEncoded)
+            } else {
+                equivalentBody = r.HTTPBody == request.HTTPBody
+            }
+
             // Note: We don't check headers right now
-            if r.HTTPMethod == request.HTTPMethod && r.URL == request.URL && r.HTTPBody == request.HTTPBody {
+            if r.HTTPMethod == request.HTTPMethod && r.URL == request.URL && equivalentBody {
                 return interaction
             }
         }
