@@ -11,26 +11,26 @@ struct Cassette {
 
     func interactionForRequest(request: NSURLRequest) -> Interaction? {
         for interaction in interactions {
-            let r = interaction.request
-
-            let equivalentBody: Bool
-
-            if let rBody = r.HTTPBody,
-                requestBody = request.HTTPBody,
-                rEncoded = Interaction.encodeBody(rBody, headers: r.allHTTPHeaderFields),
-                requestEncoded = Interaction.encodeBody(requestBody, headers: request.allHTTPHeaderFields) {
-
-                equivalentBody = rEncoded.isEqual(requestEncoded)
-            } else {
-                equivalentBody = r.HTTPBody == request.HTTPBody
-            }
+            let interactionRequest = interaction.request
 
             // Note: We don't check headers right now
-            if r.HTTPMethod == request.HTTPMethod && r.URL == request.URL && equivalentBody {
+            if interactionRequest.HTTPMethod == request.HTTPMethod && interactionRequest.URL == request.URL && equalHTTPBody(request: interactionRequest, request: request) {
                 return interaction
             }
         }
         return nil
+    }
+
+    private func equalHTTPBody(request request1: NSURLRequest, request request2: NSURLRequest) -> Bool {
+        if let body1 = request1.HTTPBody,
+            body2 = request2.HTTPBody,
+            encoded1 = Interaction.encodeBody(body1, headers: request1.allHTTPHeaderFields),
+            encoded2 = Interaction.encodeBody(body2, headers: request2.allHTTPHeaderFields) {
+
+                return encoded1.isEqual(encoded2)
+        } else {
+            return request1.HTTPBody == request2.HTTPBody
+        }
     }
 }
 
