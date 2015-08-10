@@ -79,7 +79,7 @@
           "Strict-Transport-Security" : "max-age=631138519; includeSubdomains; preload",
           "Content-Length" : "2139",
           "Connection" : "close",
-          "Content-Type" : "application\/json",
+          "Content-Type" : "application\/json; charset=utf-8",
           "Access-Control-Allow-Origin" : "*"
         }
       },
