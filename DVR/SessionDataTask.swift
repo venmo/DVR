@@ -12,6 +12,7 @@ class SessionDataTask: NSURLSessionDataTask {
     weak var session: Session!
     let request: NSURLRequest
     let completion: Completion?
+    private let queue = dispatch_queue_create("com.venmo.DVR.sessionDataTaskQueue", nil)
 
 
     // MARK: - Initializers
@@ -36,7 +37,6 @@ class SessionDataTask: NSURLSessionDataTask {
         if let interaction = cassette?.interactionForRequest(request) {
             // Forward completion
             if let completion = completion {
-                let queue = dispatch_queue_create("com.venmo.DVR.sessionDataTaskQueue", nil)
                 dispatch_async(queue) {
                     completion(interaction.responseData, interaction.response, nil)
                 }
