@@ -35,7 +35,12 @@ class SessionDataTask: NSURLSessionDataTask {
         // Find interaction
         if let interaction = cassette?.interactionForRequest(request) {
             // Forward completion
-            completion?(interaction.responseData, interaction.response, nil)
+            if let completion = completion {
+                let queue = dispatch_queue_create("com.venmo.DVR.sessionDataTaskQueue", nil)
+                dispatch_async(queue) {
+                    completion(interaction.responseData, interaction.response, nil)
+                }
+            }
             return
         }
 
