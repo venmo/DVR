@@ -46,13 +46,13 @@ class SessionDataTask: NSURLSessionDataTask {
         }
 
 		if cassette != nil {
-			print("[DVR] Invalid request. The request was not found in the cassette.")
+            print("[DVR] Invalid request. The request was not found in the cassette.")
             abort()
 		}
 
         // Cassette is missing. Record.
 		if session.recordingEnabled == false {
-			print("[DVR] Recording is disabled.")
+            print("[DVR] Recording is disabled.")
             abort()
 		}
 
@@ -101,7 +101,7 @@ class SessionDataTask: NSURLSessionDataTask {
                 // Do nothing
             }
 
-			print("[DVR] Failed to persist cassette.")
+            print("[DVR] Failed to persist cassette.")
             abort()
         }
         task.resume()
