@@ -45,16 +45,16 @@ class SessionDataTask: NSURLSessionDataTask {
             return
         }
 
-		if cassette != nil {
+        if cassette != nil {
             print("[DVR] Invalid request. The request was not found in the cassette.")
             abort()
-		}
+        }
 
         // Cassette is missing. Record.
-		if session.recordingEnabled == false {
+        if session.recordingEnabled == false {
             print("[DVR] Recording is disabled.")
             abort()
-		}
+        }
 
         // Create directory
         let outputDirectory = (session.outputDirectory as NSString).stringByExpandingTildeInPath
