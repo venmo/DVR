@@ -37,6 +37,7 @@ class SessionDataTask: NSURLSessionDataTask {
         if let interaction = cassette?.interactionForRequest(request) {
             // Forward completion
             if let completion = completion {
+                print("[DVR] Replaying '\(session.cassetteName)'")
                 dispatch_async(queue) {
                     completion(interaction.responseData, interaction.response, nil)
                 }
@@ -45,12 +46,14 @@ class SessionDataTask: NSURLSessionDataTask {
         }
 
 		if cassette != nil {
-			fatalError("[DVR] Invalid request. The request was not found in the cassette.")
+			print("[DVR] Invalid request. The request was not found in the cassette.")
+            abort()
 		}
 
         // Cassette is missing. Record.
 		if session.recordingEnabled == false {
-			fatalError("[DVR] Recording is disabled.")
+			print("[DVR] Recording is disabled.")
+            abort()
 		}
 
         // Create directory
@@ -66,7 +69,8 @@ class SessionDataTask: NSURLSessionDataTask {
             
             //Ensure we have a response
             guard let response = response else {
-                fatalError("[DVR] Failed to persist cassette, because the task returned a nil response.")
+                print("[DVR] Failed to persist cassette, because the task returned a nil response.")
+                abort()
             }
             
             // Create cassette
@@ -80,21 +84,25 @@ class SessionDataTask: NSURLSessionDataTask {
 
                 // Add trailing new line
                 guard var string = NSString(data: data, encoding: NSUTF8StringEncoding) else {
-                    fatalError("[DVR] Failed to persist cassette.")
+                    print("[DVR] Failed to persist cassette.")
+                    abort()
                 }
                 string = string.stringByAppendingString("\n")
 
                 if let data = string.dataUsingEncoding(NSUTF8StringEncoding) {
                     data.writeToFile(outputPath, atomically: true)
-                    fatalError("[DVR] Persisted cassette at \(outputPath). Please add this file to your test target")
+                    print("[DVR] Persisted cassette at \(outputPath). Please add this file to your test target")
+                    abort()
                 }
 
-                fatalError("[DVR] Failed to persist cassette.")
+                print("[DVR] Failed to persist cassette.")
+                abort()
             } catch {
                 // Do nothing
             }
 
-			fatalError("[DVR] Failed to persist cassette.")
+			print("[DVR] Failed to persist cassette.")
+            abort()
         }
         task.resume()
     }
