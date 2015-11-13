@@ -55,14 +55,14 @@ extension Cassette {
 
 private extension NSURLRequest {
     func hasHTTPBodyEqualToThatOfRequest(request: NSURLRequest) -> Bool {
-        if let body1 = self.HTTPBody,
+        guard let body1 = self.HTTPBody,
             body2 = request.HTTPBody,
             encoded1 = Interaction.encodeBody(body1, headers: self.allHTTPHeaderFields),
-            encoded2 = Interaction.encodeBody(body2, headers: request.allHTTPHeaderFields) {
+            encoded2 = Interaction.encodeBody(body2, headers: request.allHTTPHeaderFields)
+		else {
+			return self.HTTPBody == request.HTTPBody
+		}
 
-                return encoded1.isEqual(encoded2)
-        } else {
-            return self.HTTPBody == request.HTTPBody
-        }
+		return encoded1.isEqual(encoded2)
     }
 }

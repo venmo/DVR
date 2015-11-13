@@ -26,8 +26,8 @@ struct Interaction {
         if let contentType = headers?["Content-Type"] {
             // Text
             if contentType.hasPrefix("text/") {
-                // TODO: Use encoding if specified in headers
-                return String(NSString(data: body, encoding: NSUTF8StringEncoding))
+                // TODO: Use text encoding if specified in headers
+                return NSString(data: body, encoding: NSUTF8StringEncoding)
             }
 
             // JSON
