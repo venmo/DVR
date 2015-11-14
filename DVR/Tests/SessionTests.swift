@@ -86,22 +86,25 @@ class SessionTests: XCTestCase {
 		session.beginRecording()
 
 		let apple = expectationWithDescription("Apple")
+		let google = expectationWithDescription("Google")
+
 		session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://apple.com")!)) { _, response, _ in
 			XCTAssertEqual(200, (response as? NSHTTPURLResponse)?.statusCode)
+
+			dispatch_async(dispatch_get_main_queue()) {
+				session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://google.com")!)) { _, response, _ in
+					XCTAssertEqual(200, (response as? NSHTTPURLResponse)?.statusCode)
+					google.fulfill()
+				}.resume()
+
+				session.endRecording() {
+					expectation.fulfill()
+				}
+			}
+
 			apple.fulfill()
 		}.resume()
 
-		let google = expectationWithDescription("Google")
-		session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://google.com")!)) { _, response, _ in
-			XCTAssertEqual(200, (response as? NSHTTPURLResponse)?.statusCode)
-			google.fulfill()
-		}.resume()
-
-		session.endRecording() {
-			expectation.fulfill()
-		}
-
 		waitForExpectationsWithTimeout(1, handler: nil)
-
 	}
 }

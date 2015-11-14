@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2119D3801BF6BB2700E91D6F /* multiple.json in Resources */ = {isa = PBXBuildFile; fileRef = 2119D37E1BF6BB2300E91D6F /* multiple.json */; };
+		2119D3811BF6BB2700E91D6F /* multiple.json in Resources */ = {isa = PBXBuildFile; fileRef = 2119D37E1BF6BB2300E91D6F /* multiple.json */; };
 		215F927D1B33D46C00EDC60F /* example.json in Resources */ = {isa = PBXBuildFile; fileRef = 215F927C1B33D46C00EDC60F /* example.json */; };
 		215F927E1B33D46C00EDC60F /* example.json in Resources */ = {isa = PBXBuildFile; fileRef = 215F927C1B33D46C00EDC60F /* example.json */; };
-		2197317B1BF6B50D003DC1EB /* multiple.json in Resources */ = {isa = PBXBuildFile; fileRef = 219731771BF6B3E5003DC1EB /* multiple.json */; };
-		2197317C1BF6B50E003DC1EB /* multiple.json in Resources */ = {isa = PBXBuildFile; fileRef = 219731771BF6B3E5003DC1EB /* multiple.json */; };
 		21E548F31BF69E30004855AE /* text.json in Resources */ = {isa = PBXBuildFile; fileRef = 21E548F11BF69E29004855AE /* text.json */; };
 		21E548F41BF69E30004855AE /* text.json in Resources */ = {isa = PBXBuildFile; fileRef = 21E548F11BF69E29004855AE /* text.json */; };
 		360F5F731B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */; };
@@ -66,8 +66,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2119D37E1BF6BB2300E91D6F /* multiple.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = multiple.json; sourceTree = "<group>"; };
 		215F927C1B33D46C00EDC60F /* example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = example.json; sourceTree = "<group>"; };
-		219731771BF6B3E5003DC1EB /* multiple.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = multiple.json; sourceTree = "<group>"; };
 		21E548F11BF69E29004855AE /* text.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = text.json; sourceTree = "<group>"; };
 		360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDownloadTask.swift; sourceTree = "<group>"; };
 		3647AF9B1B335D5500EF10D4 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,7 +193,7 @@
 				36BDDB881B6716AB00878665 /* json-example.json */,
 				215F927C1B33D46C00EDC60F /* example.json */,
 				21E548F11BF69E29004855AE /* text.json */,
-				219731771BF6B3E5003DC1EB /* multiple.json */,
+				2119D37E1BF6BB2300E91D6F /* multiple.json */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -379,7 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36BDDB891B6716AB00878665 /* json-example.json in Resources */,
-				2197317B1BF6B50D003DC1EB /* multiple.json in Resources */,
+				2119D3801BF6BB2700E91D6F /* multiple.json in Resources */,
 				215F927D1B33D46C00EDC60F /* example.json in Resources */,
 				21E548F31BF69E30004855AE /* text.json in Resources */,
 			);
@@ -404,7 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36BDDB8A1B6716AB00878665 /* json-example.json in Resources */,
-				2197317C1BF6B50E003DC1EB /* multiple.json in Resources */,
+				2119D3811BF6BB2700E91D6F /* multiple.json in Resources */,
 				215F927E1B33D46C00EDC60F /* example.json in Resources */,
 				21E548F41BF69E30004855AE /* text.json in Resources */,
 			);

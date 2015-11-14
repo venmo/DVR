@@ -34,10 +34,9 @@ class SessionDataTask: NSURLSessionDataTask {
         let cassette = session.cassette
 
         // Find interaction
-        if let interaction = cassette?.interactionForRequest(request) {
+        if let interaction = session.cassette?.interactionForRequest(request) {
             // Forward completion
             if let completion = completion {
-                print("[DVR] Replaying '\(session.cassetteName)'")
                 dispatch_async(queue) {
                     completion(interaction.responseData, interaction.response, nil)
                 }
@@ -68,6 +67,11 @@ class SessionDataTask: NSURLSessionDataTask {
 			guard let this = self else {
 				print("[DVR] Something has gone horribly wrong.")
 				abort()
+			}
+
+			// Still call the completion block so the user can chain requests while recording.
+			dispatch_async(this.queue) {
+				this.completion?(data, response, nil)
 			}
 
             // Create interaction
