@@ -19,15 +19,15 @@ class SessionTests: XCTestCase {
         session.recordingEnabled = false
         let expectation = expectationWithDescription("Network")
 
-        let task = session.dataTaskWithRequest(request) { data, response, error in
+        session.dataTaskWithRequest(request) { data, response, error in
             XCTAssertEqual("hello", String(data: data!, encoding: NSUTF8StringEncoding))
 
 			let HTTPResponse = response as! NSHTTPURLResponse
 			XCTAssertEqual(200, HTTPResponse.statusCode)
 
             expectation.fulfill()
-        }
-        task.resume()
+        }.resume()
+		
         waitForExpectationsWithTimeout(1, handler: nil)
     }
 
@@ -42,15 +42,15 @@ class SessionTests: XCTestCase {
 
 		let expectation = expectationWithDescription("Network")
 
-		let task = session.dataTaskWithRequest(request) { data, response, error in
+		session.dataTaskWithRequest(request) { data, response, error in
 			XCTAssertEqual("hello", String(data: data!, encoding: NSUTF8StringEncoding))
 
 			let HTTPResponse = response as! NSHTTPURLResponse
 			XCTAssertEqual(200, HTTPResponse.statusCode)
 
 			expectation.fulfill()
-		}
-		task.resume()
+        }.resume()
+
 		waitForExpectationsWithTimeout(1, handler: nil)
 	}
 
@@ -62,7 +62,7 @@ class SessionTests: XCTestCase {
 
         let request = NSURLRequest(URL: NSURL(string: "https://www.howsmyssl.com/a/check")!)
         
-        let task = session.downloadTaskWithRequest(request) { location, response, error in
+        session.downloadTaskWithRequest(request) { location, response, error in
             let data = NSData(contentsOfURL: location!)!
             do {
                 let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject]
@@ -75,8 +75,33 @@ class SessionTests: XCTestCase {
             XCTAssertEqual(200, HTTPResponse.statusCode)
 
             expectation.fulfill()
-        }
-        task.resume()
+        }.resume()
+
         waitForExpectationsWithTimeout(1, handler: nil)
     }
+
+	func testMultiple() {
+		let expectation = expectationWithDescription("Network")
+		let session = Session(cassetteName: "multiple")
+		session.beginRecording()
+
+		let apple = expectationWithDescription("Apple")
+		session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://apple.com")!)) { _, response, _ in
+			XCTAssertEqual(200, (response as? NSHTTPURLResponse)?.statusCode)
+			apple.fulfill()
+		}.resume()
+
+		let google = expectationWithDescription("Google")
+		session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://google.com")!)) { _, response, _ in
+			XCTAssertEqual(200, (response as? NSHTTPURLResponse)?.statusCode)
+			google.fulfill()
+		}.resume()
+
+		session.endRecording() {
+			expectation.fulfill()
+		}
+
+		waitForExpectationsWithTimeout(1, handler: nil)
+
+	}
 }
