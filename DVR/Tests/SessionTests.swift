@@ -22,37 +22,37 @@ class SessionTests: XCTestCase {
         session.dataTaskWithRequest(request) { data, response, error in
             XCTAssertEqual("hello", String(data: data!, encoding: NSUTF8StringEncoding))
 
-			let HTTPResponse = response as! NSHTTPURLResponse
-			XCTAssertEqual(200, HTTPResponse.statusCode)
+            let HTTPResponse = response as! NSHTTPURLResponse
+            XCTAssertEqual(200, HTTPResponse.statusCode)
 
             expectation.fulfill()
         }.resume()
-		
+
         waitForExpectationsWithTimeout(1, handler: nil)
     }
 
-	func testTextPlayback() {
-		let session = Session(cassetteName: "text")
-		session.recordingEnabled = false
+    func testTextPlayback() {
+        let session = Session(cassetteName: "text")
+        session.recordingEnabled = false
 
-		let request = NSMutableURLRequest(URL: NSURL(string: "http://example.com")!)
-		request.HTTPMethod = "POST"
-		request.HTTPBody = "Some text.".dataUsingEncoding(NSUTF8StringEncoding)
-		request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://example.com")!)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = "Some text.".dataUsingEncoding(NSUTF8StringEncoding)
+        request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
 
-		let expectation = expectationWithDescription("Network")
+        let expectation = expectationWithDescription("Network")
 
-		session.dataTaskWithRequest(request) { data, response, error in
-			XCTAssertEqual("hello", String(data: data!, encoding: NSUTF8StringEncoding))
+        session.dataTaskWithRequest(request) { data, response, error in
+            XCTAssertEqual("hello", String(data: data!, encoding: NSUTF8StringEncoding))
 
-			let HTTPResponse = response as! NSHTTPURLResponse
-			XCTAssertEqual(200, HTTPResponse.statusCode)
+            let HTTPResponse = response as! NSHTTPURLResponse
+            XCTAssertEqual(200, HTTPResponse.statusCode)
 
-			expectation.fulfill()
+            expectation.fulfill()
         }.resume()
 
-		waitForExpectationsWithTimeout(1, handler: nil)
-	}
+        waitForExpectationsWithTimeout(1, handler: nil)
+    }
 
     func testDownload() {
         let expectation = expectationWithDescription("Network")
@@ -61,7 +61,7 @@ class SessionTests: XCTestCase {
         session.recordingEnabled = false
 
         let request = NSURLRequest(URL: NSURL(string: "https://www.howsmyssl.com/a/check")!)
-        
+
         session.downloadTaskWithRequest(request) { location, response, error in
             let data = NSData(contentsOfURL: location!)!
             do {
@@ -80,31 +80,31 @@ class SessionTests: XCTestCase {
         waitForExpectationsWithTimeout(1, handler: nil)
     }
 
-	func testMultiple() {
-		let expectation = expectationWithDescription("Network")
-		let session = Session(cassetteName: "multiple")
-		session.beginRecording()
+    func testMultiple() {
+        let expectation = expectationWithDescription("Network")
+        let session = Session(cassetteName: "multiple")
+        session.beginRecording()
 
-		let apple = expectationWithDescription("Apple")
-		let google = expectationWithDescription("Google")
+        let apple = expectationWithDescription("Apple")
+        let google = expectationWithDescription("Google")
 
-		session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://apple.com")!)) { _, response, _ in
-			XCTAssertEqual(200, (response as? NSHTTPURLResponse)?.statusCode)
+        session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://apple.com")!)) { _, response, _ in
+            XCTAssertEqual(200, (response as? NSHTTPURLResponse)?.statusCode)
 
-			dispatch_async(dispatch_get_main_queue()) {
-				session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://google.com")!)) { _, response, _ in
-					XCTAssertEqual(200, (response as? NSHTTPURLResponse)?.statusCode)
-					google.fulfill()
-				}.resume()
+            dispatch_async(dispatch_get_main_queue()) {
+                session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://google.com")!)) { _, response, _ in
+                    XCTAssertEqual(200, (response as? NSHTTPURLResponse)?.statusCode)
+                    google.fulfill()
+                }.resume()
 
-				session.endRecording() {
-					expectation.fulfill()
-				}
-			}
+                session.endRecording() {
+                    expectation.fulfill()
+                }
+            }
 
-			apple.fulfill()
-		}.resume()
+            apple.fulfill()
+        }.resume()
 
-		waitForExpectationsWithTimeout(1, handler: nil)
-	}
+        waitForExpectationsWithTimeout(1, handler: nil)
+    }
 }

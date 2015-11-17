@@ -25,7 +25,7 @@ class SessionDataTask: NSURLSessionDataTask {
 
 
     // MARK: - NSURLSessionTask
-    
+
     override func cancel() {
         // Don't do anything
     }
@@ -41,7 +41,7 @@ class SessionDataTask: NSURLSessionDataTask {
                     completion(interaction.responseData, interaction.response, nil)
                 }
             }
-			session.finishTask(self, interaction: interaction, playback: true)
+            session.finishTask(self, interaction: interaction, playback: true)
             return
         }
 
@@ -57,22 +57,22 @@ class SessionDataTask: NSURLSessionDataTask {
         }
 
         let task = session.backingSession.dataTaskWithRequest(request) { [weak self] data, response, error in
-            
+
             //Ensure we have a response
             guard let response = response else {
                 print("[DVR] Failed to record because the task returned a nil response.")
                 abort()
             }
 
-			guard let this = self else {
-				print("[DVR] Something has gone horribly wrong.")
-				abort()
-			}
+            guard let this = self else {
+                print("[DVR] Something has gone horribly wrong.")
+                abort()
+            }
 
-			// Still call the completion block so the user can chain requests while recording.
-			dispatch_async(this.queue) {
-				this.completion?(data, response, nil)
-			}
+            // Still call the completion block so the user can chain requests while recording.
+            dispatch_async(this.queue) {
+                this.completion?(data, response, nil)
+            }
 
             // Create interaction
             let interaction = Interaction(request: this.request, response: response, responseData: data)

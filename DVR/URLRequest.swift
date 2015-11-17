@@ -41,8 +41,8 @@ extension NSMutableURLRequest {
             allHTTPHeaderFields = headers
         }
 
-		if let body = dictionary["body"] {
-			HTTPBody = Interaction.dencodeBody(body, headers: allHTTPHeaderFields)
-		}
+        if let body = dictionary["body"] {
+            HTTPBody = Interaction.dencodeBody(body, headers: allHTTPHeaderFields)
+        }
     }
 }

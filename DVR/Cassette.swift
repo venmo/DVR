@@ -59,10 +59,10 @@ private extension NSURLRequest {
             body2 = request.HTTPBody,
             encoded1 = Interaction.encodeBody(body1, headers: self.allHTTPHeaderFields),
             encoded2 = Interaction.encodeBody(body2, headers: request.allHTTPHeaderFields)
-		else {
-			return self.HTTPBody == request.HTTPBody
-		}
+        else {
+            return self.HTTPBody == request.HTTPBody
+        }
 
-		return encoded1.isEqual(encoded2)
+        return encoded1.isEqual(encoded2)
     }
 }
