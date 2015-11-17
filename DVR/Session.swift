@@ -141,7 +141,12 @@ public class Session: NSURLSession {
         let outputDirectory = (self.outputDirectory as NSString).stringByExpandingTildeInPath
         let fileManager = NSFileManager.defaultManager()
         if !fileManager.fileExistsAtPath(outputDirectory) {
-            try! fileManager.createDirectoryAtPath(outputDirectory, withIntermediateDirectories: true, attributes: nil)
+			do {
+				try fileManager.createDirectoryAtPath(outputDirectory, withIntermediateDirectories: true, attributes: nil)
+			} catch {
+				print("[DVR] Failed to create cassettes directory.")
+				abort()
+			}
         }
 
         let cassette = Cassette(name: cassetteName, interactions: interactions)
