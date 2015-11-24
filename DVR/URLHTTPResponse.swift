@@ -3,7 +3,7 @@ import Foundation
 // There isn't a mutable NSHTTPURLResponse, so we have to make our own.
 class URLHTTPResponse: NSHTTPURLResponse {
 
-	// MARK: - Properties
+    // MARK: - Properties
 
     private var _URL: NSURL?
     override var URL: NSURL? {
