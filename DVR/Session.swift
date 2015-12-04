@@ -8,6 +8,7 @@ public class Session: NSURLSession {
     public let cassetteName: String
     public let backingSession: NSURLSession
     public var recordingEnabled = true
+    public var ignoreBaseURL = false
 
     private let testBundle: NSBundle
 

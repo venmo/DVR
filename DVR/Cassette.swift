@@ -18,12 +18,16 @@ struct Cassette {
 
     // MARK: - Functions
 
-    func interactionForRequest(request: NSURLRequest) -> Interaction? {
+    func interactionForRequest(request: NSURLRequest, ignoreBaseURL: Bool) -> Interaction? {
         for interaction in interactions {
             let interactionRequest = interaction.request
 
+            guard let interactionURL = interactionRequest.URL,
+                requestURL = request.URL else {
+                return nil
+            }
             // Note: We don't check headers right now
-            if interactionRequest.HTTPMethod == request.HTTPMethod && interactionRequest.URL == request.URL && interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)  {
+            if interactionRequest.HTTPMethod == request.HTTPMethod && interactionURL.isEqualWithURL(requestURL, ignoreBaseURL: ignoreBaseURL) && interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)  {
                 return interaction
             }
         }
@@ -50,6 +54,23 @@ extension Cassette {
         } else {
             interactions = []
         }
+    }
+}
+
+private extension NSURL {
+    func isEqualWithURL(url: NSURL, ignoreBaseURL: Bool = false) -> Bool {
+        var isEqualWithURL = false
+        
+        if ignoreBaseURL {
+            if let firstRelativePath = self.relativePath,
+                secondRelativePath = url.relativePath {
+                    isEqualWithURL = firstRelativePath == secondRelativePath
+            }
+        } else {
+           isEqualWithURL = self == url
+        }
+        
+        return isEqualWithURL
     }
 }
 
