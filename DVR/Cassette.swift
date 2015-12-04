@@ -58,6 +58,14 @@ extension Cassette {
 }
 
 private extension NSURL {
+    /**
+     Method used to check if it is equal with the provided url.
+     
+     - parameter url:           The url to compare against.
+     - parameter ignoreBaseURL: Bool flag for ignoring the baseURL when comparing against the provided url.
+     
+     - returns: true if is equal with the provided url, false otherwhise.
+     */
     func isEqualWithURL(url: NSURL, ignoreBaseURL: Bool = false) -> Bool {
         var isEqualWithURL = false
         
