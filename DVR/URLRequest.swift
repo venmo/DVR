@@ -25,6 +25,15 @@ extension NSURLRequest {
 }
 
 
+extension NSURLRequest {
+    func requestByAppendingHeaders(headers: [NSObject: AnyObject]) -> NSURLRequest {
+        let request = mutableCopy() as! NSMutableURLRequest
+        request.appendHeaders(headers)
+        return request.copy() as! NSURLRequest
+    }
+}
+
+
 extension NSMutableURLRequest {
     convenience init(dictionary: [String: AnyObject]) {
         self.init()
@@ -44,5 +53,22 @@ extension NSMutableURLRequest {
         if let body = dictionary["body"] {
             HTTPBody = Interaction.dencodeBody(body, headers: allHTTPHeaderFields)
         }
+    }
+}
+
+
+extension NSMutableURLRequest {
+    func appendHeaders(headers: [NSObject: AnyObject]) {
+        var existingHeaders = allHTTPHeaderFields ?? [:]
+
+        headers.forEach { header in
+            guard let key = header.0 as? String, value = header.1 as? String where existingHeaders[key] == nil else {
+                return
+            }
+
+            existingHeaders[key] = value
+        }
+
+        allHTTPHeaderFields = existingHeaders
     }
 }

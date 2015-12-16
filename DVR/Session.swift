@@ -32,27 +32,19 @@ public class Session: NSURLSession {
     // MARK: - NSURLSession
 
     public override func dataTaskWithRequest(request: NSURLRequest) -> NSURLSessionDataTask {
-        let task = SessionDataTask(session: self, request: request)
-        addTask(task)
-        return task
+        return addDataTask(request)
     }
 
     public override func dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
-        let task = SessionDataTask(session: self, request: request, completion: completionHandler)
-        addTask(task)
-        return task
+        return addDataTask(request, completionHandler: completionHandler)
     }
 
     public override func downloadTaskWithRequest(request: NSURLRequest) -> NSURLSessionDownloadTask {
-        let task = SessionDownloadTask(session: self, request: request)
-        addTask(task)
-        return task
+        return addDownloadTask(request)
     }
 
     public override func downloadTaskWithRequest(request: NSURLRequest, completionHandler: (NSURL?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDownloadTask {
-        let task = SessionDownloadTask(session: self, request: request, completion: completionHandler)
-        addTask(task)
-        return task
+        return addDownloadTask(request, completionHandler: completionHandler)
     }
 
     public override func invalidateAndCancel() {
@@ -122,6 +114,20 @@ public class Session: NSURLSession {
 
 
     // MARK: - Private
+
+    private func addDataTask(request: NSURLRequest, completionHandler: ((NSData?, NSURLResponse?, NSError?) -> Void)? = nil) -> NSURLSessionDataTask {
+        let modifiedRequest = backingSession.configuration.HTTPAdditionalHeaders.map(request.requestByAppendingHeaders) ?? request
+        let task = SessionDataTask(session: self, request: modifiedRequest, completion: completionHandler)
+        addTask(task)
+        return task
+    }
+
+    private func addDownloadTask(request: NSURLRequest, completionHandler: SessionDownloadTask.Completion? = nil) -> NSURLSessionDownloadTask {
+        let modifiedRequest = backingSession.configuration.HTTPAdditionalHeaders.map(request.requestByAppendingHeaders) ?? request
+        let task = SessionDownloadTask(session: self, request: modifiedRequest, completion: completionHandler)
+        addTask(task)
+        return task
+    }
 
     private func addTask(task: NSURLSessionTask) {
         let shouldRecord = !recording

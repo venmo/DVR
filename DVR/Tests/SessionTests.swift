@@ -2,7 +2,13 @@ import XCTest
 @testable import DVR
 
 class SessionTests: XCTestCase {
-    let session = Session(cassetteName: "example")
+    let session: Session = {
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.HTTPAdditionalHeaders = ["testSessionHeader": "testSessionHeaderValue"]
+        let backingSession = NSURLSession(configuration: configuration)
+        return Session(cassetteName: "example", backingSession: backingSession)
+    }()
+
     let request = NSURLRequest(URL: NSURL(string: "http://example.com")!)
 
     func testInit() {
@@ -11,8 +17,28 @@ class SessionTests: XCTestCase {
 
     func testDataTask() {
         let request = NSURLRequest(URL: NSURL(string: "http://example.com")!)
-        XCTAssert(session.dataTaskWithRequest(request) is SessionDataTask)
-        XCTAssert(session.dataTaskWithRequest(request) { _, _, _ in return } is SessionDataTask)
+        let dataTask = session.dataTaskWithRequest(request)
+        
+        XCTAssert(dataTask is SessionDataTask)
+        
+        if let dataTask = dataTask as? SessionDataTask, headers = dataTask.request.allHTTPHeaderFields {
+            XCTAssert(headers["testSessionHeader"] == "testSessionHeaderValue")
+        } else {
+            XCTFail()
+        }
+    }
+
+    func testDataTaskWithCompletion() {
+        let request = NSURLRequest(URL: NSURL(string: "http://example.com")!)
+        let dataTask = session.dataTaskWithRequest(request) { _, _, _ in return }
+        
+        XCTAssert(dataTask is SessionDataTask)
+        
+        if let dataTask = dataTask as? SessionDataTask, headers = dataTask.request.allHTTPHeaderFields {
+            XCTAssert(headers["testSessionHeader"] == "testSessionHeaderValue")
+        } else {
+            XCTFail()
+        }
     }
 
     func testPlayback() {
