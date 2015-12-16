@@ -143,6 +143,10 @@ public class Session: NSURLSession {
     }
 
     private func persist(interactions: [Interaction]) {
+        defer {
+            abort()
+        }
+
         // Create directory
         let outputDirectory = (self.outputDirectory as NSString).stringByExpandingTildeInPath
         let fileManager = NSFileManager.defaultManager()
@@ -151,13 +155,14 @@ public class Session: NSURLSession {
 				try fileManager.createDirectoryAtPath(outputDirectory, withIntermediateDirectories: true, attributes: nil)
 			} catch {
 				print("[DVR] Failed to create cassettes directory.")
-				abort()
 			}
         }
 
         let cassette = Cassette(name: cassetteName, interactions: interactions)
 
         // Persist
+
+
         do {
             let outputPath = ((outputDirectory as NSString).stringByAppendingPathComponent(cassetteName) as NSString).stringByAppendingPathExtension("json")!
             let data = try NSJSONSerialization.dataWithJSONObject(cassette.dictionary, options: [.PrettyPrinted])
@@ -165,21 +170,18 @@ public class Session: NSURLSession {
             // Add trailing new line
             guard var string = NSString(data: data, encoding: NSUTF8StringEncoding) else {
                 print("[DVR] Failed to persist cassette.")
-                abort()
+                return
             }
             string = string.stringByAppendingString("\n")
 
             if let data = string.dataUsingEncoding(NSUTF8StringEncoding) {
                 data.writeToFile(outputPath, atomically: true)
                 print("[DVR] Persisted cassette at \(outputPath). Please add this file to your test target")
-                abort()
             }
 
             print("[DVR] Failed to persist cassette.")
-            abort()
         } catch {
             print("[DVR] Failed to persist cassette.")
-            abort()
         }
     }
 
