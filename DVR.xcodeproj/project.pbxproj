@@ -119,7 +119,9 @@
 				3647AF9D1B335D5500EF10D4 /* DVR */,
 				3647AF9C1B335D5500EF10D4 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		3647AF9C1B335D5500EF10D4 /* Products */ = {
 			isa = PBXGroup;
