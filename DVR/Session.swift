@@ -17,7 +17,7 @@ public class Session: NSURLSession {
     private var completedInteractions = [Interaction]()
     private var completionBlock: (Void -> Void)?
 
-    private var nextTaskID: Int = 0
+    private static var nextTaskID: Int = 0
     private let idGenerationQueue = dispatch_queue_create("com.venmo.DVR.idGenerationQueue", nil)
 
     private let _delegate: NSURLSessionDelegate?
@@ -126,8 +126,8 @@ public class Session: NSURLSession {
     private func generateNextTaskID() -> Int {
         var id: Int!
         dispatch_sync(idGenerationQueue) {
-            id = self.nextTaskID
-            self.nextTaskID += 1
+            id = Session.nextTaskID
+            Session.nextTaskID += 1
         }
         return id
     }
