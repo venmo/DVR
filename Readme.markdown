@@ -2,7 +2,8 @@
 
 [![Version](https://img.shields.io/github/release/venmo/DVR.svg)](https://github.com/venmo/DVR/releases) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-DVR is a simple Swift framework for making fake `NSURLSession` requests based on [VCR](https://github.com/vcr/vcr) for iOS, watchOS, and OS X.
+DVR is a simple Swift framework for making fake `NSURLSession` requests for iOS,
+watchOS, and OS X based on [VCR](https://github.com/vcr/vcr).
 
 Easy [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) is the main design goal. The API is the same as `NSURLSession`. `DVR.Session` is a subclass of `NSURLSession` so you can use it as a drop in replacement anywhere. (Currently only data tasks are supported.)
 
