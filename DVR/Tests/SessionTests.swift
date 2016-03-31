@@ -134,15 +134,17 @@ class SessionTests: XCTestCase {
         waitForExpectationsWithTimeout(1, handler: nil)
     }
 
-    func testDelegate() {
+    func testTaskDelegate() {
         class Delegate: NSObject, NSURLSessionTaskDelegate {
             let expectation: XCTestExpectation
+            var response: NSURLResponse?
 
             init(expectation: XCTestExpectation) {
                 self.expectation = expectation
             }
 
             @objc private func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+                response = task.response
                 expectation.fulfill()
             }
         }

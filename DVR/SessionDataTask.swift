@@ -13,6 +13,11 @@ class SessionDataTask: NSURLSessionDataTask {
     let request: NSURLRequest
     let completion: Completion?
     private let queue = dispatch_queue_create("com.venmo.DVR.sessionDataTaskQueue", nil)
+    private var interaction: Interaction?
+
+    override var response: NSURLResponse? {
+        return interaction?.response
+    }
 
 
     // MARK: - Initializers
@@ -35,6 +40,7 @@ class SessionDataTask: NSURLSessionDataTask {
 
         // Find interaction
         if let interaction = session.cassette?.interactionForRequest(request) {
+            self.interaction = interaction
             // Forward completion
             if let completion = completion {
                 dispatch_async(queue) {

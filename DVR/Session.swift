@@ -114,7 +114,9 @@ public class Session: NSURLSession {
             finishRecording()
         }
 
-        (delegate as? NSURLSessionTaskDelegate)?.URLSession?(self, task: task, didCompleteWithError: nil)
+        if let delegate = delegate as? NSURLSessionTaskDelegate {
+            delegate.URLSession?(self, task: task, didCompleteWithError: nil)
+        }
     }
 
 
