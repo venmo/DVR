@@ -114,6 +114,10 @@ public class Session: NSURLSession {
             finishRecording()
         }
 
+        if let delegate = delegate as? NSURLSessionDataDelegate, task = task as? NSURLSessionDataTask, data = interaction.responseData {
+            delegate.URLSession?(self, dataTask: task, didReceiveData: data)
+        }
+
         if let delegate = delegate as? NSURLSessionTaskDelegate {
             delegate.URLSession?(self, task: task, didCompleteWithError: nil)
         }
