@@ -133,4 +133,30 @@ class SessionTests: XCTestCase {
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }
+
+    func testDelegate() {
+        class Delegate: NSObject, NSURLSessionTaskDelegate {
+            let expectation: XCTestExpectation
+
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+            }
+
+            @objc private func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+                expectation.fulfill()
+            }
+        }
+
+        let expectation = expectationWithDescription("didCompleteWithError")
+        let delegate = Delegate(expectation: expectation)
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let backingSession = NSURLSession(configuration: config, delegate: delegate, delegateQueue: nil)
+        let session = Session(cassetteName: "example", backingSession: backingSession)
+        session.recordingEnabled = false
+
+        let task = session.dataTaskWithRequest(request)
+        task.resume()
+
+        waitForExpectationsWithTimeout(1, handler: nil)
+    }
 }
