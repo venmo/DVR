@@ -31,6 +31,12 @@ extension NSURLRequest {
         request.appendHeaders(headers)
         return request.copy() as! NSURLRequest
     }
+
+    func requestWithBody(body: NSData) -> NSURLRequest {
+        let request = mutableCopy() as! NSMutableURLRequest
+        request.HTTPBody = body
+        return request.copy() as! NSURLRequest
+    }
 }
 
 
