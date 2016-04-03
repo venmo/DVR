@@ -37,6 +37,15 @@
 		3690A0A21B33AA9E00731222 /* SessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647AFCB1B33689000EF10D4 /* SessionTests.swift */; };
 		36BDDB891B6716AB00878665 /* json-example.json in Resources */ = {isa = PBXBuildFile; fileRef = 36BDDB881B6716AB00878665 /* json-example.json */; };
 		36BDDB8A1B6716AB00878665 /* json-example.json in Resources */ = {isa = PBXBuildFile; fileRef = 36BDDB881B6716AB00878665 /* json-example.json */; };
+		B19D62651CB1860400E16D11 /* SessionUploadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D62641CB1860400E16D11 /* SessionUploadTask.swift */; };
+		B19D62681CB19AA000E16D11 /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = B19D62661CB18EDB00E16D11 /* testfile.txt */; };
+		B19D62691CB19AA200E16D11 /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = B19D62661CB18EDB00E16D11 /* testfile.txt */; };
+		B19D626E1CB1A0DD00E16D11 /* SessionUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D626D1CB1A0DD00E16D11 /* SessionUploadTests.swift */; };
+		B19D626F1CB1A0DD00E16D11 /* SessionUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D626D1CB1A0DD00E16D11 /* SessionUploadTests.swift */; };
+		B19D62711CB1A27700E16D11 /* upload-data.json in Resources */ = {isa = PBXBuildFile; fileRef = B19D62701CB1A27700E16D11 /* upload-data.json */; };
+		B19D62721CB1A27700E16D11 /* upload-data.json in Resources */ = {isa = PBXBuildFile; fileRef = B19D62701CB1A27700E16D11 /* upload-data.json */; };
+		B19D62771CB1A42600E16D11 /* upload-file.json in Resources */ = {isa = PBXBuildFile; fileRef = B19D62761CB1A42600E16D11 /* upload-file.json */; };
+		B19D62781CB1A42600E16D11 /* upload-file.json in Resources */ = {isa = PBXBuildFile; fileRef = B19D62761CB1A42600E16D11 /* upload-file.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +86,11 @@
 		3690A07B1B33AA3B00731222 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3690A0841B33AA3C00731222 /* DVRTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVRTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36BDDB881B6716AB00878665 /* json-example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "json-example.json"; sourceTree = "<group>"; };
+		B19D62641CB1860400E16D11 /* SessionUploadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionUploadTask.swift; sourceTree = "<group>"; };
+		B19D62661CB18EDB00E16D11 /* testfile.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testfile.txt; sourceTree = "<group>"; };
+		B19D626D1CB1A0DD00E16D11 /* SessionUploadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionUploadTests.swift; sourceTree = "<group>"; };
+		B19D62701CB1A27700E16D11 /* upload-data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "upload-data.json"; sourceTree = "<group>"; };
+		B19D62761CB1A42600E16D11 /* upload-file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "upload-file.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +153,7 @@
 				3647AFB81B335E4A00EF10D4 /* Session.swift */,
 				3647AFB91B335E4A00EF10D4 /* SessionDataTask.swift */,
 				360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */,
+				B19D62641CB1860400E16D11 /* SessionUploadTask.swift */,
 				3647AFB51B335E4A00EF10D4 /* Cassette.swift */,
 				3647AFB61B335E4A00EF10D4 /* Interaction.swift */,
 				3647AFB71B335E4A00EF10D4 /* URLRequest.swift */,
@@ -164,6 +179,7 @@
 				3647AFCB1B33689000EF10D4 /* SessionTests.swift */,
 				3647AFCF1B33693F00EF10D4 /* Fixtures */,
 				3647AFCC1B33689000EF10D4 /* Info.plist */,
+				B19D626D1CB1A0DD00E16D11 /* SessionUploadTests.swift */,
 			);
 			name = Tests;
 			path = DVR/Tests;
@@ -176,6 +192,9 @@
 				215F927C1B33D46C00EDC60F /* example.json */,
 				21E548F11BF69E29004855AE /* text.json */,
 				2119D37E1BF6BB2300E91D6F /* multiple.json */,
+				B19D62701CB1A27700E16D11 /* upload-data.json */,
+				B19D62761CB1A42600E16D11 /* upload-file.json */,
+				B19D62661CB18EDB00E16D11 /* testfile.txt */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -332,7 +351,10 @@
 			files = (
 				36BDDB891B6716AB00878665 /* json-example.json in Resources */,
 				2119D3801BF6BB2700E91D6F /* multiple.json in Resources */,
+				B19D62711CB1A27700E16D11 /* upload-data.json in Resources */,
+				B19D62771CB1A42600E16D11 /* upload-file.json in Resources */,
 				215F927D1B33D46C00EDC60F /* example.json in Resources */,
+				B19D62681CB19AA000E16D11 /* testfile.txt in Resources */,
 				21E548F31BF69E30004855AE /* text.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,7 +372,10 @@
 			files = (
 				36BDDB8A1B6716AB00878665 /* json-example.json in Resources */,
 				2119D3811BF6BB2700E91D6F /* multiple.json in Resources */,
+				B19D62721CB1A27700E16D11 /* upload-data.json in Resources */,
+				B19D62781CB1A42600E16D11 /* upload-file.json in Resources */,
 				215F927E1B33D46C00EDC60F /* example.json in Resources */,
+				B19D62691CB19AA200E16D11 /* testfile.txt in Resources */,
 				21E548F41BF69E30004855AE /* text.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -363,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3647AFC01B33602A00EF10D4 /* URLResponse.swift in Sources */,
+				B19D62651CB1860400E16D11 /* SessionUploadTask.swift in Sources */,
 				3647AFBE1B335E4A00EF10D4 /* SessionDataTask.swift in Sources */,
 				3647AFBD1B335E4A00EF10D4 /* Session.swift in Sources */,
 				360F5F731B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */,
@@ -378,6 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3647AFCD1B33689000EF10D4 /* SessionTests.swift in Sources */,
+				B19D626E1CB1A0DD00E16D11 /* SessionUploadTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3690A0A21B33AA9E00731222 /* SessionTests.swift in Sources */,
+				B19D626F1CB1A0DD00E16D11 /* SessionUploadTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
