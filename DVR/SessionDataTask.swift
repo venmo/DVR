@@ -14,6 +14,7 @@ class SessionDataTask: NSURLSessionDataTask {
     let completion: Completion?
     private let queue = dispatch_queue_create("com.venmo.DVR.sessionDataTaskQueue", nil)
     private var interaction: Interaction?
+    private var backingTask: NSURLSessionTask?
 
     override var response: NSURLResponse? {
         return interaction?.response
@@ -22,9 +23,10 @@ class SessionDataTask: NSURLSessionDataTask {
 
     // MARK: - Initializers
 
-    init(session: Session, request: NSURLRequest, completion: (Completion)? = nil) {
+    init(session: Session, request: NSURLRequest, backingTask: NSURLSessionTask? = nil, completion: (Completion)? = nil) {
         self.session = session
         self.request = request
+        self.backingTask = backingTask
         self.completion = completion
     }
 
@@ -47,7 +49,7 @@ class SessionDataTask: NSURLSessionDataTask {
                     completion(interaction.responseData, interaction.response, nil)
                 }
             }
-            session.finishTask(self, interaction: interaction, playback: true)
+            session.finishTask(self.backingTask ?? self, interaction: interaction, playback: true)
             return
         }
 
@@ -82,7 +84,7 @@ class SessionDataTask: NSURLSessionDataTask {
 
             // Create interaction
             this.interaction = Interaction(request: this.request, response: response, responseData: data)
-            this.session.finishTask(this, interaction: this.interaction!, playback: false)
+            this.session.finishTask(this.backingTask ?? this, interaction: this.interaction!, playback: false)
         }
         task.resume()
     }

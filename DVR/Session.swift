@@ -162,7 +162,7 @@ public class Session: NSURLSession {
         var modifiedRequest = backingSession.configuration.HTTPAdditionalHeaders.map(request.requestByAppendingHeaders) ?? request
         modifiedRequest = data.map(modifiedRequest.requestWithBody) ?? modifiedRequest
         let task = SessionUploadTask(session: self, request: modifiedRequest, completion: completionHandler)
-        addTask(task.dataTask)
+        addTask(task)
         return task
     }
 
