@@ -11,6 +11,10 @@ class SessionUploadTask: NSURLSessionUploadTask {
     let completion: Completion?
     var dataTask: SessionDataTask!
 
+    override var response: NSURLResponse? {
+        return dataTask.interaction?.response
+    }
+
     // MARK: - Initializers
 
     init(session: Session, request: NSURLRequest, completion: Completion? = nil) {

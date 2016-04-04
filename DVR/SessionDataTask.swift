@@ -13,7 +13,7 @@ class SessionDataTask: NSURLSessionDataTask {
     let request: NSURLRequest
     let completion: Completion?
     private let queue = dispatch_queue_create("com.venmo.DVR.sessionDataTaskQueue", nil)
-    private var interaction: Interaction?
+    internal var interaction: Interaction?
     private var backingTask: NSURLSessionTask?
 
     override var response: NSURLResponse? {
