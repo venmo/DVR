@@ -128,16 +128,16 @@ public class Session: NSURLSession {
 
         completedInteractions.append(interaction)
 
-        if !recording && outstandingTasks.count == 0 {
-            finishRecording()
-        }
-
         if let delegate = delegate as? NSURLSessionDataDelegate, task = task as? NSURLSessionDataTask, data = interaction.responseData {
             delegate.URLSession?(self, dataTask: task, didReceiveData: data)
         }
 
         if let delegate = delegate as? NSURLSessionTaskDelegate {
             delegate.URLSession?(self, task: task, didCompleteWithError: nil)
+        }
+
+        if !recording && outstandingTasks.count == 0 {
+            finishRecording()
         }
     }
 
