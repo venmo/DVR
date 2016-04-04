@@ -81,8 +81,8 @@ class SessionDataTask: NSURLSessionDataTask {
             }
 
             // Create interaction
-            let interaction = Interaction(request: this.request, response: response, responseData: data)
-            this.session.finishTask(this, interaction: interaction, playback: false)
+            this.interaction = Interaction(request: this.request, response: response, responseData: data)
+            this.session.finishTask(this, interaction: this.interaction!, playback: false)
         }
         task.resume()
     }
