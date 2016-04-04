@@ -138,6 +138,7 @@ class SessionTests: XCTestCase {
         class Delegate: NSObject, NSURLSessionTaskDelegate {
             let expectation: XCTestExpectation
             var response: NSURLResponse?
+            var bytes: Int64?
 
             init(expectation: XCTestExpectation) {
                 self.expectation = expectation
@@ -146,6 +147,10 @@ class SessionTests: XCTestCase {
             @objc private func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
                 response = task.response
                 expectation.fulfill()
+            }
+
+            @objc private func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+                bytes = bytesSent
             }
         }
 
@@ -160,6 +165,7 @@ class SessionTests: XCTestCase {
         task.resume()
 
         waitForExpectationsWithTimeout(1, handler: nil)
+        XCTAssertNotNil(delegate.bytes)
     }
 
     func testDataDelegate() {

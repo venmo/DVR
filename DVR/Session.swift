@@ -133,6 +133,8 @@ public class Session: NSURLSession {
         }
 
         if let delegate = delegate as? NSURLSessionTaskDelegate {
+            let bytes = Int64(interaction.responseData?.length ?? 0)
+            delegate.URLSession?(self, task: task, didSendBodyData: bytes, totalBytesSent: bytes, totalBytesExpectedToSend: bytes)
             delegate.URLSession?(self, task: task, didCompleteWithError: nil)
         }
 
