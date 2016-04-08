@@ -18,6 +18,7 @@ class SessionTests: XCTestCase {
     func testDataTask() {
         let request = NSURLRequest(URL: NSURL(string: "http://example.com")!)
         let dataTask = session.dataTaskWithRequest(request)
+        dataTask.taskDescription = "description"
         
         XCTAssert(dataTask is SessionDataTask)
         

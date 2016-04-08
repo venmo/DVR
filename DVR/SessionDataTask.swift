@@ -16,6 +16,16 @@ class SessionDataTask: NSURLSessionDataTask {
     internal var interaction: Interaction?
     private var backingTask: NSURLSessionTask?
 
+    private var _taskDescription: String?
+    override var taskDescription: String? {
+        get {
+            return _taskDescription
+        }
+        set {
+            _taskDescription = newValue
+        }
+    }
+
     override var response: NSURLResponse? {
         return interaction?.response
     }
