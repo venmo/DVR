@@ -26,8 +26,9 @@ class SessionDataTask: NSURLSessionDataTask {
         }
     }
 
+    private var _taskIdentifier: Int?
     override var taskIdentifier: Int {
-        return backingTask?.taskIdentifier ?? 0
+        return _taskIdentifier ?? 0
     }
 
     override var response: NSURLResponse? {
@@ -100,6 +101,8 @@ class SessionDataTask: NSURLSessionDataTask {
             this.interaction = Interaction(request: this.request, response: response, responseData: data)
             this.session.finishTask(this.backingTask ?? this, interaction: this.interaction!, playback: false)
         }
+
+        _taskIdentifier = task.taskIdentifier
         task.resume()
     }
 }
