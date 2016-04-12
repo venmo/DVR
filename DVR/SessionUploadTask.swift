@@ -15,6 +15,10 @@ class SessionUploadTask: NSURLSessionUploadTask {
         return dataTask.interaction?.response
     }
 
+    override var taskIdentifier: Int {
+        return dataTask.taskIdentifier
+    }
+
     // MARK: - Initializers
 
     init(session: Session, request: NSURLRequest, completion: Completion? = nil) {
