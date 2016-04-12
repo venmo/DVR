@@ -26,6 +26,10 @@ class SessionDataTask: NSURLSessionDataTask {
         }
     }
 
+    override var taskIdentifier: Int {
+        return backingTask?.taskIdentifier ?? 0
+    }
+
     override var response: NSURLResponse? {
         return interaction?.response
     }
