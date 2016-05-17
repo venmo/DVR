@@ -98,8 +98,9 @@ class SessionDataTask: NSURLSessionDataTask {
             }
 
             // Create interaction
-            this.interaction = Interaction(request: this.request, response: response, responseData: data)
-            this.session.finishTask(this.backingTask ?? this, interaction: this.interaction!, playback: false)
+            let interaction = Interaction(request: this.request, response: response, responseData: data)
+            this.interaction = interaction
+            this.session.finishTask(this.backingTask ?? this, interaction: interaction, playback: false)
         }
 
         _taskIdentifier = task.taskIdentifier
