@@ -1,12 +1,10 @@
 language: objective-c # lol
 osx_image: xcode7.3
 xcode_project: DVR.xcodeproj
-xcode_scheme: [DVR-iOS, DVR-OSX]
-xcode_sdk: [iphonesimulator, macosx]
 
 matrix:
-  exclude:
-    - xcode_scheme: DVR-OSX
-      xcode_sdk: iphonesimulator
+  include:
     - xcode_scheme: DVR-iOS
+      xcode_sdk: iphonesimulator
+    - xcode_scheme: DVR-OSX
       xcode_sdk: macosx
