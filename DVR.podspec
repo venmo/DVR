@@ -14,7 +14,7 @@ DVR.Session is a subclass of NSURLSession so you can use it as a drop in replace
   s.license          = { type: 'MIT', file: 'LICENSE' }
   s.author           = { 'Venmo' => 'ios@venmo.com' }
   s.source           = { git: 'https://github.com/venmo/DVR.git',
-                         tag: s.version.to_s }
+                         tag: "v#{s.version}" }
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
