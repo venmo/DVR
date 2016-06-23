@@ -13,6 +13,7 @@
 		215F927E1B33D46C00EDC60F /* example.json in Resources */ = {isa = PBXBuildFile; fileRef = 215F927C1B33D46C00EDC60F /* example.json */; };
 		21E548F31BF69E30004855AE /* text.json in Resources */ = {isa = PBXBuildFile; fileRef = 21E548F11BF69E29004855AE /* text.json */; };
 		21E548F41BF69E30004855AE /* text.json in Resources */ = {isa = PBXBuildFile; fileRef = 21E548F11BF69E29004855AE /* text.json */; };
+		26D1E4181D1C30D500A20B76 /* SessionUploadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D62641CB1860400E16D11 /* SessionUploadTask.swift */; };
 		360F5F731B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */; };
 		360F5F751B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */; };
 		3647AF9F1B335D5500EF10D4 /* DVR.h in Headers */ = {isa = PBXBuildFile; fileRef = 3647AF9E1B335D5500EF10D4 /* DVR.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -413,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3690A0961B33AA9400731222 /* Interaction.swift in Sources */,
+				26D1E4181D1C30D500A20B76 /* SessionUploadTask.swift in Sources */,
 				3690A0951B33AA9400731222 /* Cassette.swift in Sources */,
 				3690A0981B33AA9400731222 /* URLResponse.swift in Sources */,
 				360F5F751B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */,
