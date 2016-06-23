@@ -17,6 +17,9 @@ public class Session: NSURLSession {
     private var completedInteractions = [Interaction]()
     private var completionBlock: (Void -> Void)?
 
+    override public var delegate: NSURLSessionDelegate? {
+        return backingSession.delegate
+    }
 
     // MARK: - Initializers
 
@@ -127,6 +130,14 @@ public class Session: NSURLSession {
 
         if !recording && outstandingTasks.count == 0 {
             finishRecording()
+        }
+
+        if let delegate = delegate as? NSURLSessionDataDelegate, task = task as? NSURLSessionDataTask, data = interaction.responseData {
+            delegate.URLSession?(self, dataTask: task, didReceiveData: data)
+        }
+
+        if let delegate = delegate as? NSURLSessionTaskDelegate {
+            delegate.URLSession?(self, task: task, didCompleteWithError: nil)
         }
     }
 
