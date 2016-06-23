@@ -47,6 +47,24 @@ public class Session: NSURLSession {
         return addDownloadTask(request, completionHandler: completionHandler)
     }
 
+    public override func uploadTaskWithRequest(request: NSURLRequest, fromData bodyData: NSData) -> NSURLSessionUploadTask {
+        return addUploadTask(request, fromData: bodyData)
+    }
+
+    public override func uploadTaskWithRequest(request: NSURLRequest, fromData bodyData: NSData?, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionUploadTask {
+        return addUploadTask(request, fromData: bodyData, completionHandler: completionHandler)
+    }
+
+    public override func uploadTaskWithRequest(request: NSURLRequest, fromFile fileURL: NSURL) -> NSURLSessionUploadTask {
+        let data = NSData(contentsOfURL: fileURL)!
+        return addUploadTask(request, fromData: data)
+    }
+
+    public override func uploadTaskWithRequest(request: NSURLRequest, fromFile fileURL: NSURL, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionUploadTask {
+        let data = NSData(contentsOfURL: fileURL)!
+        return addUploadTask(request, fromData: data, completionHandler: completionHandler)
+    }
+
     public override func invalidateAndCancel() {
         recording = false
         outstandingTasks.removeAll()
@@ -126,6 +144,14 @@ public class Session: NSURLSession {
         let modifiedRequest = backingSession.configuration.HTTPAdditionalHeaders.map(request.requestByAppendingHeaders) ?? request
         let task = SessionDownloadTask(session: self, request: modifiedRequest, completion: completionHandler)
         addTask(task)
+        return task
+    }
+
+    private func addUploadTask(request: NSURLRequest, fromData data: NSData?, completionHandler: SessionUploadTask.Completion? = nil) -> NSURLSessionUploadTask {
+        var modifiedRequest = backingSession.configuration.HTTPAdditionalHeaders.map(request.requestByAppendingHeaders) ?? request
+        modifiedRequest = data.map(modifiedRequest.requestWithBody) ?? modifiedRequest
+        let task = SessionUploadTask(session: self, request: modifiedRequest, completion: completionHandler)
+        addTask(task.dataTask)
         return task
     }
 

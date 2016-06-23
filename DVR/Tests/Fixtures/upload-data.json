@@ -1,0 +1,52 @@
+{
+  "interactions" : [
+    {
+      "recorded_at" : 1459710669.692243,
+      "response" : {
+        "body" : {
+          "json" : null,
+          "origin" : "104.153.125.238",
+          "url" : "https:\/\/httpbin.org\/post",
+          "data" : "",
+          "headers" : {
+            "Accept" : "*\/*",
+            "Accept-Encoding" : "gzip, deflate",
+            "Content-Type" : "multipart\/form-data; boundary=<2d2d2d2d 2d2d2d2d 2d2d2d2d 2d2d2d2d 2d2d2d2d 2d2d2d2d 2d2d2d33 6b6c6665 6e616c6b 736a666c 6b6a6f69 39617566 38396573 68616a73 6e6c336b 6a6e7761 6c>",
+            "Host" : "httpbin.org",
+            "Content-Length" : "365",
+            "User-Agent" : "xctest (unknown version) CFNetwork\/758.3.15 Darwin\/15.3.0",
+            "Accept-Language" : "en-us"
+          },
+          "args" : {
+
+          },
+          "files" : {
+
+          },
+          "form" : {
+            "file" : "test file\n"
+          }
+        },
+        "status" : 200,
+        "url" : "https:\/\/httpbin.org\/post",
+        "headers" : {
+          "access-control-allow-credentials" : "true",
+          "Date" : "Sun, 03 Apr 2016 19:10:15 GMT",
+          "Content-Type" : "application\/json",
+          "Content-Length" : "635",
+          "Server" : "nginx",
+          "Access-Control-Allow-Origin" : "*"
+        }
+      },
+      "request" : {
+        "method" : "POST",
+        "body" : "LS08MmQyZDJkMmQgMmQyZDJkMmQgMmQyZDJkMmQgMmQyZDJkMmQgMmQyZDJkMmQgMmQyZDJkMmQgMmQyZDJkMzMgNmI2YzY2NjUgNmU2MTZjNmIgNzM2YTY2NmMgNmI2YTZmNjkgMzk2MTc1NjYgMzgzOTY1NzMgNjg2MTZhNzMgNmU2YzMzNmIgNmE2ZTc3NjEgNmM+DQpDb250ZW50LURpc3Bvc2l0aW9uOiBmb3JtLWRhdGE7IG5hbWU9ImZpbGUiDQoNCnRlc3QgZmlsZQoNCi0tPDJkMmQyZDJkIDJkMmQyZDJkIDJkMmQyZDJkIDJkMmQyZDJkIDJkMmQyZDJkIDJkMmQyZDJkIDJkMmQyZDMzIDZiNmM2NjY1IDZlNjE2YzZiIDczNmE2NjZjIDZiNmE2ZjY5IDM5NjE3NTY2IDM4Mzk2NTczIDY4NjE2YTczIDZlNmMzMzZiIDZhNmU3NzYxIDZjPi0tDQo=",
+        "url" : "https:\/\/httpbin.org\/post",
+        "headers" : {
+          "Content-Type" : "multipart\/form-data; boundary=<2d2d2d2d 2d2d2d2d 2d2d2d2d 2d2d2d2d 2d2d2d2d 2d2d2d2d 2d2d2d33 6b6c6665 6e616c6b 736a666c 6b6a6f69 39617566 38396573 68616a73 6e6c336b 6a6e7761 6c>"
+        }
+      }
+    }
+  ],
+  "name" : "upload-data"
+}
