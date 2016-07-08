@@ -8,7 +8,8 @@ public class Session: NSURLSession {
     public let cassetteName: String
     public let backingSession: NSURLSession
     public var recordingEnabled = true
-
+    public let cassetteOptions: CassetteOptions
+    
     private let testBundle: NSBundle
 
     private var recording = false
@@ -23,11 +24,13 @@ public class Session: NSURLSession {
 
     // MARK: - Initializers
 
-    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: NSBundle = NSBundle.allBundles().filter() { $0.bundlePath.hasSuffix(".xctest") }.first!, backingSession: NSURLSession = NSURLSession.sharedSession()) {
+    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: NSBundle = NSBundle.allBundles().filter() { $0.bundlePath.hasSuffix(".xctest") }.first!, backingSession: NSURLSession = NSURLSession.sharedSession(), cassetteOptions: CassetteOptions = CassetteOptions()) {
         self.outputDirectory = outputDirectory
         self.cassetteName = cassetteName
         self.testBundle = testBundle
         self.backingSession = backingSession
+        self.cassetteOptions = cassetteOptions
+        
         super.init()
     }
 
@@ -116,7 +119,7 @@ public class Session: NSURLSession {
             json = raw as? [String: AnyObject]
         else { return nil }
 
-        return Cassette(dictionary: json)
+        return Cassette(dictionary: json, cassetteOptions: cassetteOptions)
     }
 
     func finishTask(task: NSURLSessionTask, interaction: Interaction, playback: Bool) {
@@ -195,7 +198,7 @@ public class Session: NSURLSession {
 			}
         }
 
-        let cassette = Cassette(name: cassetteName, interactions: interactions)
+        let cassette = Cassette(name: cassetteName, interactions: interactions, cassetteOptions: cassetteOptions)
 
         // Persist
 

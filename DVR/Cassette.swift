@@ -6,31 +6,145 @@ struct Cassette {
 
     let name: String
     let interactions: [Interaction]
-
+    let cassetteOptions: CassetteOptions
 
     // MARK: - Initializers
 
-    init(name: String, interactions: [Interaction]) {
+    init(name: String, interactions: [Interaction], cassetteOptions: CassetteOptions) {
         self.name = name
         self.interactions = interactions
+        self.cassetteOptions = cassetteOptions
     }
-
 
     // MARK: - Functions
 
     func interactionForRequest(request: NSURLRequest) -> Interaction? {
         for interaction in interactions {
             let interactionRequest = interaction.request
+            
+            if cassetteOptions.requestMatching == [.URL, .Path, .HTTPMethod, .HTTPBody] {
+                guard
+                    interactionRequest.URL == request.URL &&
+                    interactionRequest.URL?.relativePath == request.URL?.relativePath &&
+                    interactionRequest.HTTPMethod == request.HTTPMethod &&
+                    interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)
+                else {
+                    continue
+                }
+                
+                return interaction
+            }
+            
+            if cassetteOptions.requestMatching == [.URL, .Path] {
+                guard
+                    interactionRequest.URL == request.URL &&
+                    interactionRequest.URL?.relativePath == request.URL?.relativePath
+                else {
+                    continue
+                }
+                
+                return interaction
+            }
+            
+            if cassetteOptions.requestMatching == [.URL, .HTTPMethod] {
+                guard
+                    interactionRequest.URL == request.URL &&
+                    interactionRequest.HTTPMethod == request.HTTPMethod
+                else {
+                    continue
+                }
+                
+                return interaction
+            }
+           
+            if cassetteOptions.requestMatching == [.URL, .HTTPBody] {
+                guard
+                    interactionRequest.URL == request.URL &&
+                    interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)
+                else {
+                    continue
+                }
+                
+                return interaction
+            }
+            
+            if cassetteOptions.requestMatching == [.Path, .HTTPMethod] {
+                guard
+                    interactionRequest.URL?.relativePath == request.URL?.relativePath &&
+                        interactionRequest.HTTPMethod == request.HTTPMethod
+                else {
+                    continue
+                }
+                
+                return interaction
+            }
+            
+            if cassetteOptions.requestMatching == [.Path, .HTTPBody] {
+                guard
+                    interactionRequest.URL?.relativePath == request.URL?.relativePath &&
+                    interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)
+                else {
+                        continue
+                }
+                
+                return interaction
+            }
 
-            // Note: We don't check headers right now
-            if interactionRequest.HTTPMethod == request.HTTPMethod && interactionRequest.URL == request.URL && interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)  {
+            if cassetteOptions.requestMatching == [.HTTPMethod, .HTTPBody] {
+                guard
+                    interactionRequest.HTTPMethod == request.HTTPMethod &&
+                    interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)
+                else {
+                    continue
+                }
+                
+                return interaction
+            }
+            
+            if cassetteOptions.requestMatching == [.URL] {
+                guard
+                    interactionRequest.URL == request.URL
+                else {
+                    continue
+                }
+                
+                return interaction
+            }
+            
+            if cassetteOptions.requestMatching == [.Path] {
+                guard
+                    interactionRequest.URL?.relativePath == request.URL?.relativePath
+                else {
+                    continue
+                }
+                
+                return interaction
+            }
+            
+            if cassetteOptions.requestMatching == [.HTTPMethod] {
+                guard
+                    interactionRequest.HTTPMethod == request.HTTPMethod
+                else {
+                    continue
+                }
+                
+                return interaction
+            }
+            
+            if cassetteOptions.requestMatching == [.HTTPBody] {
+                guard
+                    interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)
+                else {
+                    continue
+                }
+                
                 return interaction
             }
         }
+        
         return nil
     }
 }
-
 
 extension Cassette {
     var dictionary: [String: AnyObject] {
@@ -40,10 +154,11 @@ extension Cassette {
         ]
     }
 
-    init?(dictionary: [String: AnyObject]) {
+    init?(dictionary: [String: AnyObject], cassetteOptions: CassetteOptions) {
         guard let name = dictionary["name"] as? String else { return nil }
 
         self.name = name
+        self.cassetteOptions = cassetteOptions
 
         if let array = dictionary["interactions"] as? [[String: AnyObject]] {
             interactions = array.flatMap { Interaction(dictionary: $0) }

@@ -133,6 +133,25 @@ class SessionTests: XCTestCase {
 
         waitForExpectationsWithTimeout(1, handler: nil)
     }
+    
+    func testDataTaskWithHTTPBodyRequestMatchingCassetteOptions() {
+        let cassetteOptions = CassetteOptions(requestMatching: [.HTTPBody])
+        let session = Session(cassetteName: "example", cassetteOptions: cassetteOptions)
+        
+        session.recordingEnabled = false
+        let expectation = expectationWithDescription("Network")
+        
+        session.dataTaskWithRequest(request) { data, response, error in
+            XCTAssertEqual("hello", String(data: data!, encoding: NSUTF8StringEncoding))
+            
+            let HTTPResponse = response as! NSHTTPURLResponse
+            XCTAssertEqual(200, HTTPResponse.statusCode)
+            
+            expectation.fulfill()
+            }.resume()
+        
+        waitForExpectationsWithTimeout(1, handler: nil)
+    }
 
     func testTaskDelegate() {
         class Delegate: NSObject, NSURLSessionTaskDelegate {
