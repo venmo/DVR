@@ -52,27 +52,23 @@ final class SessionDataTask: URLSessionDataTask {
         }
 
         if cassette != nil {
-            print("[DVR] Invalid request. The request was not found in the cassette.")
-            abort()
+            fatalError("[DVR] Invalid request. The request was not found in the cassette.")
         }
 
         // Cassette is missing. Record.
         if session.recordingEnabled == false {
-            print("[DVR] Recording is disabled.")
-            abort()
+            fatalError("[DVR] Recording is disabled.")
         }
 
         let task = session.backingSession.dataTask(with: request, completionHandler: { [weak self] data, response, error in
 
             //Ensure we have a response
             guard let response = response else {
-                print("[DVR] Failed to record because the task returned a nil response.")
-                abort()
+                fatalError("[DVR] Failed to record because the task returned a nil response.")
             }
 
             guard let this = self else {
-                print("[DVR] Something has gone horribly wrong.")
-                abort()
+                fatalError("[DVR] Something has gone horribly wrong.")
             }
 
             // Still call the completion block so the user can chain requests while recording.
