@@ -12,7 +12,15 @@ class SessionTests: XCTestCase {
     let request = NSURLRequest(URL: NSURL(string: "http://example.com")!)
 
     func testInit() {
-        XCTAssertEqual("example", session.cassetteName)
+        XCTAssertEqual("example.json", session.cassetteURL?.lastPathComponent)
+        XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath(session.cassetteURL!.path!))
+    }
+    
+    func testInitWithURL() {
+        let fileURL = NSBundle(forClass: SessionTests.self).URLForResource("example", withExtension: "json")
+        let alternateSession = Session(cassetteURL: fileURL)
+        XCTAssertEqual("example.json", alternateSession.cassetteURL?.lastPathComponent)
+        XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath(alternateSession.cassetteURL!.path!))
     }
 
     func testDataTask() {
