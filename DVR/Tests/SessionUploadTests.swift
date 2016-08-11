@@ -12,8 +12,8 @@ class SessionUploadTests: XCTestCase {
         return request
     }()
     let multipartBoundary = "---------------------------3klfenalksjflkjoi9auf89eshajsnl3kjnwal".UTF8Data()
-    lazy var testFile: NSURL = {
-        return NSBundle(forClass: self.dynamicType).URLForResource("testfile", withExtension: "txt")!
+    lazy var testFile: NSURL? = {
+        return NSBundle(forClass: self.dynamicType).URLForResource("testfile", withExtension: "txt")
     }()
 
     func testUploadFile() {
@@ -21,18 +21,26 @@ class SessionUploadTests: XCTestCase {
         session.recordingEnabled = false
         let expectation = expectationWithDescription("Network")
 
-        let data = encodeMultipartBody(NSData(contentsOfURL: testFile)!, parameters: [:])
+        guard let testFile = testFile else { XCTFail("Missing test file URL"); return }
+        guard let fileData = NSData(contentsOfURL: testFile) else { XCTFail("Missing body data"); return }
+        let data = encodeMultipartBody(fileData, parameters: [:])
         let file = writeDataToFile(data, fileName: "upload-file")
 
         session.uploadTaskWithRequest(request, fromFile: file) { data, response, error in
+            if let error = error {
+                XCTFail("Error uploading file: \(error)")
+                return
+            }
+            guard let data = data else { XCTFail("Missing request data"); return }
+
             do {
-                let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String: AnyObject]
+                let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject]
                 XCTAssertEqual("test file\n", (JSON?["form"] as? [String: AnyObject])?["file"] as? String)
             } catch {
                 XCTFail("Failed to read JSON.")
             }
 
-            let HTTPResponse = response as! NSHTTPURLResponse
+            guard let HTTPResponse = response as? NSHTTPURLResponse else { XCTFail("Bad HTTP response"); return }
             XCTAssertEqual(200, HTTPResponse.statusCode)
 
             expectation.fulfill()
@@ -46,6 +54,7 @@ class SessionUploadTests: XCTestCase {
         session.recordingEnabled = false
         let expectation = expectationWithDescription("Network")
 
+        guard let testFile = testFile else { XCTFail("Missing testfile URL"); return }
         let data = encodeMultipartBody(NSData(contentsOfURL: testFile)!, parameters: [:])
 
         session.uploadTaskWithRequest(request, fromData: data) { data, response, error in
@@ -87,6 +96,12 @@ class SessionUploadTests: XCTestCase {
     func writeDataToFile(data: NSData, fileName: String) -> NSURL {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let documentsURL = NSURL(fileURLWithPath: documentsPath, isDirectory: true)
+        
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtURL(documentsURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            XCTFail("Failed to create documents directory \(documentsURL). Error \(error)")
+        }
 
         let url = documentsURL.URLByAppendingPathComponent(fileName + ".tmp")
 

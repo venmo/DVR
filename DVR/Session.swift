@@ -66,7 +66,7 @@ public class Session: NSURLSession {
     }
 
     public override func uploadTaskWithRequest(request: NSURLRequest, fromFile fileURL: NSURL, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionUploadTask {
-        let data = NSData(contentsOfURL: fileURL)!
+        let data = NSData(contentsOfURL: fileURL)
         return addUploadTask(request, fromData: data, completionHandler: completionHandler)
     }
 
