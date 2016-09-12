@@ -8,9 +8,13 @@ watchOS, and OS X based on [VCR](https://github.com/vcr/vcr).
 Easy [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) is the main design goal. The API is the same as `NSURLSession`. `DVR.Session` is a subclass of `NSURLSession` so you can use it as a drop in replacement anywhere. (Currently only data tasks are supported.)
 
 
-## Building
+## Version Compatibility
 
-DVR 0.3.0 requires Swift 2.2. For older versions of Swift, please use 0.2.x.
+| Swift Version | DVR Version |
+| ------------- | ----------- |
+| 2.3           | 0.4         |
+| 2.2           | 0.3         |
+| < 2.2         | 0.2.1       |
 
 
 ## Usage

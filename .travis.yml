@@ -1,6 +1,8 @@
 language: objective-c # lol
-osx_image: xcode7.3
+osx_image: xcode8
 xcode_project: DVR.xcodeproj
+
+script: xcodebuild -scheme "$TRAVIS_XCODE_SCHEME" test
 
 matrix:
   include:
@@ -8,3 +10,6 @@ matrix:
       xcode_sdk: iphonesimulator
     - xcode_scheme: DVR-OSX
       xcode_sdk: macosx
+
+env:
+  TOOLCHAINS=com.apple.dt.toolchain.Swift_2_3
