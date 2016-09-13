@@ -3,94 +3,94 @@ import XCTest
 
 class SessionUploadTests: XCTestCase {
 
-    lazy var request: NSURLRequest = {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://httpbin.org/post")!)
-        request.HTTPMethod = "POST"
+    lazy var request: URLRequest = {
+        var request = URLRequest(url: URL(string: "https://httpbin.org/post")!)
+        request.httpMethod = "POST"
 
-        let contentType = "multipart/form-data; boundary=\(self.multipartBoundary)"
+        let contentType = "multipart/form-data; boundary=---------------------------3klfenalksjflkjoi9auf89eshajsnl3kjnwal"
         request.addValue(contentType, forHTTPHeaderField: "Content-Type")
+
         return request
     }()
-    let multipartBoundary = "---------------------------3klfenalksjflkjoi9auf89eshajsnl3kjnwal".UTF8Data()
-    lazy var testFile: NSURL = {
-        return NSBundle(forClass: self.dynamicType).URLForResource("testfile", withExtension: "txt")!
+    lazy var testFile: URL = {
+        return Bundle(for: type(of: self)).url(forResource: "testfile", withExtension: "txt")!
     }()
 
     func testUploadFile() {
         let session = Session(cassetteName: "upload-file")
         session.recordingEnabled = false
-        let expectation = expectationWithDescription("Network")
+        let expectation = self.expectation(description: "Network")
 
-        let data = encodeMultipartBody(NSData(contentsOfURL: testFile)!, parameters: [:])
+        let data = encodeMultipartBody(try! Data(contentsOf: testFile), parameters: [:])
         let file = writeDataToFile(data, fileName: "upload-file")
 
-        session.uploadTaskWithRequest(request, fromFile: file) { data, response, error in
+        session.uploadTask(with: request, fromFile: file, completionHandler: { data, response, error in
             do {
-                let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String: AnyObject]
+                let JSON = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: AnyObject]
                 XCTAssertEqual("test file\n", (JSON?["form"] as? [String: AnyObject])?["file"] as? String)
             } catch {
                 XCTFail("Failed to read JSON.")
             }
 
-            let HTTPResponse = response as! NSHTTPURLResponse
+            let HTTPResponse = response as! HTTPURLResponse
             XCTAssertEqual(200, HTTPResponse.statusCode)
 
             expectation.fulfill()
-        }.resume()
+        }) .resume()
 
-        waitForExpectationsWithTimeout(4, handler: nil)
+        waitForExpectations(timeout: 4, handler: nil)
     }
 
     func testUploadData() {
         let session = Session(cassetteName: "upload-data")
         session.recordingEnabled = false
-        let expectation = expectationWithDescription("Network")
+        let expectation = self.expectation(description: "Network")
 
-        let data = encodeMultipartBody(NSData(contentsOfURL: testFile)!, parameters: [:])
+        let data = encodeMultipartBody(try! Data(contentsOf: testFile), parameters: [:])
 
-        session.uploadTaskWithRequest(request, fromData: data) { data, response, error in
+        session.uploadTask(with: request, from: data, completionHandler: { data, response, error in
             do {
-                let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String: AnyObject]
+                let JSON = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: AnyObject]
                 XCTAssertEqual("test file\n", (JSON?["form"] as? [String: AnyObject])?["file"] as? String)
             } catch {
                 XCTFail("Failed to read JSON.")
             }
 
-            let HTTPResponse = response as! NSHTTPURLResponse
+            let HTTPResponse = response as! HTTPURLResponse
             XCTAssertEqual(200, HTTPResponse.statusCode)
 
             expectation.fulfill()
-        }.resume()
+        }) .resume()
 
-        waitForExpectationsWithTimeout(4, handler: nil)
+        waitForExpectations(timeout: 4, handler: nil)
     }
 
     // MARK: Helpers
 
-    func encodeMultipartBody(data: NSData, parameters: [String: AnyObject]) -> NSData {
-        let delim = "--\(multipartBoundary)\r\n".UTF8Data()
+    func encodeMultipartBody(_ data: Data, parameters: [String: AnyObject]) -> Data {
+        let delim = "-----------------------------3klfenalksjflkjoi9auf89eshajsnl3kjnwal\r\n".UTF8Data()
 
-        let body = NSMutableData()
-        body += delim
+        var body = Data()
+        body.append(delim)
         for (key, value) in parameters {
-            body += "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n\(value)\r\n".UTF8Data()
-            body += delim
+            body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n\(value)\r\n".UTF8Data())
+            body.append(delim)
         }
 
-        body += "Content-Disposition: form-data; name=\"file\"\r\n\r\n".UTF8Data()
-        body += data
-        body += "\r\n--\(multipartBoundary)--\r\n".UTF8Data()
+        body.append("Content-Disposition: form-data; name=\"file\"\r\n\r\n".UTF8Data())
+        body.append(data)
+        body.append("\r\n-----------------------------3klfenalksjflkjoi9auf89eshajsnl3kjnwal--\r\n".UTF8Data())
 
-        return body
+        return body.base64EncodedData(options: [])
     }
 
-    func writeDataToFile(data: NSData, fileName: String) -> NSURL {
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let documentsURL = NSURL(fileURLWithPath: documentsPath, isDirectory: true)
+    func writeDataToFile(_ data: Data, fileName: String) -> URL {
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        let documentsURL = URL(fileURLWithPath: documentsPath, isDirectory: true)
 
-        let url = documentsURL.URLByAppendingPathComponent(fileName + ".tmp")
+        let url = documentsURL.appendingPathComponent(fileName + ".tmp")
 
-        data.writeToURL(url, atomically: true)
+        try? data.write(to: url, options: [.atomic])
         return url
     }
 
@@ -99,12 +99,7 @@ class SessionUploadTests: XCTestCase {
 // MARK: - Helpers
 
 extension String {
-    func UTF8Data() -> NSData {
-        return dataUsingEncoding(NSUTF8StringEncoding)!
+    func UTF8Data() -> Data {
+        return data(using: String.Encoding.utf8)!
     }
-}
-
-
-public func +=(lhs: NSMutableData, rhs: NSData) {
-    lhs.appendData(rhs)
 }

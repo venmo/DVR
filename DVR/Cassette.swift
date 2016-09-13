@@ -18,12 +18,12 @@ struct Cassette {
 
     // MARK: - Functions
 
-    func interactionForRequest(request: NSURLRequest) -> Interaction? {
+    func interactionForRequest(_ request: URLRequest) -> Interaction? {
         for interaction in interactions {
             let interactionRequest = interaction.request
 
             // Note: We don't check headers right now
-            if interactionRequest.HTTPMethod == request.HTTPMethod && interactionRequest.URL == request.URL && interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)  {
+            if interactionRequest.httpMethod == request.httpMethod && interactionRequest.url == request.url && interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)  {
                 return interaction
             }
         }
@@ -35,8 +35,8 @@ struct Cassette {
 extension Cassette {
     var dictionary: [String: AnyObject] {
         return [
-            "name": name,
-            "interactions": interactions.map { $0.dictionary }
+            "name": name as AnyObject,
+            "interactions": interactions.map { $0.dictionary } as AnyObject
         ]
     }
 
@@ -53,14 +53,14 @@ extension Cassette {
     }
 }
 
-private extension NSURLRequest {
-    func hasHTTPBodyEqualToThatOfRequest(request: NSURLRequest) -> Bool {
-        guard let body1 = self.HTTPBody,
-            body2 = request.HTTPBody,
-            encoded1 = Interaction.encodeBody(body1, headers: self.allHTTPHeaderFields),
-            encoded2 = Interaction.encodeBody(body2, headers: request.allHTTPHeaderFields)
+private extension URLRequest {
+    func hasHTTPBodyEqualToThatOfRequest(_ request: URLRequest) -> Bool {
+        guard let body1 = self.httpBody,
+            let body2 = request.httpBody,
+            let encoded1 = Interaction.encodeBody(body1, headers: self.allHTTPHeaderFields),
+            let encoded2 = Interaction.encodeBody(body2, headers: request.allHTTPHeaderFields)
         else {
-            return self.HTTPBody == request.HTTPBody
+            return self.httpBody == request.httpBody
         }
 
         return encoded1.isEqual(encoded2)

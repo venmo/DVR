@@ -1,14 +1,14 @@
 import Foundation
 
 // There isn't a mutable NSHTTPURLResponse, so we have to make our own.
-class URLHTTPResponse: NSHTTPURLResponse {
+class URLHTTPResponse: HTTPURLResponse {
 
     // MARK: - Properties
 
-    private var _URL: NSURL?
-    override var URL: NSURL? {
+    fileprivate var _URL: Foundation.URL?
+    override var url: Foundation.URL? {
         get {
-            return _URL ?? super.URL
+            return _URL ?? super.url
         }
 
         set {
@@ -16,7 +16,7 @@ class URLHTTPResponse: NSHTTPURLResponse {
         }
     }
 
-    private var _statusCode: Int?
+    fileprivate var _statusCode: Int?
     override var statusCode: Int {
         get {
             return _statusCode ?? super.statusCode
@@ -27,8 +27,8 @@ class URLHTTPResponse: NSHTTPURLResponse {
         }
     }
 
-    private var _allHeaderFields: [NSObject : AnyObject]?
-    override var allHeaderFields: [NSObject : AnyObject] {
+    fileprivate var _allHeaderFields: [AnyHashable: Any]?
+    override var allHeaderFields: [AnyHashable: Any] {
         get {
             return _allHeaderFields ?? super.allHeaderFields
         }
@@ -40,12 +40,12 @@ class URLHTTPResponse: NSHTTPURLResponse {
 }
 
 
-extension NSHTTPURLResponse {
+extension URLHTTPResponse {
     override var dictionary: [String: AnyObject] {
-        var dictionary = super.dictionary
+        var dictionary: [String: AnyObject] = super.dictionary
 
-        dictionary["headers"] = allHeaderFields
-        dictionary["status"] = statusCode
+        dictionary["headers"] = allHeaderFields as AnyObject
+        dictionary["status"] = statusCode as AnyObject
 
         return dictionary
     }
@@ -53,19 +53,26 @@ extension NSHTTPURLResponse {
 
 
 extension URLHTTPResponse {
-    convenience init(dictionary: [String: AnyObject]) {
-        self.init()
-
-        if let string = dictionary["url"] as? String, url = NSURL(string: string) {
-            URL = url
+    convenience init?(dictionary: [String: AnyObject]) {
+        var durl: Foundation.URL
+        if let string = dictionary["url"] as? String, let furl = Foundation.URL(string: string) {
+            durl = furl
+        } else {
+            fatalError("Can't initialise response without URL")
         }
 
+        var allHeaders = [String:String]()
         if let headers = dictionary["headers"] as? [String: String] {
-            allHeaderFields = headers
+            allHeaders = headers
         }
 
+        var code: Int
         if let status = dictionary["status"] as? Int {
-            statusCode = status
+            code = status
+        } else {
+            fatalError("Can't initialize response without status code")
         }
+
+        self.init(url: durl, statusCode: code, httpVersion: nil, headerFields: allHeaders)
     }
 }

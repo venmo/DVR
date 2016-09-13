@@ -1,11 +1,11 @@
 import Foundation
 
 // There isn't a mutable NSURLResponse, so we have to make our own.
-class URLResponse: NSURLResponse {
-    private var _URL: NSURL?
-    override var URL: NSURL? {
+open class URLResponse: Foundation.URLResponse {
+    fileprivate var _URL: Foundation.URL?
+    override open var url: Foundation.URL? {
         get {
-            return _URL ?? super.URL
+            return _URL ?? super.url
         }
 
         set {
@@ -15,10 +15,10 @@ class URLResponse: NSURLResponse {
 }
 
 
-extension NSURLResponse {
+extension Foundation.URLResponse {
     var dictionary: [String: AnyObject] {
-        if let url = URL?.absoluteString {
-            return ["url": url]
+        if let url = url?.absoluteString {
+            return ["url": url as AnyObject]
         }
 
         return [:]
@@ -30,8 +30,8 @@ extension URLResponse {
     convenience init(dictionary: [String: AnyObject]) {
         self.init()
 
-        if let string = dictionary["url"] as? String, url = NSURL(string: string) {
-            URL = url
+        if let string = dictionary["url"] as? String, let furl = Foundation.URL(string: string) {
+            url = furl
         }
     }
 }
