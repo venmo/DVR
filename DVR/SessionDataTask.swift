@@ -37,7 +37,7 @@ class SessionDataTask: NSURLSessionDataTask {
 
     override func resume() {
         let cassette = session.cassette
-
+        
         // Find interaction
         if let interaction = session.cassette?.interactionForRequest(request) {
             self.interaction = interaction
@@ -47,12 +47,14 @@ class SessionDataTask: NSURLSessionDataTask {
                     completion(interaction.responseData, interaction.response, nil)
                 }
             }
+
             session.finishTask(self, interaction: interaction, playback: true)
             return
         }
-
+        
         if cassette != nil {
             print("[DVR] Invalid request. The request was not found in the cassette.")
+            print("[DVR] Request: ", request)
             abort()
         }
 
