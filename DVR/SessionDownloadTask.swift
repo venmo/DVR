@@ -1,25 +1,25 @@
-class SessionDownloadTask: NSURLSessionDownloadTask {
+final class SessionDownloadTask: URLSessionDownloadTask {
 
     // MARK: - Types
 
-    typealias Completion = (NSURL?, NSURLResponse?, NSError?) -> Void
+    typealias Completion = (URL?, Foundation.URLResponse?, NSError?) -> Void
 
     // MARK: - Properties
 
     weak var session: Session!
-    let request: NSURLRequest
+    let request: URLRequest
     let completion: Completion?
 
 
     // MARK: - Initializers
 
-    init(session: Session, request: NSURLRequest, completion: Completion? = nil) {
+    init(session: Session, request: URLRequest, completion: Completion? = nil) {
         self.session = session
         self.request = request
         self.completion = completion
     }
 
-    // MARK: - NSURLSessionTask
+    // MARK: - URLSessionTask
 
     override func cancel() {
         // Don't do anything
@@ -27,11 +27,11 @@ class SessionDownloadTask: NSURLSessionDownloadTask {
 
     override func resume() {
         let task = SessionDataTask(session: session, request: request) { data, response, error in
-            let location: NSURL?
+            let location: URL?
             if let data = data {
                 // Write data to temporary file
-                let tempURL = NSURL(fileURLWithPath: (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(NSUUID().UUIDString))
-                data.writeToURL(tempURL, atomically: true)
+                let tempURL = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent(UUID().uuidString))
+                try? data.write(to: tempURL, options: [.atomic])
                 location = tempURL
             } else {
                 location = nil
