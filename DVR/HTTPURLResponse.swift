@@ -40,7 +40,7 @@ class HTTPURLResponse: Foundation.HTTPURLResponse {
 }
 
 
-extension HTTPURLResponse {
+extension Foundation.HTTPURLResponse {
     override var dictionary: [String: Any] {
         var dictionary = super.dictionary
 
