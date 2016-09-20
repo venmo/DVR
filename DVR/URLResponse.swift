@@ -2,7 +2,7 @@ import Foundation
 
 // There isn't a mutable URLResponse, so we have to make our own.
 class URLResponse: Foundation.URLResponse {
-    fileprivate var _URL: Foundation.URL?
+    private var _URL: Foundation.URL?
     override var url: Foundation.URL? {
         get {
             return _URL ?? super.url

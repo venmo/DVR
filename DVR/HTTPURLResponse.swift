@@ -5,7 +5,7 @@ class HTTPURLResponse: Foundation.HTTPURLResponse {
 
     // MARK: - Properties
 
-    fileprivate var _url: URL?
+    private var _url: URL?
     override var url: URL? {
         get {
             return _url ?? super.url
@@ -16,7 +16,7 @@ class HTTPURLResponse: Foundation.HTTPURLResponse {
         }
     }
 
-    fileprivate var _statusCode: Int?
+    private var _statusCode: Int?
     override var statusCode: Int {
         get {
             return _statusCode ?? super.statusCode
@@ -27,7 +27,7 @@ class HTTPURLResponse: Foundation.HTTPURLResponse {
         }
     }
 
-    fileprivate var _allHeaderFields: [AnyHashable: Any]?
+    private var _allHeaderFields: [AnyHashable: Any]?
     override var allHeaderFields: [AnyHashable: Any] {
         get {
             return _allHeaderFields ?? super.allHeaderFields
