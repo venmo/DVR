@@ -214,6 +214,7 @@ open class Session: URLSession {
             if let data = string.data(using: String.Encoding.utf8.rawValue) {
                 try? data.write(to: URL(fileURLWithPath: outputPath), options: [.atomic])
                 print("[DVR] Persisted cassette at \(outputPath). Please add this file to your test target")
+				return
             }
 
             print("[DVR] Failed to persist cassette.")
