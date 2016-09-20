@@ -9,13 +9,13 @@ open class Session: URLSession {
     open let backingSession: URLSession
     open var recordingEnabled = true
 
-    fileprivate let testBundle: Bundle
+    private let testBundle: Bundle
 
-    fileprivate var recording = false
-    fileprivate var needsPersistence = false
-    fileprivate var outstandingTasks = [URLSessionTask]()
-    fileprivate var completedInteractions = [Interaction]()
-    fileprivate var completionBlock: ((Void) -> Void)?
+    private var recording = false
+    private var needsPersistence = false
+    private var outstandingTasks = [URLSessionTask]()
+    private var completedInteractions = [Interaction]()
+    private var completionBlock: ((Void) -> Void)?
 
     override open var delegate: URLSessionDelegate? {
         return backingSession.delegate
@@ -144,21 +144,21 @@ open class Session: URLSession {
 
     // MARK: - Private
 
-    fileprivate func addDataTask(_ request: URLRequest, completionHandler: ((Data?, Foundation.URLResponse?, NSError?) -> Void)? = nil) -> URLSessionDataTask {
+    private func addDataTask(_ request: URLRequest, completionHandler: ((Data?, Foundation.URLResponse?, NSError?) -> Void)? = nil) -> URLSessionDataTask {
         let modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
         let task = SessionDataTask(session: self, request: modifiedRequest, completion: completionHandler)
         addTask(task)
         return task
     }
 
-    fileprivate func addDownloadTask(_ request: URLRequest, completionHandler: SessionDownloadTask.Completion? = nil) -> URLSessionDownloadTask {
+    private func addDownloadTask(_ request: URLRequest, completionHandler: SessionDownloadTask.Completion? = nil) -> URLSessionDownloadTask {
         let modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
         let task = SessionDownloadTask(session: self, request: modifiedRequest, completion: completionHandler)
         addTask(task)
         return task
     }
 
-    fileprivate func addUploadTask(_ request: URLRequest, fromData data: Data?, completionHandler: SessionUploadTask.Completion? = nil) -> URLSessionUploadTask {
+    private func addUploadTask(_ request: URLRequest, fromData data: Data?, completionHandler: SessionUploadTask.Completion? = nil) -> URLSessionUploadTask {
         var modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
         modifiedRequest = data.map(modifiedRequest.appending) ?? modifiedRequest
         let task = SessionUploadTask(session: self, request: modifiedRequest, completion: completionHandler)
@@ -166,7 +166,7 @@ open class Session: URLSession {
         return task
     }
 
-    fileprivate func addTask(_ task: URLSessionTask) {
+    private func addTask(_ task: URLSessionTask) {
         let shouldRecord = !recording
         if shouldRecord {
             beginRecording()
@@ -179,7 +179,7 @@ open class Session: URLSession {
         }
     }
 
-    fileprivate func persist(_ interactions: [Interaction]) {
+    private func persist(_ interactions: [Interaction]) {
         defer {
             abort()
         }
@@ -222,7 +222,7 @@ open class Session: URLSession {
         }
     }
 
-    fileprivate func finishRecording() {
+    private func finishRecording() {
         if needsPersistence {
             persist(completedInteractions)
         }

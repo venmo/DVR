@@ -12,8 +12,8 @@ final class SessionDataTask: URLSessionDataTask {
     weak var session: Session!
     let request: URLRequest
     let completion: Completion?
-    fileprivate let queue = DispatchQueue(label: "com.venmo.DVR.sessionDataTaskQueue", attributes: [])
-    fileprivate var interaction: Interaction?
+    private let queue = DispatchQueue(label: "com.venmo.DVR.sessionDataTaskQueue", attributes: [])
+    private var interaction: Interaction?
 
     override var response: Foundation.URLResponse? {
         return interaction?.response
