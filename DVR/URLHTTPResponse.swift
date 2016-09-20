@@ -1,22 +1,22 @@
 import Foundation
 
-// There isn't a mutable NSHTTPURLResponse, so we have to make our own.
-class URLHTTPResponse: NSHTTPURLResponse {
+// There isn't a mutable HTTPURLResponse, so we have to make our own.
+class HTTPURLResponse: Foundation.HTTPURLResponse {
 
     // MARK: - Properties
 
-    private var _URL: NSURL?
-    override var URL: NSURL? {
+    fileprivate var _url: URL?
+    override var url: URL? {
         get {
-            return _URL ?? super.URL
+            return _url ?? super.url
         }
 
         set {
-            _URL = newValue
+            _url = newValue
         }
     }
 
-    private var _statusCode: Int?
+    fileprivate var _statusCode: Int?
     override var statusCode: Int {
         get {
             return _statusCode ?? super.statusCode
@@ -27,8 +27,8 @@ class URLHTTPResponse: NSHTTPURLResponse {
         }
     }
 
-    private var _allHeaderFields: [NSObject : AnyObject]?
-    override var allHeaderFields: [NSObject : AnyObject] {
+    fileprivate var _allHeaderFields: [AnyHashable: Any]?
+    override var allHeaderFields: [AnyHashable: Any] {
         get {
             return _allHeaderFields ?? super.allHeaderFields
         }
@@ -40,8 +40,8 @@ class URLHTTPResponse: NSHTTPURLResponse {
 }
 
 
-extension NSHTTPURLResponse {
-    override var dictionary: [String: AnyObject] {
+extension HTTPURLResponse {
+    override var dictionary: [String: Any] {
         var dictionary = super.dictionary
 
         dictionary["headers"] = allHeaderFields
@@ -52,13 +52,10 @@ extension NSHTTPURLResponse {
 }
 
 
-extension URLHTTPResponse {
-    convenience init(dictionary: [String: AnyObject]) {
-        self.init()
-
-        if let string = dictionary["url"] as? String, url = NSURL(string: string) {
-            URL = url
-        }
+extension HTTPURLResponse {
+    convenience init(dictionary: [String: Any]) {
+		let url = URL(string: dictionary["url"] as! String)!
+		self.init(url: url, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
 
         if let headers = dictionary["headers"] as? [String: String] {
             allHeaderFields = headers
