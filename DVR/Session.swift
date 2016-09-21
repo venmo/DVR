@@ -217,8 +217,7 @@ public class Session: NSURLSession {
             if let data = string.dataUsingEncoding(NSUTF8StringEncoding) {
                 data.writeToFile(outputPath, atomically: true)
                 print("[DVR] Persisted cassette at \(outputPath). Please add this file to your test target")
-            } else {
-                print("[DVR] Failed to persist cassette.")
+                return
             }
         } catch {
             print("[DVR] Failed to persist cassette.")
