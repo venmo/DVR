@@ -197,10 +197,7 @@ public class Session: NSURLSession {
 			}
         }
 
-        var cassetteName = "cassette"
-        if let s = cassetteURL?.lastPathComponent {
-            cassetteName = s.substringToIndex(s.endIndex.advancedBy(-5))
-        }
+        let cassetteName = cassetteURL?.URLByDeletingPathExtension?.lastPathComponent ?? "cassette"
         let cassette = Cassette(name: cassetteName, interactions: interactions)
 
         // Persist
