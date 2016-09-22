@@ -119,7 +119,10 @@ class SessionUploadTests: XCTestCase {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let documentsURL = NSURL(fileURLWithPath: documentsPath, isDirectory: true)
 
-        let url = documentsURL.URLByAppendingPathComponent(fileName + ".tmp")
+        guard let url = documentsURL.URLByAppendingPathComponent(fileName + ".tmp") else {
+            XCTFail("Failed to write to file")
+            fatalError()
+        }
 
         data.writeToURL(url, atomically: true)
         return url
