@@ -15,16 +15,38 @@ final class SessionDataTask: URLSessionDataTask {
     private let queue = DispatchQueue(label: "com.venmo.DVR.sessionDataTaskQueue", attributes: [])
     private var interaction: Interaction?
 
+    private let generatedTaskIdentifier: Int
+    private var stateOverride: URLSessionTask.State? = nil
+
     override var response: Foundation.URLResponse? {
         return interaction?.response
     }
 
 
+    // MARK: - Alamofire Support
+
+    override var taskIdentifier: Int {
+        return generatedTaskIdentifier
+    }
+
+    override var originalRequest: URLRequest? {
+        return interaction?.request
+    }
+
+    override var currentRequest: URLRequest? {
+        return interaction?.request
+    }
+
+    override var state: URLSessionTask.State {
+        return stateOverride ?? super.state
+    }
+
     // MARK: - Initializers
 
-    init(session: Session, request: URLRequest, completion: (Completion)? = nil) {
+    init(session: Session, request: URLRequest, taskIdentifier: Int, completion: (Completion)? = nil) {
         self.session = session
         self.request = request
+        self.generatedTaskIdentifier = taskIdentifier
         self.completion = completion
     }
 
@@ -38,9 +60,23 @@ final class SessionDataTask: URLSessionDataTask {
     override func resume() {
         let cassette = session.cassette
 
+        stateOverride = .running
+
         // Find interaction
         if let interaction = session.cassette?.interactionForRequest(request) {
             self.interaction = interaction
+
+            // Handle delegate callbacks
+            if let delegate = session.delegate as? URLSessionDataDelegate {
+                delegate.urlSession?(session, dataTask: self, didReceive: interaction.response, completionHandler: { _ in })
+
+                if let responseData = interaction.responseData {
+                    delegate.urlSession?(session, dataTask: self, didReceive: responseData)
+                }
+
+                delegate.urlSession?(session, task: self, didCompleteWithError: nil)
+            }
+
             // Forward completion
             if let completion = completion {
                 queue.async {
@@ -48,6 +84,7 @@ final class SessionDataTask: URLSessionDataTask {
                 }
             }
             session.finishTask(self, interaction: interaction, playback: true)
+            stateOverride = .completed
             return
         }
 
@@ -78,6 +115,7 @@ final class SessionDataTask: URLSessionDataTask {
             // Still call the completion block so the user can chain requests while recording.
             this.queue.async {
                 this.completion?(data, response, nil)
+                self?.stateOverride = .completed
             }
 
             // Create interaction

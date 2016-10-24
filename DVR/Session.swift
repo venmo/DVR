@@ -17,6 +17,9 @@ open class Session: URLSession {
     private var completedInteractions = [Interaction]()
     private var completionBlock: ((Void) -> Void)?
 
+    private static var nextTaskIdentifier = 0
+    private static let taskIdentifierGenerationQueue = DispatchQueue(label: "com.venmo.dvr.taskIdentifierGenerationQueue")
+
     override open var delegate: URLSessionDelegate? {
         return backingSession.delegate
     }
@@ -144,9 +147,18 @@ open class Session: URLSession {
 
     // MARK: - Private
 
+    private static func generateTaskIdentifier() -> Int {
+        var identifier: Int = 0
+        taskIdentifierGenerationQueue.sync {
+            identifier = nextTaskIdentifier
+            nextTaskIdentifier = nextTaskIdentifier + 1
+        }
+        return identifier
+    }
+
     private func addDataTask(_ request: URLRequest, completionHandler: ((Data?, Foundation.URLResponse?, NSError?) -> Void)? = nil) -> URLSessionDataTask {
         let modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
-        let task = SessionDataTask(session: self, request: modifiedRequest, completion: completionHandler)
+        let task = SessionDataTask(session: self, request: modifiedRequest, taskIdentifier: Session.generateTaskIdentifier(), completion: completionHandler)
         addTask(task)
         return task
     }
