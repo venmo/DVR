@@ -102,8 +102,11 @@ final class SessionDataTask: URLSessionDataTask {
         let task = session.backingSession.dataTask(with: request, completionHandler: { [weak self] data, response, error in
 
             //Ensure we have a response
-            guard let response = response else {
+            guard let response = response, error == nil else {
                 print("[DVR] Failed to record because the task returned a nil response.")
+                if let error = error {
+                    print("[DVR] Error: \(error.localizedDescription) (\(error))")
+                }
                 abort()
             }
 
