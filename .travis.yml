@@ -11,5 +11,3 @@ matrix:
     - xcode_scheme: DVR-OSX
       xcode_sdk: macosx
 
-env:
-  TOOLCHAINS=com.apple.dt.toolchain.Swift_2_3
