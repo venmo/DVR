@@ -2,43 +2,59 @@ import XCTest
 @testable import DVR
 
 class SessionUploadTests: XCTestCase {
-
-    lazy var request: NSURLRequest = {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://httpbin.org/post")!)
-        request.HTTPMethod = "POST"
-
-        let contentType = "multipart/form-data; boundary=\(self.multipartBoundary)"
-        request.addValue(contentType, forHTTPHeaderField: "Content-Type")
-        return request
-    }()
-    let multipartBoundary = "---------------------------3klfenalksjflkjoi9auf89eshajsnl3kjnwal".UTF8Data()
-    lazy var testFile: NSURL = {
-        return NSBundle(forClass: self.dynamicType).URLForResource("testfile", withExtension: "txt")!
-    }()
-
     func testUploadFile() {
         let session = Session(cassetteName: "upload-file")
         session.recordingEnabled = false
         let expectation = expectationWithDescription("Network")
 
-        let data = encodeMultipartBody(NSData(contentsOfURL: testFile)!, parameters: [:])
-        let file = writeDataToFile(data, fileName: "upload-file")
+        guard let testData = testData else {
+            XCTFail("Failed to load test data")
+            return
+        }
+
+        let bodyPart = BodyPart(name: "file", fileName: "testfile", mimeType: "text/plain", data: testData)
+        let formData = FormData(bodyParts: [bodyPart], boundaryValue: multipartBoundary)
+
+        let file = writeDataToFile(formData.data, fileName: "upload-file")
 
         session.uploadTaskWithRequest(request, fromFile: file) { data, response, error in
+            guard let data = data else {
+                XCTFail("Test returned no data")
+                return
+            }
+
             do {
-                let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String: AnyObject]
-                XCTAssertEqual("test file\n", (JSON?["form"] as? [String: AnyObject])?["file"] as? String)
+                guard let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] else {
+                    XCTFail("Failed to unwrap JSON as dictionary")
+                    return
+                }
+
+                guard let formData = JSON["files"] as? [String: AnyObject] else {
+                    XCTFail("Failed to unwrap form data as dictionary")
+                    return
+                }
+
+                guard let formFileContents = formData["file"] as? String else {
+                    XCTFail("Failed to unwrap form file contents as string")
+                    return
+                }
+
+                XCTAssertEqual("test file\n", formFileContents)
             } catch {
                 XCTFail("Failed to read JSON.")
             }
 
-            let HTTPResponse = response as! NSHTTPURLResponse
+            guard let HTTPResponse = response as? NSHTTPURLResponse else {
+                XCTFail("Response type was not an HTTP URL response")
+                return
+            }
+
             XCTAssertEqual(200, HTTPResponse.statusCode)
 
             expectation.fulfill()
         }.resume()
 
-        waitForExpectationsWithTimeout(4, handler: nil)
+        waitForExpectationsWithTimeout(1, handler: nil)
     }
 
     func testUploadData() {
@@ -46,45 +62,79 @@ class SessionUploadTests: XCTestCase {
         session.recordingEnabled = false
         let expectation = expectationWithDescription("Network")
 
-        let data = encodeMultipartBody(NSData(contentsOfURL: testFile)!, parameters: [:])
+        guard let bodyPart = BodyPart(name: "file", value: "test file\n") else {
+            XCTFail("Failed to create body part")
+            return
+        }
 
-        session.uploadTaskWithRequest(request, fromData: data) { data, response, error in
+        let formData = FormData(bodyParts: [bodyPart], boundaryValue: "---------------------------3klfenalksjflkjoi9auf89eshajsnl3kjnwal")
+
+        session.uploadTaskWithRequest(request, fromData: formData.data) { data, response, error in
+            guard let data = data else {
+                XCTFail("Test returned no data")
+                return
+            }
+
             do {
-                let JSON = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String: AnyObject]
-                XCTAssertEqual("test file\n", (JSON?["form"] as? [String: AnyObject])?["file"] as? String)
+                guard let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] else {
+                    XCTFail("Failed to unwrap JSON as dictionary")
+                    return
+                }
+
+                guard let formData = JSON["form"] as? [String: AnyObject] else {
+                    XCTFail("Failed to unwrap form data as dictionary")
+                    return
+                }
+
+                guard let formFileContents = formData["file"] as? String else {
+                    XCTFail("Failed to unwrap form file contents as string")
+                    return
+                }
+
+                XCTAssertEqual("test file\n", formFileContents)
             } catch {
                 XCTFail("Failed to read JSON.")
             }
 
-            let HTTPResponse = response as! NSHTTPURLResponse
+            guard let HTTPResponse = response as? NSHTTPURLResponse else {
+                XCTFail("Response type was not an HTTP URL response")
+                return
+            }
+
             XCTAssertEqual(200, HTTPResponse.statusCode)
 
             expectation.fulfill()
         }.resume()
 
-        waitForExpectationsWithTimeout(4, handler: nil)
+        waitForExpectationsWithTimeout(1, handler: nil)
     }
+
 
     // MARK: Helpers
 
-    func encodeMultipartBody(data: NSData, parameters: [String: AnyObject]) -> NSData {
-        let delim = "--\(multipartBoundary)\r\n".UTF8Data()
+    private lazy var request: NSURLRequest = {
+        let url = NSURL(string: "https://httpbin.org/post")!
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
 
-        let body = NSMutableData()
-        body += delim
-        for (key, value) in parameters {
-            body += "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n\(value)\r\n".UTF8Data()
-            body += delim
-        }
+        let contentType = "multipart/form-data; boundary=\(self.multipartBoundary)"
+        request.addValue(contentType, forHTTPHeaderField: "Content-Type")
+        return request
+    }()
 
-        body += "Content-Disposition: form-data; name=\"file\"\r\n\r\n".UTF8Data()
-        body += data
-        body += "\r\n--\(multipartBoundary)--\r\n".UTF8Data()
+    private lazy var testFileURL: NSURL? = {
+        guard let bundle = NSBundle.allBundles().filter({ $0.bundlePath.hasSuffix(".xctest") }).first else { return nil }
+        return bundle.URLForResource("testfile", withExtension: "txt")
+    }()
 
-        return body
-    }
+    private lazy var testData: NSData? = {
+        guard let URL = self.testFileURL else { return nil }
+        return NSData(contentsOfURL: URL)
+    }()
 
-    func writeDataToFile(data: NSData, fileName: String) -> NSURL {
+    private let multipartBoundary = "---------------------------3klfenalksjflkjoi9auf89eshajsnl3kjnwal"
+
+    private func writeDataToFile(data: NSData, fileName: String) -> NSURL {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let documentsURL = NSURL(fileURLWithPath: documentsPath, isDirectory: true)
 
@@ -96,14 +146,13 @@ class SessionUploadTests: XCTestCase {
         data.writeToURL(url, atomically: true)
         return url
     }
-
 }
 
 // MARK: - Helpers
 
 extension String {
-    func UTF8Data() -> NSData {
-        return dataUsingEncoding(NSUTF8StringEncoding)!
+    func UTF8Data() -> NSData? {
+        return dataUsingEncoding(NSUTF8StringEncoding)
     }
 }
 
