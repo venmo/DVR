@@ -65,18 +65,6 @@ final class SessionDataTask: URLSessionDataTask {
         // Find interaction
         if let interaction = session.cassette?.interactionForRequest(request) {
             self.interaction = interaction
-
-            // Handle delegate callbacks
-            if let delegate = session.delegate as? URLSessionDataDelegate {
-                delegate.urlSession?(session, dataTask: self, didReceive: interaction.response, completionHandler: { _ in })
-
-                if let responseData = interaction.responseData {
-                    delegate.urlSession?(session, dataTask: self, didReceive: responseData)
-                }
-
-                delegate.urlSession?(session, task: self, didCompleteWithError: nil)
-            }
-
             // Forward completion
             if let completion = completion {
                 queue.async {

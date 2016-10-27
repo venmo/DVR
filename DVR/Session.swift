@@ -135,6 +135,10 @@ open class Session: URLSession {
             finishRecording()
         }
 
+        if let delegate = delegate as? URLSessionDataDelegate, let task = task as? URLSessionDataTask {
+            delegate.urlSession?(self, dataTask: task, didReceive: interaction.response, completionHandler: { _ in })
+        }
+
         if let delegate = delegate as? URLSessionDataDelegate, let task = task as? URLSessionDataTask, let data = interaction.responseData {
             delegate.urlSession?(self, dataTask: task, didReceive: data as Data)
         }
