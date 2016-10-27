@@ -5,11 +5,9 @@ public class Session: NSURLSession {
     // MARK: - Properties
 
     public var outputDirectory: String
-    public let cassetteName: String
+    public var cassetteURL: NSURL?
     public let backingSession: NSURLSession
     public var recordingEnabled = true
-
-    private let testBundle: NSBundle
 
     private var recording = false
     private var needsPersistence = false
@@ -23,10 +21,14 @@ public class Session: NSURLSession {
 
     // MARK: - Initializers
 
-    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: NSBundle = NSBundle.allBundles().filter() { $0.bundlePath.hasSuffix(".xctest") }.first!, backingSession: NSURLSession = NSURLSession.sharedSession()) {
+    convenience public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: NSBundle? = NSBundle.allBundles().filter() { $0.bundlePath.hasSuffix(".xctest") }.first, backingSession: NSURLSession = NSURLSession.sharedSession()) {
+        let bundle = testBundle ?? NSBundle.mainBundle()
+        self.init(outputDirectory: outputDirectory, cassetteURL: bundle.URLForResource(cassetteName, withExtension: "json"), backingSession: backingSession)
+    }
+
+    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteURL: NSURL?, backingSession: NSURLSession = NSURLSession.sharedSession()) {
         self.outputDirectory = outputDirectory
-        self.cassetteName = cassetteName
-        self.testBundle = testBundle
+        self.cassetteURL = cassetteURL
         self.backingSession = backingSession
         super.init()
     }
@@ -64,7 +66,7 @@ public class Session: NSURLSession {
     }
 
     public override func uploadTaskWithRequest(request: NSURLRequest, fromFile fileURL: NSURL, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionUploadTask {
-        let data = NSData(contentsOfURL: fileURL)!
+        let data = NSData(contentsOfURL: fileURL)
         return addUploadTask(request, fromData: data, completionHandler: completionHandler)
     }
 
@@ -110,8 +112,8 @@ public class Session: NSURLSession {
     // MARK: - Internal
 
     var cassette: Cassette? {
-        guard let path = testBundle.pathForResource(cassetteName, ofType: "json"),
-            data = NSData(contentsOfFile: path),
+        guard let cassetteURL = cassetteURL,
+            data = NSData(contentsOfURL: cassetteURL),
             raw = try? NSJSONSerialization.JSONObjectWithData(data, options: []),
             json = raw as? [String: AnyObject]
         else { return nil }
@@ -195,6 +197,7 @@ public class Session: NSURLSession {
 			}
         }
 
+        let cassetteName = cassetteURL?.URLByDeletingPathExtension?.lastPathComponent ?? "cassette"
         let cassette = Cassette(name: cassetteName, interactions: interactions)
 
         // Persist
@@ -214,9 +217,8 @@ public class Session: NSURLSession {
             if let data = string.dataUsingEncoding(NSUTF8StringEncoding) {
                 data.writeToFile(outputPath, atomically: true)
                 print("[DVR] Persisted cassette at \(outputPath). Please add this file to your test target")
+                return
             }
-
-            print("[DVR] Failed to persist cassette.")
         } catch {
             print("[DVR] Failed to persist cassette.")
         }

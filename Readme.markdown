@@ -59,3 +59,32 @@ session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://apple.com")!
 ```
 
 If you don't call `beginRecording` and `endRecording`, DVR will call these for your around the first request you make to a session. You can call `endRecording` immediately after you've submitted all of your requests to the session. The optional completion block that `endRecording` accepts will be called when all requests have finished. This is a good spot to fulfill XCTest expectations you've setup or do whatever else now that networking has finished.
+
+### UI Testing
+
+To fake network requests in your app during UI testing, setup your app's network stack to check for the cassette file.
+
+``` swift
+var activeSession: NSURLSession {
+    return fakeSession ?? defaultSession
+}
+
+private var fakeSession: NSURLSession? {
+    guard let path = NSProcessInfo.processInfo().environment["cassette"] else { return nil }
+    return Session(cassetteURL: NSURL(string: path)!)
+}
+```
+
+And then send your app the cassette file's location when you launch it during UI testing.
+
+``` swift
+class LoginUITests: XCTestCase {
+    func testUseValidAuth() {
+        let app = XCUIApplication()
+        app.launchEnvironment["cassette"] = NSBundle(forClass: LoginUITests.self).URLForResource("valid-auth", withExtension: "json")!.absoluteString
+        app.launch()
+    }
+}
+```
+
+If you use a URL that does not exist, DVR will record the result the same way it does in other testing scenarios.
