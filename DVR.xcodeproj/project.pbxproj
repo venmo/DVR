@@ -41,8 +41,6 @@
 		B19D62651CB1860400E16D11 /* SessionUploadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D62641CB1860400E16D11 /* SessionUploadTask.swift */; };
 		B19D62681CB19AA000E16D11 /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = B19D62661CB18EDB00E16D11 /* testfile.txt */; };
 		B19D62691CB19AA200E16D11 /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = B19D62661CB18EDB00E16D11 /* testfile.txt */; };
-		B19D626E1CB1A0DD00E16D11 /* SessionUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D626D1CB1A0DD00E16D11 /* SessionUploadTests.swift */; };
-		B19D626F1CB1A0DD00E16D11 /* SessionUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D626D1CB1A0DD00E16D11 /* SessionUploadTests.swift */; };
 		B19D62711CB1A27700E16D11 /* upload-data.json in Resources */ = {isa = PBXBuildFile; fileRef = B19D62701CB1A27700E16D11 /* upload-data.json */; };
 		B19D62721CB1A27700E16D11 /* upload-data.json in Resources */ = {isa = PBXBuildFile; fileRef = B19D62701CB1A27700E16D11 /* upload-data.json */; };
 		B19D62771CB1A42600E16D11 /* upload-file.json in Resources */ = {isa = PBXBuildFile; fileRef = B19D62761CB1A42600E16D11 /* upload-file.json */; };
@@ -89,7 +87,6 @@
 		36BDDB881B6716AB00878665 /* json-example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "json-example.json"; sourceTree = "<group>"; };
 		B19D62641CB1860400E16D11 /* SessionUploadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionUploadTask.swift; sourceTree = "<group>"; };
 		B19D62661CB18EDB00E16D11 /* testfile.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testfile.txt; sourceTree = "<group>"; };
-		B19D626D1CB1A0DD00E16D11 /* SessionUploadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionUploadTests.swift; sourceTree = "<group>"; };
 		B19D62701CB1A27700E16D11 /* upload-data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "upload-data.json"; sourceTree = "<group>"; };
 		B19D62761CB1A42600E16D11 /* upload-file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "upload-file.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,7 +177,6 @@
 				3647AFCB1B33689000EF10D4 /* SessionTests.swift */,
 				3647AFCF1B33693F00EF10D4 /* Fixtures */,
 				3647AFCC1B33689000EF10D4 /* Info.plist */,
-				B19D626D1CB1A0DD00E16D11 /* SessionUploadTests.swift */,
 			);
 			name = Tests;
 			path = DVR/Tests;
@@ -407,7 +403,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3647AFCD1B33689000EF10D4 /* SessionTests.swift in Sources */,
-				B19D626E1CB1A0DD00E16D11 /* SessionUploadTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,7 +427,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3690A0A21B33AA9E00731222 /* SessionTests.swift in Sources */,
-				B19D626F1CB1A0DD00E16D11 /* SessionUploadTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
