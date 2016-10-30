@@ -623,7 +623,6 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -646,7 +645,6 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -664,7 +662,6 @@
 				PRODUCT_NAME = DVRTests;
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -681,7 +678,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.dvr.tests;
 				PRODUCT_NAME = DVRTests;
 				SDKROOT = appletvos;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -921,6 +917,7 @@
 				2104F5411DC658590039CA14 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2104F5421DC658590039CA14 /* Build configuration list for PBXNativeTarget "DVRTests-tvOS" */ = {
 			isa = XCConfigurationList;
@@ -929,6 +926,7 @@
 				2104F5441DC658590039CA14 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3647AF951B335D5500EF10D4 /* Build configuration list for PBXProject "DVR" */ = {
 			isa = XCConfigurationList;
