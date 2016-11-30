@@ -13,7 +13,23 @@ class SessionDataTask: NSURLSessionDataTask {
     let request: NSURLRequest
     let completion: Completion?
     private let queue = dispatch_queue_create("com.venmo.DVR.sessionDataTaskQueue", nil)
-    private var interaction: Interaction?
+    internal var interaction: Interaction?
+    private var backingTask: NSURLSessionTask?
+
+    private var _taskDescription: String?
+    override var taskDescription: String? {
+        get {
+            return _taskDescription
+        }
+        set {
+            _taskDescription = newValue
+        }
+    }
+
+    private var _taskIdentifier: Int?
+    override var taskIdentifier: Int {
+        return _taskIdentifier ?? 0
+    }
 
     override var response: NSURLResponse? {
         return interaction?.response
@@ -22,9 +38,10 @@ class SessionDataTask: NSURLSessionDataTask {
 
     // MARK: - Initializers
 
-    init(session: Session, request: NSURLRequest, completion: (Completion)? = nil) {
+    init(session: Session, request: NSURLRequest, backingTask: NSURLSessionTask? = nil, completion: (Completion)? = nil) {
         self.session = session
         self.request = request
+        self.backingTask = backingTask
         self.completion = completion
     }
 
@@ -47,7 +64,7 @@ class SessionDataTask: NSURLSessionDataTask {
                     completion(interaction.responseData, interaction.response, nil)
                 }
             }
-            session.finishTask(self, interaction: interaction, playback: true)
+            session.finishTask(self.backingTask ?? self, interaction: interaction, playback: true)
             return
         }
 
@@ -77,9 +94,12 @@ class SessionDataTask: NSURLSessionDataTask {
             }
 
             // Create interaction
-            this.interaction = Interaction(request: this.request, response: response, responseData: data)
-            this.session.finishTask(this, interaction: this.interaction!, playback: false)
+            let interaction = Interaction(request: this.request, response: response, responseData: data)
+            this.interaction = interaction
+            this.session.finishTask(this.backingTask ?? this, interaction: interaction, playback: false)
         }
+
+        _taskIdentifier = task.taskIdentifier
         task.resume()
     }
 }

@@ -9,7 +9,15 @@ class SessionUploadTask: NSURLSessionUploadTask {
     weak var session: Session!
     let request: NSURLRequest
     let completion: Completion?
-    let dataTask: SessionDataTask
+    var dataTask: SessionDataTask!
+
+    override var response: NSURLResponse? {
+        return dataTask.interaction?.response
+    }
+
+    override var taskIdentifier: Int {
+        return dataTask.taskIdentifier
+    }
 
     // MARK: - Initializers
 
@@ -17,7 +25,8 @@ class SessionUploadTask: NSURLSessionUploadTask {
         self.session = session
         self.request = request
         self.completion = completion
-        dataTask = SessionDataTask(session: session, request: request, completion: completion)
+        super.init()
+        dataTask = SessionDataTask(session: session, request: request, backingTask: self, completion: completion)
     }
 
     // MARK: - NSURLSessionTask

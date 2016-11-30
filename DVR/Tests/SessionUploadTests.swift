@@ -65,6 +65,37 @@ class SessionUploadTests: XCTestCase {
         waitForExpectationsWithTimeout(4, handler: nil)
     }
 
+    func testUploadDelegate() {
+        class Delegate: NSObject, NSURLSessionDataDelegate {
+            var task: NSURLSessionTask?
+            let expectation: XCTestExpectation
+
+            init(expectation: XCTestExpectation) {
+                self.expectation = expectation
+            }
+
+            @objc func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+                task = dataTask
+                expectation.fulfill()
+            }
+        }
+
+        let expectation = expectationWithDescription("didCompleteWithError")
+        let delegate = Delegate(expectation: expectation)
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let backingSession = NSURLSession(configuration: config, delegate: delegate, delegateQueue: nil)
+        let session = Session(cassetteName: "upload-data", backingSession: backingSession)
+        session.recordingEnabled = false
+
+        let data = encodeMultipartBody(NSData(contentsOfURL: testFile)!, parameters: [:])
+
+        let task = session.uploadTaskWithRequest(request, fromData: data)
+        task.resume()
+
+        waitForExpectationsWithTimeout(1, handler: nil)
+        XCTAssertEqual(task, delegate.task)
+    }
+
     // MARK: Helpers
 
     func encodeMultipartBody(data: NSData, parameters: [String: AnyObject]) -> NSData {

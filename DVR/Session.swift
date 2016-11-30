@@ -128,16 +128,18 @@ public class Session: NSURLSession {
 
         completedInteractions.append(interaction)
 
-        if !recording && outstandingTasks.count == 0 {
-            finishRecording()
-        }
-
         if let delegate = delegate as? NSURLSessionDataDelegate, task = task as? NSURLSessionDataTask, data = interaction.responseData {
             delegate.URLSession?(self, dataTask: task, didReceiveData: data)
         }
 
         if let delegate = delegate as? NSURLSessionTaskDelegate {
+            let bytes = Int64(interaction.responseData?.length ?? 0)
+            delegate.URLSession?(self, task: task, didSendBodyData: bytes, totalBytesSent: bytes, totalBytesExpectedToSend: bytes)
             delegate.URLSession?(self, task: task, didCompleteWithError: nil)
+        }
+
+        if !recording && outstandingTasks.count == 0 {
+            finishRecording()
         }
     }
 
@@ -162,7 +164,7 @@ public class Session: NSURLSession {
         var modifiedRequest = backingSession.configuration.HTTPAdditionalHeaders.map(request.requestByAppendingHeaders) ?? request
         modifiedRequest = data.map(modifiedRequest.requestWithBody) ?? modifiedRequest
         let task = SessionUploadTask(session: self, request: modifiedRequest, completion: completionHandler)
-        addTask(task.dataTask)
+        addTask(task)
         return task
     }
 
