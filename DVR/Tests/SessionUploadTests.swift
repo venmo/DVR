@@ -16,54 +16,54 @@ class SessionUploadTests: XCTestCase {
         return Bundle(for: type(of: self)).url(forResource: "testfile", withExtension: "txt")!
     }()
 
-//    func testUploadFile() {
-//        let session = Session(cassetteName: "upload-file")
-//        session.recordingEnabled = false
-//        let expectation = self.expectation(description: "Network")
-//
-//        let data = encodeMultipartBody(try! Data(contentsOf: testFile), parameters: [:])
-//        let file = writeDataToFile(data, fileName: "upload-file")
-//
-//        session.uploadTask(with: request, fromFile: file, completionHandler: { data, response, error in
-//            do {
-//                let JSON = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]
-//                XCTAssertEqual("test file\n", (JSON?["form"] as? [String: Any])?["file"] as? String)
-//            } catch {
-//                XCTFail("Failed to read JSON.")
-//            }
-//
-//            let HTTPResponse = response as! HTTPURLResponse
-//            XCTAssertEqual(200, HTTPResponse.statusCode)
-//
-//            expectation.fulfill()
-//        }) .resume()
-//
-//        waitForExpectations(timeout: 4, handler: nil)
-//    }
+    func testUploadFile() {
+        let session = Session(cassetteName: "upload-file")
+        session.recordingEnabled = false
+        let expectation = self.expectation(description: "Network")
 
-//    func testUploadData() {
-//        let session = Session(cassetteName: "upload-data")
-//        session.recordingEnabled = false
-//        let expectation = self.expectation(description: "Network")
-//
-//        let data = encodeMultipartBody(try! Data(contentsOf: testFile), parameters: [:])
-//
-//        session.uploadTask(with: request, from: data) { data, response, error in
-//            do {
-//                let JSON = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]
-//                XCTAssertEqual("test file\n", (JSON?["form"] as? [String: Any])?["file"] as? String)
-//            } catch {
-//                XCTFail("Failed to read JSON.")
-//            }
-//
-//            let HTTPResponse = response as! HTTPURLResponse
-//            XCTAssertEqual(200, HTTPResponse.statusCode)
-//
-//            expectation.fulfill()
-//        }.resume()
-//
-//        waitForExpectations(timeout: 4, handler: nil)
-//    }
+        let data = encodeMultipartBody(try! Data(contentsOf: testFile), parameters: [:])
+        let file = writeDataToFile(data, fileName: "upload-file")
+
+        session.uploadTask(with: request, fromFile: file, completionHandler: { data, response, error in
+            do {
+                let JSON = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]
+                XCTAssertEqual("test file\n", (JSON?["form"] as? [String: Any])?["file"] as? String)
+            } catch {
+                XCTFail("Failed to read JSON.")
+            }
+
+            let HTTPResponse = response as! HTTPURLResponse
+            XCTAssertEqual(200, HTTPResponse.statusCode)
+
+            expectation.fulfill()
+        }) .resume()
+
+        waitForExpectations(timeout: 4, handler: nil)
+    }
+
+    func testUploadData() {
+        let session = Session(cassetteName: "upload-data")
+        session.recordingEnabled = false
+        let expectation = self.expectation(description: "Network")
+
+        let data = encodeMultipartBody(try! Data(contentsOf: testFile), parameters: [:])
+
+        session.uploadTask(with: request, from: data) { data, response, error in
+            do {
+                let JSON = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]
+                XCTAssertEqual("test file\n", (JSON?["form"] as? [String: Any])?["file"] as? String)
+            } catch {
+                XCTFail("Failed to read JSON.")
+            }
+
+            let HTTPResponse = response as! HTTPURLResponse
+            XCTAssertEqual(200, HTTPResponse.statusCode)
+
+            expectation.fulfill()
+        }.resume()
+
+        waitForExpectations(timeout: 4, handler: nil)
+    }
 
 
     // MARK: Helpers
