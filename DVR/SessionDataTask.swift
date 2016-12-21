@@ -1,23 +1,23 @@
 import Foundation
 
-class SessionDataTask: NSURLSessionDataTask {
+class SessionDataTask: URLSessionDataTask {
 
     // MARK: - Types
 
-    typealias Completion = (NSData?, NSURLResponse?, NSError?) -> Void
+    typealias Completion = (Data?, Foundation.URLResponse?, NSError?) -> Void
 
 
     // MARK: - Properties
 
     weak var session: Session!
-    let request: NSURLRequest
+    let request: URLRequest
     let completion: Completion?
-    private let queue = dispatch_queue_create("com.venmo.DVR.sessionDataTaskQueue", nil)
+    fileprivate let queue = DispatchQueue(label: "com.venmo.DVR.sessionDataTaskQueue", attributes: [])
 
 
     // MARK: - Initializers
 
-    init(session: Session, request: NSURLRequest, completion: (Completion)? = nil) {
+    init(session: Session, request: URLRequest, completion: (Completion)? = nil) {
         self.session = session
         self.request = request
         self.completion = completion
@@ -37,7 +37,7 @@ class SessionDataTask: NSURLSessionDataTask {
         if let interaction = session.cassette?.interactionForRequest(request) {
             // Forward completion
             if let completion = completion {
-                dispatch_async(queue) {
+                queue.async {
                     completion(interaction.responseData, interaction.response, nil)
                 }
             }
@@ -56,7 +56,7 @@ class SessionDataTask: NSURLSessionDataTask {
             abort()
         }
 
-        let task = session.backingSession.dataTaskWithRequest(request) { [weak self] data, response, error in
+        let task = session.backingSession.dataTask(with: request, completionHandler: { [weak self] data, response, error in
 
             //Ensure we have a response
             guard let response = response else {
@@ -70,14 +70,14 @@ class SessionDataTask: NSURLSessionDataTask {
             }
 
             // Still call the completion block so the user can chain requests while recording.
-            dispatch_async(this.queue) {
+            this.queue.async {
                 this.completion?(data, response, nil)
             }
 
             // Create interaction
             let interaction = Interaction(request: this.request, response: response, responseData: data)
             this.session.finishTask(this, interaction: interaction, playback: false)
-        }
+        }) 
         task.resume()
     }
 }

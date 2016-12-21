@@ -1,22 +1,11 @@
 import Foundation
 
 // There isn't a mutable NSHTTPURLResponse, so we have to make our own.
-class URLHTTPResponse: NSHTTPURLResponse {
+final class MutableHTTPURLResponse: HTTPURLResponse {
 
     // MARK: - Properties
 
-    private var _URL: NSURL?
-    override var URL: NSURL? {
-        get {
-            return _URL ?? super.URL
-        }
-
-        set {
-            _URL = newValue
-        }
-    }
-
-    private var _statusCode: Int?
+    fileprivate var _statusCode: Int?
     override var statusCode: Int {
         get {
             return _statusCode ?? super.statusCode
@@ -27,8 +16,8 @@ class URLHTTPResponse: NSHTTPURLResponse {
         }
     }
 
-    private var _allHeaderFields: [NSObject : AnyObject]?
-    override var allHeaderFields: [NSObject : AnyObject] {
+    fileprivate var _allHeaderFields: [AnyHashable: Any]?
+    override var allHeaderFields: [AnyHashable: Any] {
         get {
             return _allHeaderFields ?? super.allHeaderFields
         }
@@ -40,32 +29,29 @@ class URLHTTPResponse: NSHTTPURLResponse {
 }
 
 
-extension NSHTTPURLResponse {
-    override var dictionary: [String: AnyObject] {
+extension MutableHTTPURLResponse {
+    override var dictionary: [String: Any] {
         var dictionary = super.dictionary
 
-        dictionary["headers"] = allHeaderFields
         dictionary["status"] = statusCode
+        dictionary["headers"] = allHeaderFields
 
         return dictionary
     }
 }
 
 
-extension URLHTTPResponse {
-    convenience init(dictionary: [String: AnyObject]) {
-        self.init()
-
-        if let string = dictionary["url"] as? String, url = NSURL(string: string) {
-            URL = url
+extension HTTPURLResponse {
+    convenience init?(dictionary: [String: Any]) {
+        guard
+            let url = (dictionary["url"] as? String).flatMap(URL.init(string:)),
+            let statusCode = (dictionary["status"] as? Int)
+        else {
+            return nil
         }
 
-        if let headers = dictionary["headers"] as? [String: String] {
-            allHeaderFields = headers
-        }
+        let headerFields = dictionary["headers"] as? [String: String]
 
-        if let status = dictionary["status"] as? Int {
-            statusCode = status
-        }
+        self.init(url: url, statusCode: statusCode, httpVersion: nil, headerFields: headerFields)
     }
 }
