@@ -26,23 +26,23 @@ extension URLRequest {
 
 
 extension URLRequest {
-	func appending(headers: [AnyHashable: Any]) -> URLRequest {
-		guard let headers = headers as? [String: String] else { return self }
+    func appending(headers: [AnyHashable: Any]) -> URLRequest {
+        guard let headers = headers as? [String: String] else { return self }
 
         var request = self
 
-		for (key, value) in headers {
-			request.addValue(value, forHTTPHeaderField: key)
-		}
+        for (key, value) in headers {
+          request.addValue(value, forHTTPHeaderField: key)
+        }
 
         return request
     }
 
-	func appending(body: Data?) -> URLRequest {
-		var request = self
-		request.httpBody = body
-		return request
-	}
+    func appending(body: Data?) -> URLRequest {
+        var request = self
+        request.httpBody = body
+        return request
+    }
 }
 
 

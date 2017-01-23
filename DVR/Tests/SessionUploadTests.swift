@@ -88,7 +88,7 @@ class SessionUploadTests: XCTestCase {
     private func writeDataToFile(_ data: Data, fileName: String) -> URL {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         let documentsURL = URL(fileURLWithPath: documentsPath, isDirectory: true)
-		let url = documentsURL.appendingPathComponent(fileName + ".tmp")
+        let url = documentsURL.appendingPathComponent(fileName + ".tmp")
 
         try? data.write(to: url, options: [.atomic])
         return url
@@ -100,7 +100,7 @@ class SessionUploadTests: XCTestCase {
 // MARK: - Helpers
 
 extension String {
-	fileprivate var utf8Data: Data {
+    fileprivate var utf8Data: Data {
         return data(using: String.Encoding.utf8)!
     }
 }

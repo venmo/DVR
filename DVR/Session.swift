@@ -38,7 +38,7 @@ open class Session: URLSession {
         return addDataTask(request)
     }
 
-	open override func dataTask(with request: URLRequest, completionHandler: @escaping ((Data?, Foundation.URLResponse?, Error?) -> Void)) -> URLSessionDataTask {
+    open override func dataTask(with request: URLRequest, completionHandler: @escaping ((Data?, Foundation.URLResponse?, Error?) -> Void)) -> URLSessionDataTask {
         return addDataTask(request, completionHandler: completionHandler)
     }
 
@@ -46,7 +46,7 @@ open class Session: URLSession {
         return addDownloadTask(request)
     }
 
-	open override func downloadTask(with request: URLRequest, completionHandler: @escaping (URL?, Foundation.URLResponse?, Error?) -> Void) -> URLSessionDownloadTask {
+    open override func downloadTask(with request: URLRequest, completionHandler: @escaping (URL?, Foundation.URLResponse?, Error?) -> Void) -> URLSessionDownloadTask {
         return addDownloadTask(request, completionHandler: completionHandler)
     }
 
@@ -54,7 +54,7 @@ open class Session: URLSession {
         return addUploadTask(request, fromData: bodyData)
     }
 
-	open override  func uploadTask(with request: URLRequest, from bodyData: Data?, completionHandler: @escaping (Data?, Foundation.URLResponse?, Error?) -> Void) -> URLSessionUploadTask {
+    open override  func uploadTask(with request: URLRequest, from bodyData: Data?, completionHandler: @escaping (Data?, Foundation.URLResponse?, Error?) -> Void) -> URLSessionUploadTask {
         return addUploadTask(request, fromData: bodyData, completionHandler: completionHandler)
     }
 
@@ -63,7 +63,7 @@ open class Session: URLSession {
         return addUploadTask(request, fromData: data)
     }
 
-	open override func uploadTask(with request: URLRequest, fromFile fileURL: URL, completionHandler: @escaping (Data?, Foundation.URLResponse?, Error?) -> Void) -> URLSessionUploadTask {
+    open override func uploadTask(with request: URLRequest, fromFile fileURL: URL, completionHandler: @escaping (Data?, Foundation.URLResponse?, Error?) -> Void) -> URLSessionUploadTask {
         let data = try! Data(contentsOf: fileURL)
         return addUploadTask(request, fromData: data, completionHandler: completionHandler)
     }
@@ -188,11 +188,11 @@ open class Session: URLSession {
         let outputDirectory = (self.outputDirectory as NSString).expandingTildeInPath
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: outputDirectory) {
-			do {
-				try fileManager.createDirectory(atPath: outputDirectory, withIntermediateDirectories: true, attributes: nil)
-			} catch {
-				print("[DVR] Failed to create cassettes directory.")
-			}
+            do {
+              try fileManager.createDirectory(atPath: outputDirectory, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+              print("[DVR] Failed to create cassettes directory.")
+            }
         }
 
         let cassette = Cassette(name: cassetteName, interactions: interactions)
@@ -214,7 +214,7 @@ open class Session: URLSession {
             if let data = string.data(using: String.Encoding.utf8.rawValue) {
                 try? data.write(to: URL(fileURLWithPath: outputPath), options: [.atomic])
                 print("[DVR] Persisted cassette at \(outputPath). Please add this file to your test target")
-				return
+                return
             }
 
             print("[DVR] Failed to persist cassette.")

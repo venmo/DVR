@@ -54,8 +54,9 @@ extension Foundation.HTTPURLResponse {
 
 extension HTTPURLResponse {
     convenience init(dictionary: [String: Any]) {
-		let url = URL(string: dictionary["url"] as! String)!
-		self.init(url: url, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+        let url = URL(string: dictionary["url"] as! String)!
+
+        self.init(url: url, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
 
         if let headers = dictionary["headers"] as? [String: String] {
             allHeaderFields = headers

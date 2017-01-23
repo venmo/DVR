@@ -79,7 +79,7 @@ final class SessionDataTask: URLSessionDataTask {
             // Create interaction
             this.interaction = Interaction(request: this.request, response: response, responseData: data)
             this.session.finishTask(this, interaction: this.interaction!, playback: false)
-        }) 
+        })
         task.resume()
     }
 }
