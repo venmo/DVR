@@ -93,7 +93,7 @@ extension Interaction {
     init?(dictionary: [String: Any]) {
         guard let request = dictionary["request"] as? [String: Any],
             let response = dictionary["response"] as? [String: Any],
-            let recordedAt = dictionary["recorded_at"] as? Double else { return nil }
+            let recordedAt = dictionary["recorded_at"] as? Int else { return nil }
 
         self.request = NSMutableURLRequest(dictionary: request) as URLRequest
         self.response = HTTPURLResponse(dictionary: response)

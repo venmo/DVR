@@ -39,8 +39,8 @@ final class SessionDataTask: URLSessionDataTask {
         let cassette = session.cassette
 
         // Find interaction
-        if let interaction = session.cassette?.interactionForRequest(request, ignoreBaseURL: session.ignoreBaseURL) {
-			self.interaction = interaction
+        if let interaction = session.cassette?.interactionForRequest(request) {
+            self.interaction = interaction
             // Forward completion
             if let completion = completion {
                 queue.async {
@@ -79,7 +79,7 @@ final class SessionDataTask: URLSessionDataTask {
             // Create interaction
             this.interaction = Interaction(request: this.request, response: response, responseData: data)
             this.session.finishTask(this, interaction: this.interaction!, playback: false)
-        }) 
+        })
         task.resume()
     }
 }
