@@ -1,15 +1,16 @@
 language: objective-c # lol
-osx_image: xcode8
+osx_image: xcode8.2
 xcode_project: DVR.xcodeproj
 
-script: xcodebuild -scheme "$TRAVIS_XCODE_SCHEME" test
+script: xcodebuild -scheme "$TRAVIS_XCODE_SCHEME" -sdk "$TRAVIS_XCODE_SDK" -destination "$DESTINATION" test
 
 matrix:
   include:
     - xcode_scheme: DVR-iOS
       xcode_sdk: iphonesimulator
+      env:
+        - DESTINATION="OS=10.1,name=iPhone 7 Plus"
     - xcode_scheme: DVR-OSX
       xcode_sdk: macosx
-
-env:
-  TOOLCHAINS=com.apple.dt.toolchain.Swift_2_3
+      env:
+        - DESTINATION="arch=x86_64"

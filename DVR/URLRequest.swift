@@ -1,22 +1,22 @@
 import Foundation
 
-extension NSURLRequest {
-    var dictionary: [String: AnyObject] {
-        var dictionary = [String: AnyObject]()
+extension URLRequest {
+    var dictionary: [String: Any] {
+        var dictionary = [String: Any]()
 
-        if let method = HTTPMethod {
-            dictionary["method"] = method
+        if let method = httpMethod {
+            dictionary["method"] = method as Any?
         }
 
-        if let url = URL?.absoluteString {
-            dictionary["url"] = url
+        if let url = url?.absoluteString {
+            dictionary["url"] = url as Any?
         }
 
         if let headers = allHTTPHeaderFields {
-            dictionary["headers"] = headers
+            dictionary["headers"] = headers as Any?
         }
 
-        if let data = HTTPBody, body = Interaction.encodeBody(data, headers: allHTTPHeaderFields) {
+        if let data = httpBody, let body = Interaction.encodeBody(data, headers: allHTTPHeaderFields) {
             dictionary["body"] = body
         }
 
@@ -25,31 +25,37 @@ extension NSURLRequest {
 }
 
 
-extension NSURLRequest {
-    func requestByAppendingHeaders(headers: [NSObject: AnyObject]) -> NSURLRequest {
-        let request = mutableCopy() as! NSMutableURLRequest
-        request.appendHeaders(headers)
-        return request.copy() as! NSURLRequest
+extension URLRequest {
+    func appending(headers: [AnyHashable: Any]) -> URLRequest {
+        guard let headers = headers as? [String: String] else { return self }
+
+        var request = self
+
+        for (key, value) in headers {
+          request.addValue(value, forHTTPHeaderField: key)
+        }
+
+        return request
     }
 
-    func requestWithBody(body: NSData) -> NSURLRequest {
-        let request = mutableCopy() as! NSMutableURLRequest
-        request.HTTPBody = body
-        return request.copy() as! NSURLRequest
+    func appending(body: Data?) -> URLRequest {
+        var request = self
+        request.httpBody = body
+        return request
     }
 }
 
 
 extension NSMutableURLRequest {
-    convenience init(dictionary: [String: AnyObject]) {
+    convenience init(dictionary: [String: Any]) {
         self.init()
 
         if let method = dictionary["method"] as? String {
-            HTTPMethod = method
+            httpMethod = method
         }
 
-        if let string = dictionary["url"] as? String, url = NSURL(string: string) {
-            URL = url
+        if let string = dictionary["url"] as? String, let url = URL(string: string) {
+            self.url = url
         }
 
         if let headers = dictionary["headers"] as? [String: String] {
@@ -57,18 +63,18 @@ extension NSMutableURLRequest {
         }
 
         if let body = dictionary["body"] {
-            HTTPBody = Interaction.dencodeBody(body, headers: allHTTPHeaderFields)
+            httpBody = Interaction.dencodeBody(body, headers: allHTTPHeaderFields)
         }
     }
 }
 
 
 extension NSMutableURLRequest {
-    func appendHeaders(headers: [NSObject: AnyObject]) {
+    func appendHeaders(_ headers: [AnyHashable: Any]) {
         var existingHeaders = allHTTPHeaderFields ?? [:]
 
         headers.forEach { header in
-            guard let key = header.0 as? String, value = header.1 as? String where existingHeaders[key] == nil else {
+            guard let key = header.0 as? String, let value = header.1 as? String , existingHeaders[key] == nil else {
                 return
             }
 
