@@ -12,6 +12,7 @@ Easy [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) 
 
 | Swift Version | DVR Version |
 | ------------- | ----------- |
+| 3.0           | 1.0         |
 | 2.3           | 0.4         |
 | 2.2           | 0.3         |
 | < 2.2         | 0.2.1       |
