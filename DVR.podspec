@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'DVR'
-  s.version          = '0.3.0'
+  s.version          = '1.0.0'
   s.summary          = 'Network testing for Swift'
   s.description      = <<-DESC
 DVR is a simple Swift framework for making fake NSURLSession requests for iOS, watchOS, and OS X based on VCR.
@@ -16,7 +16,7 @@ DVR.Session is a subclass of NSURLSession so you can use it as a drop in replace
   s.source           = { git: 'https://github.com/venmo/DVR.git',
                          tag: "v#{s.version}" }
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '8.1'
   s.osx.deployment_target = '10.10'
 
   s.source_files = 'DVR/*.{swift}'
