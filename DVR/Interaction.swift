@@ -93,11 +93,11 @@ extension Interaction {
     init?(dictionary: [String: Any]) {
         guard let request = dictionary["request"] as? [String: Any],
             let response = dictionary["response"] as? [String: Any],
-            let recordedAt = dictionary["recorded_at"] as? Int else { return nil }
+            let recordedAt = dictionary["recorded_at"] as? TimeInterval else { return nil }
 
         self.request = NSMutableURLRequest(dictionary: request) as URLRequest
         self.response = HTTPURLResponse(dictionary: response)
-        self.recordedAt = Date(timeIntervalSince1970: TimeInterval(recordedAt))
+        self.recordedAt = Date(timeIntervalSince1970: recordedAt)
         self.responseData = Interaction.dencodeBody(response["body"], headers: response["headers"] as? [String: String])
     }
 }
