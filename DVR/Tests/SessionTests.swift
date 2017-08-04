@@ -26,6 +26,13 @@ class SessionTests: XCTestCase {
         } else {
             XCTFail()
         }
+
+        if let req = dataTask.currentRequest, let url = req.url {
+            XCTAssert(req.httpMethod == "GET")
+            XCTAssert(url.absoluteString == "http://example.com")
+        } else {
+            XCTFail()
+        }
     }
 
     func testDataTaskWithCompletion() {
