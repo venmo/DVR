@@ -404,17 +404,19 @@
 					};
 					3647AF9A1B335D5500EF10D4 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					3647AFA41B335D5500EF10D4 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					3690A07A1B33AA3B00731222 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0900;
 					};
 					3690A0831B33AA3C00731222 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
