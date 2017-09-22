@@ -81,11 +81,18 @@ extension Interaction {
             "recorded_at": recordedAt.timeIntervalSince1970
         ]
 
-        var response = self.response.dictionary
-        if let data = responseData, let body = Interaction.encodeBody(data, headers: response["headers"] as? [String: String]) {
-            response["body"] = body
+        var responseDictionary = self.response.dictionary
+
+        if let httpResponse = response as? HTTPURLResponse {
+            responseDictionary["headers"] = httpResponse.allHeaderFields
+            responseDictionary["status"] = httpResponse.statusCode
         }
-        dictionary["response"] = response
+
+        if let data = responseData, let body = Interaction.encodeBody(data, headers: responseDictionary["headers"] as? [String: String]) {
+            responseDictionary["body"] = body
+        }
+
+        dictionary["response"] = responseDictionary
 
         return dictionary
     }
