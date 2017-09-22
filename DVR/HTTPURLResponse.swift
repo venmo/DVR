@@ -40,18 +40,6 @@ class HTTPURLResponse: Foundation.HTTPURLResponse {
 }
 
 
-extension Foundation.HTTPURLResponse {
-    override var dictionary: [String: Any] {
-        var dictionary = super.dictionary
-
-        dictionary["headers"] = allHeaderFields
-        dictionary["status"] = statusCode
-
-        return dictionary
-    }
-}
-
-
 extension HTTPURLResponse {
     convenience init(dictionary: [String: Any]) {
         let url = URL(string: dictionary["url"] as! String)!
