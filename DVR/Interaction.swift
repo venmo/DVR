@@ -83,7 +83,10 @@ extension Interaction {
 
         var responseDictionary = self.response.dictionary
 
-        if let httpResponse = response as? HTTPURLResponse {
+        if let dvrHttpResponse = response as? HTTPURLResponse {
+            responseDictionary["headers"] = dvrHttpResponse.allHeaderFields
+            responseDictionary["status"] = dvrHttpResponse.statusCode
+        } else if let httpResponse = response as? Foundation.HTTPURLResponse {
             responseDictionary["headers"] = httpResponse.allHeaderFields
             responseDictionary["status"] = httpResponse.statusCode
         }
