@@ -20,5 +20,5 @@ DVR.Session is a subclass of NSURLSession so you can use it as a drop in replace
   s.tvos.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
 
-  s.source_files = 'DVR/*.{swift}'
+  s.source_files = 'Sources/DVR/*.{swift}'
 end
