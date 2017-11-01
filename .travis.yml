@@ -1,5 +1,5 @@
 language: objective-c # lol
-osx_image: xcode8.2
+osx_image: xcode9.1
 xcode_project: DVR.xcodeproj
 
 script: xcodebuild -scheme "$TRAVIS_XCODE_SCHEME" -sdk "$TRAVIS_XCODE_SDK" -destination "$DESTINATION" test
