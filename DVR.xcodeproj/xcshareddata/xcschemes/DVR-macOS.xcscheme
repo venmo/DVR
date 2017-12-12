@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3690A07A1B33AA3B00731222"
                BuildableName = "DVR.framework"
-               BlueprintName = "DVR-OSX"
+               BlueprintName = "DVR-macOS"
                ReferencedContainer = "container:DVR.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,8 +34,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3690A0831B33AA3C00731222"
-               BuildableName = "DVRTests-OSX.xctest"
-               BlueprintName = "DVRTests-OSX"
+               BuildableName = "DVRTests-macOS.xctest"
+               BlueprintName = "DVRTests-macOS"
                ReferencedContainer = "container:DVR.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -45,7 +45,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3690A07A1B33AA3B00731222"
             BuildableName = "DVR.framework"
-            BlueprintName = "DVR-OSX"
+            BlueprintName = "DVR-macOS"
             ReferencedContainer = "container:DVR.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -68,7 +68,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3690A07A1B33AA3B00731222"
             BuildableName = "DVR.framework"
-            BlueprintName = "DVR-OSX"
+            BlueprintName = "DVR-macOS"
             ReferencedContainer = "container:DVR.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -86,7 +86,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3690A07A1B33AA3B00731222"
             BuildableName = "DVR.framework"
-            BlueprintName = "DVR-OSX"
+            BlueprintName = "DVR-macOS"
             ReferencedContainer = "container:DVR.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
