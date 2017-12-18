@@ -10,7 +10,7 @@ matrix:
       xcode_sdk: iphonesimulator
       env:
         - DESTINATION="OS=10.1,name=iPhone 7 Plus"
-    - xcode_scheme: DVR-OSX
+    - xcode_scheme: DVR-macOS
       xcode_sdk: macosx
       env:
         - DESTINATION="arch=x86_64"
