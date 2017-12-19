@@ -114,7 +114,7 @@
 		3647AFCB1B33689000EF10D4 /* SessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionTests.swift; sourceTree = "<group>"; };
 		3647AFCC1B33689000EF10D4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3690A07B1B33AA3B00731222 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3690A0841B33AA3C00731222 /* DVRTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVRTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3690A0841B33AA3C00731222 /* DVRTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVRTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36BDDB881B6716AB00878665 /* json-example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "json-example.json"; sourceTree = "<group>"; };
 		B19D62641CB1860400E16D11 /* SessionUploadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionUploadTask.swift; sourceTree = "<group>"; };
 		B19D62661CB18EDB00E16D11 /* testfile.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testfile.txt; sourceTree = "<group>"; };
@@ -186,7 +186,7 @@
 				3647AF9B1B335D5500EF10D4 /* DVR.framework */,
 				3647AFA51B335D5500EF10D4 /* DVRTests-iOS.xctest */,
 				3690A07B1B33AA3B00731222 /* DVR.framework */,
-				3690A0841B33AA3C00731222 /* DVRTests-OSX.xctest */,
+				3690A0841B33AA3C00731222 /* DVRTests-macOS.xctest */,
 				2104F52E1DC658580039CA14 /* DVR.framework */,
 				2104F5361DC658590039CA14 /* DVRTests.xctest */,
 			);
@@ -348,9 +348,9 @@
 			productReference = 3647AFA51B335D5500EF10D4 /* DVRTests-iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3690A07A1B33AA3B00731222 /* DVR-OSX */ = {
+		3690A07A1B33AA3B00731222 /* DVR-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3690A08C1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVR-OSX" */;
+			buildConfigurationList = 3690A08C1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVR-macOS" */;
 			buildPhases = (
 				3690A0761B33AA3B00731222 /* Sources */,
 				3690A0771B33AA3B00731222 /* Frameworks */,
@@ -361,14 +361,14 @@
 			);
 			dependencies = (
 			);
-			name = "DVR-OSX";
+			name = "DVR-macOS";
 			productName = "DVR-OSX";
 			productReference = 3690A07B1B33AA3B00731222 /* DVR.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		3690A0831B33AA3C00731222 /* DVRTests-OSX */ = {
+		3690A0831B33AA3C00731222 /* DVRTests-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3690A08F1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVRTests-OSX" */;
+			buildConfigurationList = 3690A08F1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVRTests-macOS" */;
 			buildPhases = (
 				3690A0801B33AA3C00731222 /* Sources */,
 				3690A0811B33AA3C00731222 /* Frameworks */,
@@ -379,9 +379,9 @@
 			dependencies = (
 				3690A0871B33AA3C00731222 /* PBXTargetDependency */,
 			);
-			name = "DVRTests-OSX";
+			name = "DVRTests-macOS";
 			productName = "DVR-OSXTests";
-			productReference = 3690A0841B33AA3C00731222 /* DVRTests-OSX.xctest */;
+			productReference = 3690A0841B33AA3C00731222 /* DVRTests-macOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -434,8 +434,8 @@
 			targets = (
 				3647AF9A1B335D5500EF10D4 /* DVR-iOS */,
 				3647AFA41B335D5500EF10D4 /* DVRTests-iOS */,
-				3690A07A1B33AA3B00731222 /* DVR-OSX */,
-				3690A0831B33AA3C00731222 /* DVRTests-OSX */,
+				3690A07A1B33AA3B00731222 /* DVR-macOS */,
+				3690A0831B33AA3C00731222 /* DVRTests-macOS */,
 				2104F52D1DC658580039CA14 /* DVR-tvOS */,
 				2104F5351DC658590039CA14 /* DVRTests-tvOS */,
 			);
@@ -599,7 +599,7 @@
 		};
 		3690A0871B33AA3C00731222 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3690A07A1B33AA3B00731222 /* DVR-OSX */;
+			target = 3690A07A1B33AA3B00731222 /* DVR-macOS */;
 			targetProxy = 3690A0861B33AA3C00731222 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -624,7 +624,6 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
 			};
 			name = Debug;
@@ -647,7 +646,6 @@
 				PRODUCT_NAME = DVR;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
 			};
 			name = Release;
@@ -666,7 +664,6 @@
 				PRODUCT_NAME = DVRTests;
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -683,7 +680,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.dvr.tests;
 				PRODUCT_NAME = DVRTests;
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -739,7 +735,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -793,7 +790,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
@@ -818,8 +816,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR;
 				PRODUCT_NAME = DVR;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -838,8 +834,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR;
 				PRODUCT_NAME = DVR;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -851,8 +845,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.iostests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -864,8 +856,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.iostests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -885,8 +875,6 @@
 				PRODUCT_NAME = DVR;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -906,8 +894,6 @@
 				PRODUCT_NAME = DVR;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -921,8 +907,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.osxtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -936,8 +920,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.osxtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -989,7 +971,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3690A08C1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVR-OSX" */ = {
+		3690A08C1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVR-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3690A08D1B33AA3C00731222 /* Debug */,
@@ -998,7 +980,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3690A08F1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVRTests-OSX" */ = {
+		3690A08F1B33AA3C00731222 /* Build configuration list for PBXNativeTarget "DVRTests-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3690A0901B33AA3C00731222 /* Debug */,
