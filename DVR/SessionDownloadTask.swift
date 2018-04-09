@@ -1,3 +1,5 @@
+private var globalTaskIdentifier: Int = 200000
+
 final class SessionDownloadTask: URLSessionDownloadTask {
 
     // MARK: - Types
@@ -10,6 +12,18 @@ final class SessionDownloadTask: URLSessionDownloadTask {
     let request: URLRequest
     let completion: Completion?
 
+    var _taskIdentifier: Int = {
+      globalTaskIdentifier += 1
+      return globalTaskIdentifier
+    }()
+    override var taskIdentifier: Int {
+      return _taskIdentifier
+    }
+
+    var _originalRequest: URLRequest?
+    override var originalRequest: URLRequest? {
+      return _originalRequest
+    }
 
     // MARK: - Initializers
 

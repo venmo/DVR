@@ -1,3 +1,5 @@
+private var globalTaskIdentifier: Int = 300000
+
 final class SessionUploadTask: URLSessionUploadTask {
 
     // MARK: - Types
@@ -10,6 +12,19 @@ final class SessionUploadTask: URLSessionUploadTask {
     let request: URLRequest
     let completion: Completion?
     let dataTask: SessionDataTask
+
+    var _taskIdentifier: Int = {
+      globalTaskIdentifier += 1
+      return globalTaskIdentifier
+    }()
+    override var taskIdentifier: Int {
+      return _taskIdentifier
+    }
+
+    var _originalRequest: URLRequest?
+    override var originalRequest: URLRequest? {
+      return _originalRequest
+    }
 
     // MARK: - Initializers
 

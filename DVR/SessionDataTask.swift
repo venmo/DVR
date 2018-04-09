@@ -34,7 +34,6 @@ final class SessionDataTask: URLSessionDataTask {
       return _originalRequest
     }
 
-
     // MARK: - Initializers
 
     init(session: Session, request: URLRequest, completion: (Completion)? = nil) {
