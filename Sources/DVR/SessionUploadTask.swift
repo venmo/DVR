@@ -1,3 +1,5 @@
+import Foundation
+
 final class SessionUploadTask: URLSessionUploadTask {
 
     // MARK: - Types
