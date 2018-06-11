@@ -7,7 +7,7 @@ matrix:
     - xcode_scheme: DVR-iOS
       xcode_sdk: iphonesimulator
       env:
-       - PLATFORM="iOS Simulator,OS=11.2,name=iPhone 7 Plus"
+       - PLATFORM="iOS Simulator,OS=10.1,name=iPhone 7 Plus"
     - xcode_scheme: DVR-macOS
       xcode_sdk: macosx
       env:
