@@ -86,8 +86,7 @@ class SessionUploadTests: XCTestCase {
     }
 
     private func writeDataToFile(_ data: Data, fileName: String) -> URL {
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        let documentsURL = URL(fileURLWithPath: documentsPath, isDirectory: true)
+        let documentsURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let url = documentsURL.appendingPathComponent(fileName + ".tmp")
 
         try? data.write(to: url, options: [.atomic])
