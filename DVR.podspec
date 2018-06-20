@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'DVR'
-  s.version          = '1.1.0'
+  s.version          = '1.2.0'
   s.summary          = 'Network testing for Swift'
   s.description      = <<-DESC
 DVR is a simple Swift framework for making fake NSURLSession requests for iOS, watchOS, and OS X based on VCR.
