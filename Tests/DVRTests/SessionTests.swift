@@ -1,4 +1,5 @@
 import XCTest
+import Foundation
 @testable import DVR
 
 class SessionTests: XCTestCase {
@@ -183,6 +184,25 @@ class SessionTests: XCTestCase {
         session.recordingEnabled = false
 
         let task = session.dataTask(with: request)
+        task.resume()
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testRecordingStatusCodeForFailedRequest() {
+        let expectation = self.expectation(description: "didCompleteWithError")
+
+        let request = URLRequest(url: URL(string: "http://cdn.contentful.com/spaces/cfexampleapi/entries")!)
+
+        let config = URLSessionConfiguration.default
+        let backingSession = URLSession(configuration: config)
+        let session = Session(cassetteName: "failed-request-example", backingSession: backingSession)
+
+        let task = session.dataTask(with: request) { (_, urlResponse, _) in
+            XCTAssertNotEqual(200, (urlResponse as? Foundation.HTTPURLResponse)?.statusCode)
+            XCTAssertEqual(401, (urlResponse as? Foundation.HTTPURLResponse)?.statusCode)
+            expectation.fulfill()
+        }
         task.resume()
 
         waitForExpectations(timeout: 1, handler: nil)

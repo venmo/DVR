@@ -1,0 +1,41 @@
+{
+  "interactions" : [
+    {
+      "response" : {
+        "status" : 401,
+        "headers" : {
+          "Date" : "Tue, 12 Jun 2018 15:55:49 GMT",
+          "Content-Length" : "265",
+          "Age" : "225",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "\"9906052eabccd1a6c0331807805000e3\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent,X-Contentful-Enable-Alpha-Feature",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "1",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "72b236f9b6493cdbdadad8a16c54254b",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1528818949.158502,VS0,VE0",
+          "X-Served-By" : "cache-hhn1536-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Cache-Control" : "max-age=0",
+          "Via" : "1.1 varnish"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiQWNjZXNzVG9rZW5JbnZhbGlkIgogIH0sCiAgIm1lc3NhZ2UiOiAiQW4gYWNjZXNzIHRva2VuIGlzIHJlcXVpcmVkLiBQbGVhc2Ugc2VuZCBvbmUgdGhyb3VnaCB0aGUgSFRUUCBBdXRob3JpemF0aW9uIGhlYWRlciBvciBhcyB0aGUgcXVlcnkgcGFyYW1ldGVyIFwiYWNjZXNzX3Rva2VuXCIuIiwKICAicmVxdWVzdElkIjogIjcyYjIzNmY5YjY0OTNjZGJkYWRhZDhhMTZjNTQyNTRiIgp9Cg==",
+        "url" : "http:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries"
+      },
+      "recorded_at" : 1528818949.1677389,
+      "request" : {
+        "method" : "GET",
+        "url" : "http:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries"
+      }
+    }
+  ],
+  "name" : "failed-request-example"
+}

@@ -1,16 +1,19 @@
-private var globalTaskIdentifier: Int = 200000
+import Foundation
 
-final class SessionDownloadTask: URLSessionDownloadTask {
+private var globalTaskIdentifier: Int = 300000
+
+final class SessionUploadTask: URLSessionUploadTask {
 
     // MARK: - Types
 
-    typealias Completion = (URL?, Foundation.URLResponse?, NSError?) -> Void
+    typealias Completion = (Data?, Foundation.URLResponse?, NSError?) -> Void
 
     // MARK: - Properties
 
     weak var session: Session!
     let request: URLRequest
     let completion: Completion?
+    let dataTask: SessionDataTask
 
     var _taskIdentifier: Int = {
       globalTaskIdentifier += 1
@@ -31,6 +34,7 @@ final class SessionDownloadTask: URLSessionDownloadTask {
         self.session = session
         self.request = request
         self.completion = completion
+        dataTask = SessionDataTask(session: session, request: request, completion: completion)
     }
 
     // MARK: - URLSessionTask
@@ -40,19 +44,6 @@ final class SessionDownloadTask: URLSessionDownloadTask {
     }
 
     override func resume() {
-        let task = SessionDataTask(session: session, request: request) { data, response, error in
-            let location: URL?
-            if let data = data {
-                // Write data to temporary file
-                let tempURL = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent(UUID().uuidString))
-                try? data.write(to: tempURL, options: [.atomic])
-                location = tempURL
-            } else {
-                location = nil
-            }
-
-            self.completion?(location, response, error)
-        }
-        task.resume()
+        dataTask.resume()
     }
 }
