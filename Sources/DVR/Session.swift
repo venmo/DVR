@@ -5,8 +5,8 @@ open class Session: URLSession {
     // MARK: - Properties
 
     open var outputDirectory: String
-    open let cassetteName: String
-    open let backingSession: URLSession
+    public let cassetteName: String
+    public let backingSession: URLSession
     open var recordingEnabled = true
 
     private let testBundle: Bundle
