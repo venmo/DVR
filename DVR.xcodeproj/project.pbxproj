@@ -440,11 +440,11 @@
 					};
 					3647AF9A1B335D5500EF10D4 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 					};
 					3647AFA41B335D5500EF10D4 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 					};
 					3690A07A1B33AA3B00731222 = {
 						CreatedOnToolsVersion = 7.0;
@@ -777,7 +777,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -834,7 +834,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
@@ -859,6 +859,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR;
 				PRODUCT_NAME = DVR;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -877,6 +878,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR;
 				PRODUCT_NAME = DVR;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -888,6 +890,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.iostests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -899,6 +902,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.iostests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
