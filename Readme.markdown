@@ -1,7 +1,8 @@
 # DVR
 
 [![Version](https://img.shields.io/github/release/venmo/DVR.svg)](https://github.com/venmo/DVR/releases)
-![Swift Version](https://img.shields.io/badge/swift-4-orange.svg)
+![Status](https://travis-ci.org/venmo/DVR.svg?branch=master)
+![Swift Version](https://img.shields.io/badge/swift-4.2-orange.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Swift Package Manager](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://swift.org/package-manager/)
 
