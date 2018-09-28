@@ -12,7 +12,12 @@ open class Session: URLSession {
     public let cassetteName: String
     public let backingSession: URLSession
     open var recordingEnabled = true
-
+    /**
+     Bool flag for ignoring the baseURL when comparing the request url with the url stored in the cassette.
+     - Note: Defalt value is false, change to true if you need to ignore the base url and compare only the relative paths of the urls not the entire url.
+     */
+    public var ignoreBaseURL = false
+    
     private let testBundle: Bundle
 
     private var recording = false
