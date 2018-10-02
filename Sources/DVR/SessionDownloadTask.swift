@@ -1,3 +1,5 @@
+import Foundation
+
 final class SessionDownloadTask: URLSessionDownloadTask {
 
     // MARK: - Types

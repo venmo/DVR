@@ -24,8 +24,9 @@ struct Cassette {
 
             guard let interactionURL = interactionRequest.url,
                 let requestURL = request.url else {
-                return nil
+                    return nil
             }
+
             // Note: We don't check headers right now
             if interactionRequest.httpMethod == request.httpMethod && interactionURL.isEqual(to: requestURL, ignoreBaseURL: ignoreBaseURL) && interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)  {
                 return interaction
@@ -50,7 +51,7 @@ extension Cassette {
         self.name = name
 
         if let array = dictionary["interactions"] as? [[String: Any]] {
-            interactions = array.flatMap { Interaction(dictionary: $0) }
+            interactions = array.compactMap { Interaction(dictionary: $0) }
         } else {
             interactions = []
         }
@@ -60,10 +61,10 @@ extension Cassette {
 private extension URL {
     /**
      Method used to check if it is equal with the provided url.
-     
+
      - parameter url:           The url to compare against.
      - parameter ignoreBaseURL: Bool flag for ignoring the baseURL when comparing against the provided url.
-     
+
      - returns: true if is equal with the provided url, false otherwhise.
      */
     func isEqual(to url: URL, ignoreBaseURL: Bool = false) -> Bool {

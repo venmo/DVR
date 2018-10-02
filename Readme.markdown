@@ -1,6 +1,10 @@
 # DVR
 
-[![Version](https://img.shields.io/github/release/venmo/DVR.svg)](https://github.com/venmo/DVR/releases) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Version](https://img.shields.io/github/release/venmo/DVR.svg)](https://github.com/venmo/DVR/releases)
+![Status](https://travis-ci.org/venmo/DVR.svg?branch=master)
+![Swift Version](https://img.shields.io/badge/swift-4.2-orange.svg)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Swift Package Manager](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://swift.org/package-manager/)
 
 DVR is a simple Swift framework for making fake `NSURLSession` requests for iOS,
 watchOS, and OS X based on [VCR](https://github.com/vcr/vcr).
@@ -8,20 +12,11 @@ watchOS, and OS X based on [VCR](https://github.com/vcr/vcr).
 Easy [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) is the main design goal. The API is the same as `NSURLSession`. `DVR.Session` is a subclass of `NSURLSession` so you can use it as a drop in replacement anywhere. (Currently only data tasks are supported.)
 
 
-## Version Compatibility
-
-| Swift Version | DVR Version |
-| ------------- | ----------- |
-| 2.3           | 0.4         |
-| 2.2           | 0.3         |
-| < 2.2         | 0.2.1       |
-
-
 ## Usage
 
 ```swift
 let session = Session(cassetteName: "example")
-let task = session.dataTaskWithRequest(request) { data, response, error in
+let task = session.dataTask(with: request) { data, response, error in
     // Do something with the response
 }
 
@@ -44,10 +39,10 @@ let session = Session(cassetteName: "multiple")
 // Begin recording multiple requests
 session.beginRecording()
 
-session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://apple.com")!)) { data, response, error in
+session.dataTask(with: URLRequest(url: URL(string: "http://apple.com")!)) { data, response, error in
     // Do something with the response
 
-    session.dataTaskWithRequest(NSURLRequest(URL: NSURL(string: "http://google.com")!)) { data, response, error in
+    session.dataTask(with: URLRequest(url: URL(string: "http://google.com")!)) { data, response, error in
         // Do something with the response
     }.resume()
 

@@ -1,15 +1,24 @@
-language: objective-c # lol
-osx_image: xcode8
+language: objective-c
+osx_image: xcode9.4
 xcode_project: DVR.xcodeproj
-
-script: xcodebuild -scheme "$TRAVIS_XCODE_SCHEME" test
 
 matrix:
   include:
     - xcode_scheme: DVR-iOS
       xcode_sdk: iphonesimulator
-    - xcode_scheme: DVR-OSX
+      env:
+        - DESTINATION="iOS Simulator,OS=11.4,name=iPhone X"
+    - xcode_scheme: DVR-macOS
       xcode_sdk: macosx
+      env:
+        - DESTINATION="macOS,arch=x86_64"
+    - xcode_scheme: DVR-tvOS
+      xcode_sdk: appletvsimulator
+      env:
+        - DESTINATION="tvOS Simulator,name=Apple TV 4K,OS=11.4"
+    - env:
+      - SWIFT_BUILD=true
 
-env:
-  TOOLCHAINS=com.apple.dt.toolchain.Swift_2_3
+script: 
+  - ./Scripts/travis-build-test.sh
+
