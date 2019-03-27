@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode9.4
+osx_image: xcode10.2
 xcode_project: DVR.xcodeproj
 
 matrix:
@@ -7,7 +7,7 @@ matrix:
     - xcode_scheme: DVR-iOS
       xcode_sdk: iphonesimulator
       env:
-        - DESTINATION="iOS Simulator,OS=11.4,name=iPhone X"
+        - DESTINATION="iOS Simulator,OS=12.2,name=iPhone X"
     - xcode_scheme: DVR-macOS
       xcode_sdk: macosx
       env:
@@ -15,7 +15,7 @@ matrix:
     - xcode_scheme: DVR-tvOS
       xcode_sdk: appletvsimulator
       env:
-        - DESTINATION="tvOS Simulator,name=Apple TV 4K,OS=11.4"
+        - DESTINATION="tvOS Simulator,name=Apple TV 4K,OS=12.2"
     - env:
       - SWIFT_BUILD=true
 
