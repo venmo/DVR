@@ -37,6 +37,25 @@
 		3690A0981B33AA9400731222 /* URLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647AFBF1B33602A00EF10D4 /* URLResponse.swift */; };
 		3690A0991B33AA9400731222 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647AFC11B3363C400EF10D4 /* HTTPURLResponse.swift */; };
 		B19D62651CB1860400E16D11 /* SessionUploadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D62641CB1860400E16D11 /* SessionUploadTask.swift */; };
+		BB946590224BBCEA0004F29B /* json-example.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862971F7D44E200CB2625 /* json-example.json */; };
+		BB946591224BBCEA0004F29B /* multiple.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862951F7D44E200CB2625 /* multiple.json */; };
+		BB946592224BBCEA0004F29B /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = ED7862921F7D44E200CB2625 /* testfile.txt */; };
+		BB946593224BBCEA0004F29B /* text.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862961F7D44E200CB2625 /* text.json */; };
+		BB946594224BBCEA0004F29B /* upload-file.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862931F7D44E200CB2625 /* upload-file.json */; };
+		BB946595224BBCEB0004F29B /* json-example.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862971F7D44E200CB2625 /* json-example.json */; };
+		BB946596224BBCEB0004F29B /* multiple.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862951F7D44E200CB2625 /* multiple.json */; };
+		BB946597224BBCEB0004F29B /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = ED7862921F7D44E200CB2625 /* testfile.txt */; };
+		BB946598224BBCEB0004F29B /* text.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862961F7D44E200CB2625 /* text.json */; };
+		BB946599224BBCEB0004F29B /* upload-file.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862931F7D44E200CB2625 /* upload-file.json */; };
+		BB94659A224BBCEB0004F29B /* json-example.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862971F7D44E200CB2625 /* json-example.json */; };
+		BB94659B224BBCEB0004F29B /* multiple.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862951F7D44E200CB2625 /* multiple.json */; };
+		BB94659C224BBCEB0004F29B /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = ED7862921F7D44E200CB2625 /* testfile.txt */; };
+		BB94659D224BBCEB0004F29B /* text.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862961F7D44E200CB2625 /* text.json */; };
+		BB94659E224BBCEB0004F29B /* upload-file.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862931F7D44E200CB2625 /* upload-file.json */; };
+		BB9465A0224BBD5B0004F29B /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3690A07B1B33AA3B00731222 /* DVR.framework */; };
+		BB9465A2224BC2620004F29B /* failed-request-example.json in Resources */ = {isa = PBXBuildFile; fileRef = BB9465A1224BC2620004F29B /* failed-request-example.json */; };
+		BB9465A3224BC2620004F29B /* failed-request-example.json in Resources */ = {isa = PBXBuildFile; fileRef = BB9465A1224BC2620004F29B /* failed-request-example.json */; };
+		BB9465A4224BC2620004F29B /* failed-request-example.json in Resources */ = {isa = PBXBuildFile; fileRef = BB9465A1224BC2620004F29B /* failed-request-example.json */; };
 		ED7862871F7D42C200CB2625 /* SessionUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7862821F7D42B800CB2625 /* SessionUploadTests.swift */; };
 		ED7862881F7D42C200CB2625 /* SessionUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7862821F7D42B800CB2625 /* SessionUploadTests.swift */; };
 		ED7862891F7D42C300CB2625 /* SessionUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7862821F7D42B800CB2625 /* SessionUploadTests.swift */; };
@@ -49,24 +68,6 @@
 		ED7862AB1F7D44EB00CB2625 /* upload-data.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862941F7D44E200CB2625 /* upload-data.json */; };
 		ED7862AD1F7D44EB00CB2625 /* example.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862911F7D44E200CB2625 /* example.json */; };
 		ED7862B21F7D44EB00CB2625 /* upload-data.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862941F7D44E200CB2625 /* upload-data.json */; };
-		EDC4065920D9ABE900A5D1F7 /* upload-file.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065120D9ABE800A5D1F7 /* upload-file.json */; };
-		EDC4065A20D9ABE900A5D1F7 /* upload-file.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065120D9ABE800A5D1F7 /* upload-file.json */; };
-		EDC4065B20D9ABE900A5D1F7 /* upload-file.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065120D9ABE800A5D1F7 /* upload-file.json */; };
-		EDC4065C20D9ABE900A5D1F7 /* failed-request-example.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065220D9ABE800A5D1F7 /* failed-request-example.json */; };
-		EDC4065D20D9ABE900A5D1F7 /* failed-request-example.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065220D9ABE800A5D1F7 /* failed-request-example.json */; };
-		EDC4065E20D9ABE900A5D1F7 /* failed-request-example.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065220D9ABE800A5D1F7 /* failed-request-example.json */; };
-		EDC4065F20D9ABE900A5D1F7 /* multiple.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065320D9ABE800A5D1F7 /* multiple.json */; };
-		EDC4066020D9ABE900A5D1F7 /* multiple.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065320D9ABE800A5D1F7 /* multiple.json */; };
-		EDC4066120D9ABE900A5D1F7 /* multiple.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065320D9ABE800A5D1F7 /* multiple.json */; };
-		EDC4066520D9ABE900A5D1F7 /* json-example.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065520D9ABE800A5D1F7 /* json-example.json */; };
-		EDC4066620D9ABE900A5D1F7 /* json-example.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065520D9ABE800A5D1F7 /* json-example.json */; };
-		EDC4066720D9ABE900A5D1F7 /* json-example.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065520D9ABE800A5D1F7 /* json-example.json */; };
-		EDC4066820D9ABE900A5D1F7 /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065620D9ABE800A5D1F7 /* testfile.txt */; };
-		EDC4066920D9ABE900A5D1F7 /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065620D9ABE800A5D1F7 /* testfile.txt */; };
-		EDC4066A20D9ABE900A5D1F7 /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065620D9ABE800A5D1F7 /* testfile.txt */; };
-		EDC4066B20D9ABE900A5D1F7 /* text.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065720D9ABE800A5D1F7 /* text.json */; };
-		EDC4066C20D9ABE900A5D1F7 /* text.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065720D9ABE800A5D1F7 /* text.json */; };
-		EDC4066D20D9ABE900A5D1F7 /* text.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC4065720D9ABE800A5D1F7 /* text.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,7 @@
 		3690A07B1B33AA3B00731222 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3690A0841B33AA3C00731222 /* DVRTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVRTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B19D62641CB1860400E16D11 /* SessionUploadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionUploadTask.swift; sourceTree = "<group>"; };
+		BB9465A1224BC2620004F29B /* failed-request-example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "failed-request-example.json"; sourceTree = "<group>"; };
 		ED78627F1F7D42B700CB2625 /* SessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionTests.swift; sourceTree = "<group>"; };
 		ED7862811F7D42B800CB2625 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED7862821F7D42B800CB2625 /* SessionUploadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionUploadTests.swift; sourceTree = "<group>"; };
@@ -121,14 +123,6 @@
 		ED7862951F7D44E200CB2625 /* multiple.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = multiple.json; sourceTree = "<group>"; };
 		ED7862961F7D44E200CB2625 /* text.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = text.json; sourceTree = "<group>"; };
 		ED7862971F7D44E200CB2625 /* json-example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "json-example.json"; sourceTree = "<group>"; };
-		EDC4065120D9ABE800A5D1F7 /* upload-file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "upload-file.json"; sourceTree = "<group>"; };
-		EDC4065220D9ABE800A5D1F7 /* failed-request-example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "failed-request-example.json"; sourceTree = "<group>"; };
-		EDC4065320D9ABE800A5D1F7 /* multiple.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = multiple.json; sourceTree = "<group>"; };
-		EDC4065420D9ABE800A5D1F7 /* example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = example.json; sourceTree = "<group>"; };
-		EDC4065520D9ABE800A5D1F7 /* json-example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "json-example.json"; sourceTree = "<group>"; };
-		EDC4065620D9ABE800A5D1F7 /* testfile.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testfile.txt; sourceTree = "<group>"; };
-		EDC4065720D9ABE800A5D1F7 /* text.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = text.json; sourceTree = "<group>"; };
-		EDC4065820D9ABE800A5D1F7 /* upload-data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "upload-data.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB9465A0224BBD5B0004F29B /* DVR.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +178,7 @@
 				ED78627B1F7D41DE00CB2625 /* Sources */,
 				ED78627D1F7D427800CB2625 /* Tests */,
 				3647AF9C1B335D5500EF10D4 /* Products */,
+				BB94659F224BBD5B0004F29B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -225,6 +221,13 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		BB94659F224BBD5B0004F29B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		ED78627B1F7D41DE00CB2625 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,8 +258,8 @@
 		ED7862901F7D44D100CB2625 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
-				EDC4065020D9ABE800A5D1F7 /* Fixtures */,
 				ED7862911F7D44E200CB2625 /* example.json */,
+				BB9465A1224BC2620004F29B /* failed-request-example.json */,
 				ED7862971F7D44E200CB2625 /* json-example.json */,
 				ED7862951F7D44E200CB2625 /* multiple.json */,
 				ED7862921F7D44E200CB2625 /* testfile.txt */,
@@ -265,21 +268,6 @@
 				ED7862931F7D44E200CB2625 /* upload-file.json */,
 			);
 			path = Fixtures;
-			sourceTree = "<group>";
-		};
-		EDC4065020D9ABE800A5D1F7 /* Fixtures */ = {
-			isa = PBXGroup;
-			children = (
-				EDC4065120D9ABE800A5D1F7 /* upload-file.json */,
-				EDC4065220D9ABE800A5D1F7 /* failed-request-example.json */,
-				EDC4065320D9ABE800A5D1F7 /* multiple.json */,
-				EDC4065420D9ABE800A5D1F7 /* example.json */,
-				EDC4065520D9ABE800A5D1F7 /* json-example.json */,
-				EDC4065620D9ABE800A5D1F7 /* testfile.txt */,
-				EDC4065720D9ABE800A5D1F7 /* text.json */,
-				EDC4065820D9ABE800A5D1F7 /* upload-data.json */,
-			);
-			name = Fixtures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -427,41 +415,44 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Venmo;
 				TargetAttributes = {
 					2104F52D1DC658580039CA14 = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					2104F5351DC658590039CA14 = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					3647AF9A1B335D5500EF10D4 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 					3647AFA41B335D5500EF10D4 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 					3690A07A1B33AA3B00731222 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 					};
 					3690A0831B33AA3C00731222 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
 			buildConfigurationList = 3647AF951B335D5500EF10D4 /* Build configuration list for PBXProject "DVR" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 3647AF911B335D5500EF10D4;
 			productRefGroup = 3647AF9C1B335D5500EF10D4 /* Products */;
@@ -490,14 +481,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDC4066720D9ABE900A5D1F7 /* json-example.json in Resources */,
-				EDC4066D20D9ABE900A5D1F7 /* text.json in Resources */,
+				BB94659A224BBCEB0004F29B /* json-example.json in Resources */,
+				BB94659B224BBCEB0004F29B /* multiple.json in Resources */,
+				BB94659D224BBCEB0004F29B /* text.json in Resources */,
+				BB94659E224BBCEB0004F29B /* upload-file.json in Resources */,
 				ED7862AD1F7D44EB00CB2625 /* example.json in Resources */,
-				EDC4065B20D9ABE900A5D1F7 /* upload-file.json in Resources */,
-				EDC4066A20D9ABE900A5D1F7 /* testfile.txt in Resources */,
+				BB94659C224BBCEB0004F29B /* testfile.txt in Resources */,
 				ED7862B21F7D44EB00CB2625 /* upload-data.json in Resources */,
-				EDC4066120D9ABE900A5D1F7 /* multiple.json in Resources */,
-				EDC4065E20D9ABE900A5D1F7 /* failed-request-example.json in Resources */,
+				BB9465A4224BC2620004F29B /* failed-request-example.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,14 +503,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDC4066520D9ABE900A5D1F7 /* json-example.json in Resources */,
-				EDC4066B20D9ABE900A5D1F7 /* text.json in Resources */,
+				BB946590224BBCEA0004F29B /* json-example.json in Resources */,
+				BB946591224BBCEA0004F29B /* multiple.json in Resources */,
+				BB946593224BBCEA0004F29B /* text.json in Resources */,
+				BB946594224BBCEA0004F29B /* upload-file.json in Resources */,
 				ED78629F1F7D44EA00CB2625 /* example.json in Resources */,
-				EDC4065920D9ABE900A5D1F7 /* upload-file.json in Resources */,
-				EDC4066820D9ABE900A5D1F7 /* testfile.txt in Resources */,
+				BB946592224BBCEA0004F29B /* testfile.txt in Resources */,
 				ED7862A41F7D44EA00CB2625 /* upload-data.json in Resources */,
-				EDC4065F20D9ABE900A5D1F7 /* multiple.json in Resources */,
-				EDC4065C20D9ABE900A5D1F7 /* failed-request-example.json in Resources */,
+				BB9465A2224BC2620004F29B /* failed-request-example.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,14 +525,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDC4066620D9ABE900A5D1F7 /* json-example.json in Resources */,
-				EDC4066C20D9ABE900A5D1F7 /* text.json in Resources */,
+				BB946595224BBCEB0004F29B /* json-example.json in Resources */,
+				BB946596224BBCEB0004F29B /* multiple.json in Resources */,
+				BB946598224BBCEB0004F29B /* text.json in Resources */,
+				BB946599224BBCEB0004F29B /* upload-file.json in Resources */,
 				ED7862A61F7D44EB00CB2625 /* example.json in Resources */,
-				EDC4065A20D9ABE900A5D1F7 /* upload-file.json in Resources */,
-				EDC4066920D9ABE900A5D1F7 /* testfile.txt in Resources */,
+				BB946597224BBCEB0004F29B /* testfile.txt in Resources */,
 				ED7862AB1F7D44EB00CB2625 /* upload-data.json in Resources */,
-				EDC4066020D9ABE900A5D1F7 /* multiple.json in Resources */,
-				EDC4065D20D9ABE900A5D1F7 /* failed-request-example.json in Resources */,
+				BB9465A3224BC2620004F29B /* failed-request-example.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,6 +654,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 			};
 			name = Debug;
@@ -685,6 +677,7 @@
 				PRODUCT_NAME = DVR;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 			};
 			name = Release;
@@ -703,6 +696,7 @@
 				PRODUCT_NAME = DVRTests;
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -719,6 +713,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.dvr.tests;
 				PRODUCT_NAME = DVRTests;
 				SDKROOT = appletvos;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -727,6 +722,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -778,7 +774,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -791,6 +787,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -835,7 +832,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -859,7 +856,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR;
 				PRODUCT_NAME = DVR;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -878,7 +876,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR;
 				PRODUCT_NAME = DVR;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -890,7 +889,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.iostests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -902,7 +902,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.iostests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -922,6 +923,7 @@
 				PRODUCT_NAME = DVR;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -941,6 +943,7 @@
 				PRODUCT_NAME = DVR;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -954,6 +957,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.osxtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -967,6 +971,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.DVR.osxtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
