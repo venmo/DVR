@@ -53,6 +53,9 @@
 		BB94659D224BBCEB0004F29B /* text.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862961F7D44E200CB2625 /* text.json */; };
 		BB94659E224BBCEB0004F29B /* upload-file.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862931F7D44E200CB2625 /* upload-file.json */; };
 		BB9465A0224BBD5B0004F29B /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3690A07B1B33AA3B00731222 /* DVR.framework */; };
+		BB9465A2224BC2620004F29B /* failed-request-example.json in Resources */ = {isa = PBXBuildFile; fileRef = BB9465A1224BC2620004F29B /* failed-request-example.json */; };
+		BB9465A3224BC2620004F29B /* failed-request-example.json in Resources */ = {isa = PBXBuildFile; fileRef = BB9465A1224BC2620004F29B /* failed-request-example.json */; };
+		BB9465A4224BC2620004F29B /* failed-request-example.json in Resources */ = {isa = PBXBuildFile; fileRef = BB9465A1224BC2620004F29B /* failed-request-example.json */; };
 		ED7862871F7D42C200CB2625 /* SessionUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7862821F7D42B800CB2625 /* SessionUploadTests.swift */; };
 		ED7862881F7D42C200CB2625 /* SessionUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7862821F7D42B800CB2625 /* SessionUploadTests.swift */; };
 		ED7862891F7D42C300CB2625 /* SessionUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7862821F7D42B800CB2625 /* SessionUploadTests.swift */; };
@@ -109,6 +112,7 @@
 		3690A07B1B33AA3B00731222 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3690A0841B33AA3C00731222 /* DVRTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVRTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B19D62641CB1860400E16D11 /* SessionUploadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionUploadTask.swift; sourceTree = "<group>"; };
+		BB9465A1224BC2620004F29B /* failed-request-example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "failed-request-example.json"; sourceTree = "<group>"; };
 		ED78627F1F7D42B700CB2625 /* SessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionTests.swift; sourceTree = "<group>"; };
 		ED7862811F7D42B800CB2625 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED7862821F7D42B800CB2625 /* SessionUploadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionUploadTests.swift; sourceTree = "<group>"; };
@@ -255,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				ED7862911F7D44E200CB2625 /* example.json */,
+				BB9465A1224BC2620004F29B /* failed-request-example.json */,
 				ED7862971F7D44E200CB2625 /* json-example.json */,
 				ED7862951F7D44E200CB2625 /* multiple.json */,
 				ED7862921F7D44E200CB2625 /* testfile.txt */,
@@ -483,6 +488,7 @@
 				ED7862AD1F7D44EB00CB2625 /* example.json in Resources */,
 				BB94659C224BBCEB0004F29B /* testfile.txt in Resources */,
 				ED7862B21F7D44EB00CB2625 /* upload-data.json in Resources */,
+				BB9465A4224BC2620004F29B /* failed-request-example.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,6 +510,7 @@
 				ED78629F1F7D44EA00CB2625 /* example.json in Resources */,
 				BB946592224BBCEA0004F29B /* testfile.txt in Resources */,
 				ED7862A41F7D44EA00CB2625 /* upload-data.json in Resources */,
+				BB9465A2224BC2620004F29B /* failed-request-example.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +532,7 @@
 				ED7862A61F7D44EB00CB2625 /* example.json in Resources */,
 				BB946597224BBCEB0004F29B /* testfile.txt in Resources */,
 				ED7862AB1F7D44EB00CB2625 /* upload-data.json in Resources */,
+				BB9465A3224BC2620004F29B /* failed-request-example.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
