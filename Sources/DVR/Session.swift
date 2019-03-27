@@ -126,7 +126,7 @@ open class Session: URLSession {
     func finishTask(_ task: URLSessionTask, interaction: Interaction, playback: Bool) {
         needsPersistence = needsPersistence || !playback
 
-        if let index = outstandingTasks.index(of: task) {
+        if let index = outstandingTasks.firstIndex(of: task) {
             outstandingTasks.remove(at: index)
         }
 
