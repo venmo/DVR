@@ -25,6 +25,10 @@ open class Session: URLSession {
         return backingSession.delegate
     }
 
+    open override var delegateQueue: OperationQueue {
+        return backingSession.delegateQueue
+    }
+
     // MARK: - Initializers
 
     public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: Bundle = Session.defaultTestBundle!, backingSession: URLSession = URLSession.shared) {
