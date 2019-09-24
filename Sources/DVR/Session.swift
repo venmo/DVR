@@ -37,6 +37,14 @@ open class Session: URLSession {
 
 
     // MARK: - URLSession
+    
+    open override func dataTask(with url: URL) -> URLSessionDataTask {
+        return addDataTask(URLRequest(url: url))
+    }
+
+    open override func dataTask(with url: URL, completionHandler: @escaping ((Data?, Foundation.URLResponse?, Error?) -> Void)) -> URLSessionDataTask {
+        return addDataTask(URLRequest(url: url), completionHandler: completionHandler)
+    }
 
     open override func dataTask(with request: URLRequest) -> URLSessionDataTask {
         return addDataTask(request)
