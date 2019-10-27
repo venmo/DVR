@@ -1,5 +1,7 @@
 import Foundation
 
+private var globalTaskIdentifier: Int = 100000
+
 final class SessionDataTask: URLSessionDataTask {
 
     // MARK: - Types
@@ -19,6 +21,18 @@ final class SessionDataTask: URLSessionDataTask {
         return interaction?.response
     }
 
+    var _taskIdentifier: Int = {
+      globalTaskIdentifier += 1
+      return globalTaskIdentifier
+    }()
+    override var taskIdentifier: Int {
+      return _taskIdentifier
+    }
+
+    var _originalRequest: URLRequest?
+    override var originalRequest: URLRequest? {
+      return _originalRequest
+    }
 
     // MARK: - Initializers
 
