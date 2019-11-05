@@ -19,6 +19,10 @@ final class SessionDataTask: URLSessionDataTask {
         return interaction?.response
     }
 
+    override var currentRequest: URLRequest? {
+        return request
+    }
+
 
     // MARK: - Initializers
 

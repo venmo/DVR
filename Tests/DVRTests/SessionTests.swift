@@ -27,6 +27,8 @@ class SessionTests: XCTestCase {
         } else {
             XCTFail()
         }
+
+        XCTAssertEqual(dataTask.currentRequest?.url?.absoluteString, request.url?.absoluteString)
     }
 
     func testDataTaskWithCompletion() {
