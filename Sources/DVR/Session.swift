@@ -14,6 +14,7 @@ open class Session: URLSession {
     open var recordingEnabled = true
 
     private let testBundle: Bundle
+    private let requiredHeaders: [String]
 
     private var recording = false
     private var needsPersistence = false
@@ -27,11 +28,12 @@ open class Session: URLSession {
 
     // MARK: - Initializers
 
-    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: Bundle = Session.defaultTestBundle!, backingSession: URLSession = URLSession.shared) {
+    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: Bundle = Session.defaultTestBundle!, backingSession: URLSession = URLSession.shared, requiredHeaders: [String] = []) {
         self.outputDirectory = outputDirectory
         self.cassetteName = cassetteName
         self.testBundle = testBundle
         self.backingSession = backingSession
+        self.requiredHeaders = requiredHeaders
         super.init()
     }
 
@@ -158,7 +160,7 @@ open class Session: URLSession {
 
     private func addDataTask(_ request: URLRequest, completionHandler: ((Data?, Foundation.URLResponse?, NSError?) -> Void)? = nil) -> URLSessionDataTask {
         let modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
-        let task = SessionDataTask(session: self, request: modifiedRequest, completion: completionHandler)
+        let task = SessionDataTask(session: self, request: modifiedRequest, requiredHeaders: requiredHeaders, completion: completionHandler)
         addTask(task)
         return task
     }

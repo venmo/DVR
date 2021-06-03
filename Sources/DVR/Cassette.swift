@@ -18,16 +18,23 @@ struct Cassette {
 
     // MARK: - Functions
 
-    func interactionForRequest(_ request: URLRequest) -> Interaction? {
+    func interactionForRequest(_ request: URLRequest, requiredHeaders: [String] = []) -> Interaction? {
+        var match: Interaction?
         for interaction in interactions {
             let interactionRequest = interaction.request
 
-            // Note: We don't check headers right now
-            if interactionRequest.httpMethod == request.httpMethod && interactionRequest.url == request.url && interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)  {
-                return interaction
+            if interactionRequest.httpMethod == request.httpMethod &&
+                interactionRequest.url == request.url &&
+                interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)  {
+
+                // Overwrite the current match if the required headers are equal.
+                if match == nil ||
+                    interactionRequest.hasHeadersEqualToThatOfRequest(request, headersToCheck: requiredHeaders) {
+                    match = interaction
+                }
             }
         }
-        return nil
+        return match
     }
 }
 
@@ -64,5 +71,16 @@ private extension URLRequest {
         }
 
         return encoded1.isEqual(encoded2)
+    }
+
+    func hasHeadersEqualToThatOfRequest(_ request: URLRequest, headersToCheck: [String]) -> Bool {
+        let request1Headers = allHTTPHeaderFields ?? [:]
+        let request2Headers = request.allHTTPHeaderFields ?? [:]
+        for header in headersToCheck {
+            if request1Headers[header] != request2Headers[header] {
+                return false
+            }
+        }
+        return true
     }
 }

@@ -10,14 +10,16 @@ final class SessionDownloadTask: URLSessionDownloadTask {
 
     weak var session: Session!
     let request: URLRequest
+    let requiredHeaders: [String]
     let completion: Completion?
 
 
     // MARK: - Initializers
 
-    init(session: Session, request: URLRequest, completion: Completion? = nil) {
+    init(session: Session, request: URLRequest, requiredHeaders: [String] = [], completion: Completion? = nil) {
         self.session = session
         self.request = request
+        self.requiredHeaders = requiredHeaders
         self.completion = completion
     }
 
@@ -28,7 +30,7 @@ final class SessionDownloadTask: URLSessionDownloadTask {
     }
 
     override func resume() {
-        let task = SessionDataTask(session: session, request: request) { data, response, error in
+        let task = SessionDataTask(session: session, request: request, requiredHeaders: requiredHeaders) { data, response, error in
             let location: URL?
             if let data = data {
                 // Write data to temporary file

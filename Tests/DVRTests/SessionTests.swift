@@ -235,4 +235,38 @@ class SessionTests: XCTestCase {
 
         waitForExpectations(timeout: 1, handler: nil)
     }
+
+    func testSameRequestWithDifferentHeaders() {
+        let configuration = URLSessionConfiguration.default
+        configuration.httpAdditionalHeaders = ["testSessionHeader": "testSessionHeaderValue"]
+        let backingSession = URLSession(configuration: configuration)
+        let session = Session(cassetteName: "different-headers", backingSession: backingSession, requiredHeaders: ["Foo"])
+        session.recordingEnabled = false
+
+        var request = URLRequest(url: URL(string: "http://example.com")!)
+        request.setValue("Bar1", forHTTPHeaderField: "Foo")
+
+        let firstExpectation = self.expectation(description: "request 1 completed")
+        session.dataTask(with: request, completionHandler: { data, response, error in
+            XCTAssertEqual("hello", String(data: data!, encoding: String.Encoding.utf8))
+
+            let httpResponse = response as! Foundation.HTTPURLResponse
+            XCTAssertEqual(200, httpResponse.statusCode)
+
+            firstExpectation.fulfill()
+        }) .resume()
+
+        let secondExpectation = self.expectation(description: "request 2 completed")
+        request.setValue("Bar2", forHTTPHeaderField: "Foo")
+        session.dataTask(with: request, completionHandler: { data, response, error in
+            XCTAssertEqual("hello again", String(data: data!, encoding: String.Encoding.utf8))
+
+            let httpResponse = response as! Foundation.HTTPURLResponse
+            XCTAssertEqual(200, httpResponse.statusCode)
+
+            secondExpectation.fulfill()
+        }) .resume()
+
+        wait(for: [firstExpectation, secondExpectation], timeout: 3.0)
+    }
 }
