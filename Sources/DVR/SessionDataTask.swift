@@ -11,7 +11,7 @@ final class SessionDataTask: URLSessionDataTask {
 
     weak var session: Session!
     let request: URLRequest
-    let requiredHeaders: [String]
+    let headersToCheck: [String]
     let completion: Completion?
     private let queue = DispatchQueue(label: "com.venmo.DVR.sessionDataTaskQueue", attributes: [])
     private var interaction: Interaction?
@@ -27,10 +27,10 @@ final class SessionDataTask: URLSessionDataTask {
 
     // MARK: - Initializers
 
-    init(session: Session, request: URLRequest, requiredHeaders: [String] = [], completion: (Completion)? = nil) {
+    init(session: Session, request: URLRequest, headersToCheck: [String] = [], completion: (Completion)? = nil) {
         self.session = session
         self.request = request
-        self.requiredHeaders = requiredHeaders
+        self.headersToCheck = headersToCheck
         self.completion = completion
     }
 
@@ -45,7 +45,7 @@ final class SessionDataTask: URLSessionDataTask {
         let cassette = session.cassette
 
         // Find interaction
-        if let interaction = session.cassette?.interactionForRequest(request, requiredHeaders: requiredHeaders) {
+        if let interaction = session.cassette?.interactionForRequest(request, headersToCheck: headersToCheck) {
             self.interaction = interaction
             // Forward completion
             if let completion = completion {

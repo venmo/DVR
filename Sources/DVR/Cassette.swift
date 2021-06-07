@@ -18,7 +18,7 @@ struct Cassette {
 
     // MARK: - Functions
 
-    func interactionForRequest(_ request: URLRequest, requiredHeaders: [String] = []) -> Interaction? {
+    func interactionForRequest(_ request: URLRequest, headersToCheck: [String] = []) -> Interaction? {
         var match: Interaction?
         for interaction in interactions {
             let interactionRequest = interaction.request
@@ -29,7 +29,7 @@ struct Cassette {
 
                 // Overwrite the current match if the required headers are equal.
                 if match == nil ||
-                    interactionRequest.hasHeadersEqualToThatOfRequest(request, headersToCheck: requiredHeaders) {
+                    interactionRequest.hasHeadersEqualToThatOfRequest(request, headersToCheck: headersToCheck) {
                     match = interaction
                 }
             }

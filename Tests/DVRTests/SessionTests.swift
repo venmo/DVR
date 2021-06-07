@@ -240,7 +240,7 @@ class SessionTests: XCTestCase {
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = ["testSessionHeader": "testSessionHeaderValue"]
         let backingSession = URLSession(configuration: configuration)
-        let session = Session(cassetteName: "different-headers", backingSession: backingSession, requiredHeaders: ["Foo"])
+        let session = Session(cassetteName: "different-headers", backingSession: backingSession, headersToCheck: ["Foo"])
         session.recordingEnabled = false
 
         var request = URLRequest(url: URL(string: "http://example.com")!)
