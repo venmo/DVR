@@ -194,9 +194,6 @@ open class Session: URLSession {
     }
 
     private func persist(_ interactions: [Interaction]) {
-        defer {
-            abort()
-        }
 
         // Create directory
         let outputDirectory = (self.outputDirectory as NSString).expandingTildeInPath
@@ -212,8 +209,6 @@ open class Session: URLSession {
         let cassette = Cassette(name: cassetteName, interactions: interactions)
 
         // Persist
-
-
         do {
             let outputPath = ((outputDirectory as NSString).appendingPathComponent(cassetteName) as NSString).appendingPathExtension("json")!
             let data = try JSONSerialization.data(withJSONObject: cassette.dictionary, options: [.prettyPrinted])
