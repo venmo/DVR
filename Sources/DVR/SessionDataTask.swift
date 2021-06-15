@@ -42,30 +42,35 @@ final class SessionDataTask: URLSessionDataTask {
     }
 
     override func resume() {
-        let cassette = session.cassette
+        
+        if session.recordMode == .none {
+            let cassette = session.cassette
 
-        // Find interaction
-        if let interaction = session.cassette?.interactionForRequest(request, headersToCheck: headersToCheck) {
-            self.interaction = interaction
-            // Forward completion
-            if let completion = completion {
-                queue.async {
-                    completion(interaction.responseData, interaction.response, nil)
+            // Find interaction
+            if let interaction = session.cassette?.interactionForRequest(request, headersToCheck: headersToCheck) {
+                self.interaction = interaction
+                // Forward completion
+                if let completion = completion {
+                    queue.async {
+                        completion(interaction.responseData, interaction.response, nil)
+                    }
                 }
+                session.finishTask(self, interaction: interaction, playback: true)
+                return
             }
-            session.finishTask(self, interaction: interaction, playback: true)
-            return
-        }
 
-        if cassette != nil {
-            fatalError("[DVR] Invalid request. The request was not found in the cassette.")
-        }
+            if cassette != nil {
+                fatalError("[DVR] Invalid request. The request was not found in the cassette.")
+            }
 
-        // Cassette is missing. Record.
-        if session.recordingEnabled == false {
-            fatalError("[DVR] Recording is disabled.")
+            // Cassette is missing. Record.
+            if session.recordingEnabled == false {
+                fatalError("[DVR] Recording is disabled.")
+            }
         }
-
+        
+        
+        
         let task = session.backingSession.dataTask(with: request, completionHandler: { [weak self] data, response, error in
 
             //Ensure we have a response

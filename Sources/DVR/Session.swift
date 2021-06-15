@@ -7,11 +7,12 @@ open class Session: URLSession {
     public static var defaultTestBundle: Bundle? {
         return Bundle.allBundles.first { $0.bundlePath.hasSuffix(".xctest") }
     }
-
+    
     open var outputDirectory: String
     public let cassetteName: String
     public let backingSession: URLSession
     open var recordingEnabled = true
+    open var recordMode : RecordingMode = .once
 
     private let testBundle: Bundle
     private let headersToCheck: [String]
@@ -25,7 +26,11 @@ open class Session: URLSession {
     override open var delegate: URLSessionDelegate? {
         return backingSession.delegate
     }
-
+    
+    public enum RecordingMode {
+        case all, none, newEpisodes, once
+    }
+    
     // MARK: - Initializers
 
     public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: Bundle = Session.defaultTestBundle!, backingSession: URLSession = URLSession.shared, headersToCheck: [String] = []) {
@@ -134,7 +139,7 @@ open class Session: URLSession {
     }
 
     func finishTask(_ task: URLSessionTask, interaction: Interaction, playback: Bool) {
-        needsPersistence = needsPersistence || !playback
+        needsPersistence = (needsPersistence || !playback) && recordMode != .all
 
         if let index = outstandingTasks.firstIndex(of: task) {
             outstandingTasks.remove(at: index)
@@ -181,7 +186,7 @@ open class Session: URLSession {
     }
 
     private func addTask(_ task: URLSessionTask) {
-        let shouldRecord = !recording
+        let shouldRecord = !recording && (recordMode == .newEpisodes || recordMode == .once)
         if shouldRecord {
             beginRecording()
         }
