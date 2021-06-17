@@ -104,14 +104,3 @@ final class SessionDataTask: URLSessionDataTask {
     }
 }
 
-struct DVRError : Error , CustomStringConvertible {
-    let description : String
-    
-    init(_ desc : String) {
-        description = desc
-    }
-    
-    func throwError() throws {
-        throw self
-    }
-}
