@@ -1,11 +1,13 @@
 import Foundation
 
+
 final class SessionDataTask: URLSessionDataTask {
 
     // MARK: - Types
 
     typealias Completion = (Data?, Foundation.URLResponse?, NSError?) -> Void
 
+    
 
     // MARK: - Properties
 
@@ -43,7 +45,7 @@ final class SessionDataTask: URLSessionDataTask {
 
     override func resume() {
         
-        if session.recordMode == .none {
+        if session.recordMode != .all {
             let cassette = session.cassette
 
             // Find interaction
@@ -59,10 +61,17 @@ final class SessionDataTask: URLSessionDataTask {
                 return
             }
 
-            if cassette != nil {
+            // Errors unless playbackMode = .newEpisodes
+            if cassette != nil && session.recordMode != .newEpisodes {
+                
                 fatalError("[DVR] Invalid request. The request was not found in the cassette.")
             }
 
+            // Errors if in playbackMode = .none
+            if cassette == nil && session.recordMode == .none {
+                fatalError("[DVR] No Recording Found.")
+            }
+            
             // Cassette is missing. Record.
             if session.recordingEnabled == false {
                 fatalError("[DVR] Recording is disabled.")
@@ -86,11 +95,23 @@ final class SessionDataTask: URLSessionDataTask {
             this.queue.async {
                 this.completion?(data, response, nil)
             }
-
+            
             // Create interaction
             this.interaction = Interaction(request: this.request, response: response, responseData: data)
             this.session.finishTask(this, interaction: this.interaction!, playback: false)
         })
         task.resume()
+    }
+}
+
+struct DVRError : Error , CustomStringConvertible {
+    let description : String
+    
+    init(_ desc : String) {
+        description = desc
+    }
+    
+    func throwError() throws {
+        throw self
     }
 }

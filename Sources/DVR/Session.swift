@@ -139,7 +139,7 @@ open class Session: URLSession {
     }
 
     func finishTask(_ task: URLSessionTask, interaction: Interaction, playback: Bool) {
-        needsPersistence = (needsPersistence || !playback) && recordMode != .all
+        needsPersistence = (needsPersistence || !playback)
 
         if let index = outstandingTasks.firstIndex(of: task) {
             outstandingTasks.remove(at: index)
@@ -186,7 +186,7 @@ open class Session: URLSession {
     }
 
     private func addTask(_ task: URLSessionTask) {
-        let shouldRecord = !recording && (recordMode == .newEpisodes || recordMode == .once)
+        let shouldRecord = !recording && (recordMode != .none)
         if shouldRecord {
             beginRecording()
         }
