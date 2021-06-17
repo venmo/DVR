@@ -1,11 +1,13 @@
 import Foundation
 
+
 final class SessionDataTask: URLSessionDataTask {
 
     // MARK: - Types
 
     typealias Completion = (Data?, Foundation.URLResponse?, NSError?) -> Void
 
+    
 
     // MARK: - Properties
 
@@ -42,30 +44,42 @@ final class SessionDataTask: URLSessionDataTask {
     }
 
     override func resume() {
-        let cassette = session.cassette
+        
+        if session.recordMode != .all {
+            let cassette = session.cassette
 
-        // Find interaction
-        if let interaction = session.cassette?.interactionForRequest(request, headersToCheck: headersToCheck) {
-            self.interaction = interaction
-            // Forward completion
-            if let completion = completion {
-                queue.async {
-                    completion(interaction.responseData, interaction.response, nil)
+            // Find interaction
+            if let interaction = session.cassette?.interactionForRequest(request, headersToCheck: headersToCheck) {
+                self.interaction = interaction
+                // Forward completion
+                if let completion = completion {
+                    queue.async {
+                        completion(interaction.responseData, interaction.response, nil)
+                    }
                 }
+                session.finishTask(self, interaction: interaction, playback: true)
+                return
             }
-            session.finishTask(self, interaction: interaction, playback: true)
-            return
-        }
 
-        if cassette != nil {
-            fatalError("[DVR] Invalid request. The request was not found in the cassette.")
-        }
+            // Errors unless playbackMode = .newEpisodes
+            if cassette != nil && session.recordMode != .newEpisodes {
+                
+                fatalError("[DVR] Invalid request. The request was not found in the cassette.")
+            }
 
-        // Cassette is missing. Record.
-        if session.recordingEnabled == false {
-            fatalError("[DVR] Recording is disabled.")
+            // Errors if in playbackMode = .none
+            if cassette == nil && session.recordMode == .none {
+                fatalError("[DVR] No Recording Found.")
+            }
+            
+            // Cassette is missing. Record.
+            if session.recordingEnabled == false {
+                fatalError("[DVR] Recording is disabled.")
+            }
         }
-
+        
+        
+        
         let task = session.backingSession.dataTask(with: request, completionHandler: { [weak self] data, response, error in
 
             //Ensure we have a response
@@ -81,7 +95,7 @@ final class SessionDataTask: URLSessionDataTask {
             this.queue.async {
                 this.completion?(data, response, nil)
             }
-
+            
             // Create interaction
             this.interaction = Interaction(request: this.request, response: response, responseData: data)
             this.session.finishTask(this, interaction: this.interaction!, playback: false)
@@ -89,3 +103,4 @@ final class SessionDataTask: URLSessionDataTask {
         task.resume()
     }
 }
+
