@@ -2,21 +2,24 @@ import Foundation
 
 struct Interaction {
 
-    // MARK: - Properties
+    // MARK: - Propertie6s
 
-    let request: URLRequest
-    let response: Foundation.URLResponse
-    let responseData: Data?
+    var request: URLRequest
+    var response: Foundation.URLResponse
+    var responseData: Data?
     let recordedAt: Date
-
+    let filter: Filter?
 
     // MARK: - Initializers
 
-    init(request: URLRequest, response: Foundation.URLResponse, responseData: Data? = nil, recordedAt: Date = Date()) {
+    init(request: URLRequest, response: Foundation.URLResponse, responseData: Data? = nil, recordedAt: Date = Date(), filter: Filter? = nil) {
         self.request = request
         self.response = response
         self.responseData = responseData
         self.recordedAt = recordedAt
+        self.filter = filter
+        self.filter?.beforeRecordRequest(&self.request)
+        self.filter?.beforeRecordResponse(&self.response,&self.responseData!)
     }
 
 
@@ -97,7 +100,7 @@ extension Interaction {
         return dictionary
     }
 
-    init?(dictionary: [String: Any]) {
+    init?(dictionary: [String: Any], filter: Filter? = nil) {
         guard let request = dictionary["request"] as? [String: Any],
             let response = dictionary["response"] as? [String: Any],
             let recordedAt = dictionary["recorded_at"] as? TimeInterval else { return nil }
@@ -106,5 +109,8 @@ extension Interaction {
         self.response = HTTPURLResponse(dictionary: response)
         self.recordedAt = Date(timeIntervalSince1970: recordedAt)
         self.responseData = Interaction.dencodeBody(response["body"], headers: response["headers"] as? [String: String])
+        self.filter = filter
+        self.filter?.beforeRecordRequest(&self.request)
+        self.filter?.beforeRecordResponse(&self.response,&self.responseData!)
     }
 }
