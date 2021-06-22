@@ -12,10 +12,10 @@ public struct Filter {
     var headers : [String : String]
     var queryParameters : [String : String]
     var postDataParameters : [String : String]
-    var beforeRecordResponse : ((inout Foundation.URLResponse, inout Data) -> ())
+    var beforeRecordResponse : ((inout Foundation.URLResponse, inout Data?) -> ())
     var beforeRecordRequest : ((inout URLRequest) -> ())
     
-    public init(headers: [String] = [], queryParameters: [String] = [], postDataParameters: [String] = [], replacer: String = "Redacted", requestHook : @escaping ((inout URLRequest) -> ()) = {_ in } , responseHook : @escaping ((inout Foundation.URLResponse, inout Data) -> ()) = {_,_  in } ) {
+    public init(headers: [String] = [], queryParameters: [String] = [], postDataParameters: [String] = [], replacer: String = "Redacted", requestHook : @escaping ((inout URLRequest) -> ()) = {_ in } , responseHook : @escaping ((inout Foundation.URLResponse, inout Data?) -> ()) = {_,_  in } ) {
         var adjustedHeaders : [String : String] = [:]
         var adjustedQueryParameters : [String : String] = [:]
         var adjustedPostDataParameters : [String : String] = [:]
@@ -39,7 +39,7 @@ public struct Filter {
         self.beforeRecordResponse = responseHook
     }
     
-    init(headers: [String:String] = [:], queryParameters: [String:String] = [:], postDataParameters: [String:String] = [:], requestHook : @escaping ((inout URLRequest) -> ()) = {_ in } , responseHook : @escaping ((inout Foundation.URLResponse, inout Data) -> ()) = {_,_ in } ) {
+    init(headers: [String:String] = [:], queryParameters: [String:String] = [:], postDataParameters: [String:String] = [:], requestHook : @escaping ((inout URLRequest) -> ()) = {_ in } , responseHook : @escaping ((inout Foundation.URLResponse, inout Data?) -> ()) = {_,_ in } ) {
         self.headers = headers
         self.queryParameters = queryParameters
         self.postDataParameters = postDataParameters

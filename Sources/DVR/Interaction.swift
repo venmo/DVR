@@ -19,7 +19,7 @@ struct Interaction {
         self.recordedAt = recordedAt
         self.filter = filter
         self.filter?.beforeRecordRequest(&self.request)
-        self.filter?.beforeRecordResponse(&self.response,&self.responseData!)
+        self.filter?.beforeRecordResponse(&self.response,&self.responseData)
     }
 
 
