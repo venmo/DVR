@@ -27,42 +27,29 @@
 import Foundation
 
 public struct Filter {
-    public var headers : [String : String]
-    public var queryParameters : [String : String]
-    public var postDataParameters : [String : String]
+    public var replacements : [String : String]
     public var beforeRecordResponse : ((Foundation.URLResponse, Data?) -> (Foundation.URLResponse, Data?))
     public var beforeRecordRequest : ((URLRequest) -> (URLRequest))
     
-    public init(headers: [String] = [], queryParameters: [String] = [], postDataParameters: [String] = [], replacementString: String = "Redacted", requestHook : @escaping ((URLRequest) -> (URLRequest)) = { return $0 } , responseHook : @escaping ((Foundation.URLResponse, Data?) -> (Foundation.URLResponse, Data?)) = {return ($0, $1)} ) {
-        var adjustedHeaders : [String : String] = [:]
-        var adjustedQueryParameters : [String : String] = [:]
-        var adjustedPostDataParameters : [String : String] = [:]
+    public init(keys: [String] = [], replacementString: String = "Redacted", requestHook : @escaping ((URLRequest) -> (URLRequest)) = { return $0 } , responseHook : @escaping ((Foundation.URLResponse, Data?) -> (Foundation.URLResponse, Data?)) = {return ($0, $1)} ) {
+        var replacements : [String : String] = [:]
         
-        for header in headers {
-            adjustedHeaders[header] =  replacementString
+        for key in keys {
+            replacements[key] = replacementString
         }
         
-        for queryParam in queryParameters {
-            adjustedQueryParameters[queryParam] = replacementString
-        }
-        
-        for postDataParam in postDataParameters {
-            adjustedPostDataParameters[postDataParam] = replacementString
-        }
-        
-        self.headers = adjustedHeaders
-        self.queryParameters = adjustedQueryParameters
-        self.postDataParameters = adjustedPostDataParameters
+        self.replacements = replacements
         self.beforeRecordRequest = requestHook
         self.beforeRecordResponse = responseHook
     }
     
-    public init(headers: [String:String] = [:], queryParameters: [String:String] = [:], postDataParameters: [String:String] = [:], requestHook : @escaping ((URLRequest) -> (URLRequest)) = {return $0} , responseHook : @escaping ((Foundation.URLResponse, Data?) -> (Foundation.URLResponse, Data?)) = {return ($0, $1) } ) {
-        self.headers = headers
-        self.queryParameters = queryParameters
-        self.postDataParameters = postDataParameters
+    public init(replacements: [String:String] = [:], queryParameters: [String:String] = [:], postDataParameters: [String:String] = [:], requestHook : @escaping ((URLRequest) -> (URLRequest)) = {return $0} , responseHook : @escaping ((Foundation.URLResponse, Data?) -> (Foundation.URLResponse, Data?)) = {return ($0, $1) } ) {
+        self.replacements = replacements
         self.beforeRecordRequest = requestHook
         self.beforeRecordResponse = responseHook
     }
    
+    public mutating func addReplacement(key: String, value: String = "Redacted") {
+        self.replacements.updateValue(key, forKey: value)
+    }
 }
