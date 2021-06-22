@@ -46,13 +46,5 @@ public struct Filter {
         self.beforeRecordRequest = requestHook
         self.beforeRecordResponse = responseHook
     }
-    
-    func setFilter() {
-        
-    }
-    
-    func setPre() {
-        
-    }
-    
+   
 }
