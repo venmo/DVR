@@ -45,9 +45,6 @@ final class SessionDataTask: URLSessionDataTask {
 
     override func resume() {
         
-        guard session != nil else {
-            fatalError("This shouldn't happen")
-        }
         
         if session.recordMode != .all {
             let cassette = session.cassette
