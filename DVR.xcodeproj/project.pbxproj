@@ -21,6 +21,7 @@
 		3123728B26823CDE006C4D9E /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3123728A26823CDE006C4D9E /* Filter.swift */; };
 		3123728C26823CDE006C4D9E /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3123728A26823CDE006C4D9E /* Filter.swift */; };
 		3123728D26823CDE006C4D9E /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3123728A26823CDE006C4D9E /* Filter.swift */; };
+		31F9A22B26824D9A007D4D13 /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F9A22A26824D9A007D4D13 /* FilterTests.swift */; };
 		360F5F731B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */; };
 		360F5F751B5C907A001AADD1 /* SessionDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */; };
 		3647AF9F1B335D5500EF10D4 /* DVR.h in Headers */ = {isa = PBXBuildFile; fileRef = 3647AF9E1B335D5500EF10D4 /* DVR.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -104,6 +105,7 @@
 		2104F52E1DC658580039CA14 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2104F5361DC658590039CA14 /* DVRTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DVRTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3123728A26823CDE006C4D9E /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		31F9A22A26824D9A007D4D13 /* FilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
 		360F5F721B5C907A001AADD1 /* SessionDownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDownloadTask.swift; sourceTree = "<group>"; };
 		3647AF9B1B335D5500EF10D4 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3647AF9E1B335D5500EF10D4 /* DVR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVR.h; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				ED7862811F7D42B800CB2625 /* Info.plist */,
 				ED78627F1F7D42B700CB2625 /* SessionTests.swift */,
 				ED7862821F7D42B800CB2625 /* SessionUploadTests.swift */,
+				31F9A22A26824D9A007D4D13 /* FilterTests.swift */,
 			);
 			path = DVRTests;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED78628C1F7D42C800CB2625 /* SessionTests.swift in Sources */,
+				31F9A22B26824D9A007D4D13 /* FilterTests.swift in Sources */,
 				ED7862891F7D42C300CB2625 /* SessionUploadTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

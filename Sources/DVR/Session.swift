@@ -13,7 +13,7 @@ open class Session: URLSession {
     public let backingSession: URLSession
     open var recordingEnabled = true
     open var recordMode : RecordingMode = .once
-    open var filter : Filter?
+    public var filter : Filter
     
     
     private let testBundle: Bundle
@@ -35,7 +35,7 @@ open class Session: URLSession {
     
     // MARK: - Initializers
 
-    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: Bundle = Session.defaultTestBundle!, backingSession: URLSession = URLSession.shared, headersToCheck: [String] = [], filter: Filter? = nil) {
+    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: Bundle = Session.defaultTestBundle!, backingSession: URLSession = URLSession.shared, headersToCheck: [String] = [], filter: Filter = Filter()) {
         self.outputDirectory = outputDirectory
         self.cassetteName = cassetteName
         self.testBundle = testBundle
