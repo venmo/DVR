@@ -11,12 +11,11 @@ struct Interaction {
 
     // MARK: - Initializers
 
-    init(request: URLRequest, response: Foundation.URLResponse, responseData: Data? = nil, recordedAt: Date = Date(), filter: Filter = Filter()) {
+    init(request: URLRequest, response: Foundation.URLResponse, responseData: Data? = nil, recordedAt: Date = Date()) {
         self.recordedAt = recordedAt
-        self.request = filter.beforeRecordRequest(request)
-        let filteredResponseTuple = filter.beforeRecordResponse(response,responseData)
-        self.response = filteredResponseTuple.0
-        self.responseData = filteredResponseTuple.1
+        self.request = request
+        self.response = response
+        self.responseData = responseData
       
     }
 

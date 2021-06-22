@@ -98,7 +98,9 @@ final class SessionDataTask: URLSessionDataTask {
             }
             
             // Create interaction
-            this.interaction = Interaction(request: this.request, response: response, responseData: data, filter: this.session.filter)
+            let filteredRequest = this.session.filter.beforeRecordRequest(this.request)
+            let filteredResponseTuple = this.session.filter.beforeRecordResponse(response,data)
+            this.interaction = Interaction(request: filteredRequest, response: filteredResponseTuple.0, responseData: filteredResponseTuple.1)
             this.session.finishTask(this, interaction: this.interaction!, playback: false)
         })
         task.resume()
