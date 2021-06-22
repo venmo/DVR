@@ -111,6 +111,6 @@ extension Interaction {
         self.responseData = Interaction.dencodeBody(response["body"], headers: response["headers"] as? [String: String])
         self.filter = filter
         self.filter?.beforeRecordRequest(&self.request)
-        self.filter?.beforeRecordResponse(&self.response,&self.responseData!)
+        self.filter?.beforeRecordResponse(&self.response,&self.responseData)
     }
 }
