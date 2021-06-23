@@ -59,7 +59,7 @@ class FilterTests: XCTestCase {
     
     //ensures that requests are scrubbed appropriately
     func testRequestCleanse() throws {
-        var filter = Filter(keys: ["Expires", "Authorization"])
+        var filter = Filter(replacements: ["Expires" : "Redacted", "Authorization" : "Redacted"])
         filter.beforeRecordRequest = cleanRequestWithFilter(filter: filter)
         
         let session = Session(cassetteName: "test_cassette" , filter: filter)

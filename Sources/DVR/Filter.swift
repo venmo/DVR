@@ -31,18 +31,6 @@ public struct Filter {
     public var beforeRecordResponse : ((Foundation.URLResponse, Data?) -> (Foundation.URLResponse, Data?))
     public var beforeRecordRequest : ((URLRequest) -> (URLRequest))
     
-    public init(keys: [String] = [], replacementString: String = "Redacted", requestHook : @escaping ((URLRequest) -> (URLRequest)) = { return $0 } , responseHook : @escaping ((Foundation.URLResponse, Data?) -> (Foundation.URLResponse, Data?)) = {return ($0, $1)} ) {
-        var replacements : [String : String] = [:]
-        
-        for key in keys {
-            replacements[key] = replacementString
-        }
-        
-        self.replacements = replacements
-        self.beforeRecordRequest = requestHook
-        self.beforeRecordResponse = responseHook
-    }
-    
     public init(replacements: [String:String] = [:], queryParameters: [String:String] = [:], postDataParameters: [String:String] = [:], requestHook : @escaping ((URLRequest) -> (URLRequest)) = {return $0} , responseHook : @escaping ((Foundation.URLResponse, Data?) -> (Foundation.URLResponse, Data?)) = {return ($0, $1) } ) {
         self.replacements = replacements
         self.beforeRecordRequest = requestHook
