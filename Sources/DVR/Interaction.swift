@@ -4,19 +4,19 @@ struct Interaction {
 
     // MARK: - Properties
 
-    let request: URLRequest
-    let response: Foundation.URLResponse
-    let responseData: Data?
+    var request: URLRequest
+    var response: Foundation.URLResponse
+    var responseData: Data?
     let recordedAt: Date
-
 
     // MARK: - Initializers
 
     init(request: URLRequest, response: Foundation.URLResponse, responseData: Data? = nil, recordedAt: Date = Date()) {
+        self.recordedAt = recordedAt
         self.request = request
         self.response = response
         self.responseData = responseData
-        self.recordedAt = recordedAt
+      
     }
 
 

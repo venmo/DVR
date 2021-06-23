@@ -11,7 +11,7 @@ final class SessionDataTask: URLSessionDataTask {
 
     // MARK: - Properties
 
-    weak var session: Session!
+    var session: Session!
     let request: URLRequest
     let headersToCheck: [String]
     let completion: Completion?
@@ -44,6 +44,7 @@ final class SessionDataTask: URLSessionDataTask {
     }
 
     override func resume() {
+        
         
         if session.recordMode != .all {
             let cassette = session.cassette
@@ -97,7 +98,9 @@ final class SessionDataTask: URLSessionDataTask {
             }
             
             // Create interaction
-            this.interaction = Interaction(request: this.request, response: response, responseData: data)
+            let filteredRequest = this.session.filter.beforeRecordRequest(this.request)
+            let filteredResponseTuple = this.session.filter.beforeRecordResponse(response,data)
+            this.interaction = Interaction(request: filteredRequest, response: filteredResponseTuple.0, responseData: filteredResponseTuple.1)
             this.session.finishTask(this, interaction: this.interaction!, playback: false)
         })
         task.resume()
