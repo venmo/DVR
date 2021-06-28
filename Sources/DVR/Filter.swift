@@ -51,4 +51,89 @@ public struct Filter {
     public var beforeRecordRequest: ((URLRequest) -> (URLRequest))?
     
     public init() {}
+
+    // MARK: Internal Methods
+
+    func filterHeaders(for request: inout URLRequest) {
+        // return early if request has no headers
+        guard request.allHTTPHeaderFields != nil else {
+            return
+        }
+        for (key, filter) in filterHeaders ?? [:] {
+            guard let match = request.allHTTPHeaderFields![key] else {
+                continue
+            }
+            switch filter {
+            case .remove:
+                request.setValue(nil, forHTTPHeaderField: key)
+            case let .replace(replacement):
+                request.setValue(replacement, forHTTPHeaderField: key)
+            case let .closure(function):
+                request.setValue(function(key, match), forHTTPHeaderField: key)
+            }
+        }
+    }
+
+    func filterQueryParams(for request: inout URLRequest) {
+        // return early if request has no query params
+        guard let url = request.url,
+              var components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let queryItems = components.queryItems else {
+            return
+        }
+        var filteredQueryParams: [URLQueryItem] = []
+        for item in queryItems {
+            guard let filterMatch = filterQueryParameters?[item.name] else {
+                continue
+            }
+            switch filterMatch {
+            case .remove:
+                continue
+            case let .replace(replacement):
+                filteredQueryParams.append(URLQueryItem(name: item.name, value: replacement))
+            case let .closure(function):
+                // don't add if the closure returns nil
+                if let newValue = function(item.name, item.value) {
+                    filteredQueryParams.append(URLQueryItem(name: item.name, value: newValue))
+                }
+            }
+        }
+        components.queryItems = filteredQueryParams
+        request.url = components.url
+    }
+
+    func filterPostParams(for request: inout URLRequest) {
+        // return early if request is not a POST or has no body params
+        guard request.httpMethod == "POST",
+              let httpBody = request.httpBody,
+              var jsonBody = try? JSONSerialization.jsonObject(with: httpBody, options: [.mutableContainers]) else {
+            return
+        }
+        // TODO: needs to account for different ways of encoding form data
+    }
+
+    func filter(request: URLRequest) -> URLRequest {
+        var filtered = request
+        filterHeaders(for: &filtered)
+        filterQueryParams(for: &filtered)
+        filterPostParams(for: &filtered)
+        filtered = beforeRecordRequest?(filtered) ?? filtered
+        return filtered
+    }
+
+    func filter(response: Foundation.URLResponse, withData data: Data?) -> (Foundation.URLResponse, Data?)? {
+        var filtered = response
+        var filteredData = data
+        // TODO: Filter response headers
+        // filterHeaders(for: &filtered)
+        if let responseFilter = beforeRecordResponse {
+            if let filterValues = responseFilter(filtered, filteredData) {
+                filtered = filterValues.0
+                filteredData = filterValues.1
+            } else {
+                return nil
+            }
+        }
+        return (filtered, filteredData)
+    }
 }

@@ -44,7 +44,7 @@ final class SessionDataTask: URLSessionDataTask {
     override func resume() {
 
         // apply request transformations, which could impact matching the interaction
-        let filteredRequest = filter(request: request)
+        let filteredRequest = session.filter.filter(request: request)
 
         if session.recordMode != .all {
             let cassette = session.cassette
@@ -96,7 +96,7 @@ final class SessionDataTask: URLSessionDataTask {
             }
             
             // Create interaction unless the response has been filtered out
-            if let (filteredResponse, filteredData) = this.filter(response: response, withData: data) {
+            if let (filteredResponse, filteredData) = this.session.filter.filter(response: response, withData: data) {
                 // persist the interaction
                 this.interaction = Interaction(request: filteredRequest, response: filteredResponse, responseData: filteredData)
                 this.session.finishTask(this, interaction: this.interaction!, playback: false)
@@ -107,84 +107,6 @@ final class SessionDataTask: URLSessionDataTask {
             }
         })
         task.resume()
-    }
-
-    // MARK: - Internal Methods
-
-    func filterHeaders(for request: inout URLRequest) {
-        // return early if request has no headers
-        guard var filteredHeaders = request.allHTTPHeaderFields else {
-            return
-        }
-        for (key, filter) in session.filter.filterHeaders ?? [:] {
-            guard let match = filteredHeaders[key] else {
-                continue
-            }
-            switch filter {
-            case .remove:
-                filteredHeaders[key] = nil
-            case let .replace(replacement):
-                filteredHeaders[key] = replacement
-            case let .closure(function):
-                filteredHeaders[key] = function(key, match)
-            }
-        }
-        request.allHTTPHeaderFields = filteredHeaders
-    }
-
-    func filterQueryParams(for request: inout URLRequest) {
-        // return early if request has no query params
-        guard let url = request.url,
-              var components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-              let queryItems = components.queryItems else {
-            return
-        }
-        var filteredQueryParams: [URLQueryItem] = []
-        for item in queryItems {
-            guard let filterMatch = session.filter.filterQueryParameters?[item.name] else {
-                continue
-            }
-            switch filterMatch {
-            case .remove:
-                continue
-            case let .replace(replacement):
-                filteredQueryParams.append(URLQueryItem(name: item.name, value: replacement))
-            case let .closure(function):
-                // don't add if the closure returns nil
-                if let newValue = function(item.name, item.value) {
-                    filteredQueryParams.append(URLQueryItem(name: item.name, value: newValue))
-                }
-            }
-        }
-        components.queryItems = filteredQueryParams
-        request.url = components.url
-    }
-
-    func filterPostParams(for request: inout URLRequest) {
-        // return early if request is not a POST or has no body params
-        guard request.httpMethod == "POST",
-              let httpBody = request.httpBody,
-              var jsonBody = try? JSONSerialization.jsonObject(with: httpBody, options: [.mutableContainers]) else {
-            return
-        }
-        // TODO: needs to account for different ways of encoding form data
-    }
-
-    func filter(request: URLRequest) -> URLRequest {
-        var filtered = request
-        filterHeaders(for: &filtered)
-        filterQueryParams(for: &filtered)
-        filterPostParams(for: &filtered)
-        filtered = session.filter.beforeRecordRequest?(filtered) ?? filtered
-        return filtered
-    }
-
-    func filter(response: Foundation.URLResponse, withData data: Data?) -> (Foundation.URLResponse, Data?)? {
-        //  return the same data if no filter present
-        guard let responseFilter = session.filter.beforeRecordResponse else {
-            return (response, data)
-        }
-        return responseFilter(response, data)
     }
 }
 
