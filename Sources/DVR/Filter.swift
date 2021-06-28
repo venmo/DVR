@@ -26,18 +26,29 @@
 
 import Foundation
 
+/// Filters to redact senstive information or otherwise manipulate the request/response.
 public struct Filter {
-    public var replacements : [String : String]
-    public var beforeRecordResponse : ((Foundation.URLResponse, Data?) -> (Foundation.URLResponse, Data?))
-    public var beforeRecordRequest : ((URLRequest) -> (URLRequest))
+
+    /// Describes the desired filter behavior
+    public enum FilterBehavior {
+        /// Value is completed ommitted
+        case remove
+        /// Value is replaced with a static string
+        case replace(String)
+        /// Value is determined by a closure which accepts the key and value and can return a new value or nil to omit
+        case closure((String, String?) -> (String?))
+    }
+
+    /// filters to apply to headers
+    public var filterHeaders: [String: FilterBehavior]?
+    /// filters to apply to query parameters
+    public var filterQueryParameters: [String: FilterBehavior]?
+    /// filters to apply to post data parameters
+    public var filterPostDataParameters: [String: FilterBehavior]?
+    /// a closure to call when processing each response
+    public var beforeRecordResponse: ((Foundation.URLResponse, Data?) -> (Foundation.URLResponse, Data?)?)?
+    /// a closure to call when processing each request
+    public var beforeRecordRequest: ((URLRequest) -> (URLRequest))?
     
-    public init(replacements: [String:String] = [:], queryParameters: [String:String] = [:], postDataParameters: [String:String] = [:], requestHook : @escaping ((URLRequest) -> (URLRequest)) = {return $0} , responseHook : @escaping ((Foundation.URLResponse, Data?) -> (Foundation.URLResponse, Data?)) = {return ($0, $1) } ) {
-        self.replacements = replacements
-        self.beforeRecordRequest = requestHook
-        self.beforeRecordResponse = responseHook
-    }
-   
-    public mutating func addReplacement(key: String, value: String = "Redacted") {
-        self.replacements.updateValue(key, forKey: value)
-    }
+    public init() {}
 }
