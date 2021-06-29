@@ -60,7 +60,7 @@ public struct Filter {
             return
         }
         for (key, filter) in filterHeaders ?? [:] {
-            guard let match = request.allHTTPHeaderFields![key] else {
+            guard let match = request.allHTTPHeaderFields![caseInsensitive: key] else {
                 continue
             }
             switch filter {
@@ -82,16 +82,16 @@ public struct Filter {
         }
         var headers = Dictionary(uniqueKeysWithValues: httpResponse.allHeaderFields.map { ($0 as! String, $1 as! String) })
         for (key, filter) in filterHeaders ?? [:] {
-            guard let match = headers[key] else {
+            guard let match = headers[caseInsensitive: key] else {
                 continue
             }
             switch filter {
             case .remove:
-                headers[key] = nil
+                headers[caseInsensitive: key] = nil
             case let .replace(replacement):
-                headers[key] = replacement
+                headers[caseInsensitive: key] = replacement
             case let .closure(function):
-                headers[key] = function(key, match)
+                headers[caseInsensitive: key] = function(key, match)
             }
         }
         response = Foundation.HTTPURLResponse(

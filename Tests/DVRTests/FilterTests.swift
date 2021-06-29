@@ -1,11 +1,3 @@
-//
-//  FilterTests.swift
-//  DVRTests-iOS
-//
-//  Created by Jáir Myree on 6/22/21.
-//  Copyright © 2021 Venmo. All rights reserved.
-//
-
 import XCTest
 import Foundation
 @testable import DVR
@@ -14,7 +6,7 @@ class FilterTests: XCTestCase {
 
     lazy var request: URLRequest = {
         var request = URLRequest(url: URL(string: "https://www.example.com?param1=val1&param2=val2&param3=val3")!)
-        request.allHTTPHeaderFields = ["header1": "stuff1", "header2": "stuff2", "header3": "stuff3"]
+        request.allHTTPHeaderFields = ["Header1": "stuff1", "Header2": "stuff2", "Header3": "stuff3"]
         return request
     }()
 
@@ -23,7 +15,7 @@ class FilterTests: XCTestCase {
             url: URL(string: "https://www.example/com")!,
             statusCode: 200,
             httpVersion: "",
-            headerFields: ["header1": "value1", "header2": "value2", "header3": "value3"]
+            headerFields: ["Header1": "value1", "Header2": "value2", "Header3": "value3"]
         )
         return response!
     }()
