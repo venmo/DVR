@@ -26,7 +26,6 @@ final class SessionDataTask: URLSessionDataTask {
         return request
     }
 
-
     // MARK: - Initializers
 
     init(session: Session, request: URLRequest, headersToCheck: [String] = [], completion: (Completion)? = nil) {
@@ -36,7 +35,6 @@ final class SessionDataTask: URLSessionDataTask {
         self.completion = completion
     }
 
-
     // MARK: - URLSessionTask
 
     override func cancel() {
@@ -44,13 +42,15 @@ final class SessionDataTask: URLSessionDataTask {
     }
 
     override func resume() {
-        
-        
+
+        // apply request transformations, which could impact matching the interaction
+        let filteredRequest = session.filter.filter(request: request)
+
         if session.recordMode != .all {
             let cassette = session.cassette
 
             // Find interaction
-            if let interaction = session.cassette?.interactionForRequest(request, headersToCheck: headersToCheck) {
+            if let interaction = session.cassette?.interactionForRequest(filteredRequest, headersToCheck: headersToCheck) {
                 self.interaction = interaction
                 // Forward completion
                 if let completion = completion {
@@ -78,9 +78,7 @@ final class SessionDataTask: URLSessionDataTask {
                 fatalError("[DVR] Recording is disabled.")
             }
         }
-        
-        
-        
+
         let task = session.backingSession.dataTask(with: request, completionHandler: { [weak self] data, response, error in
 
             //Ensure we have a response
@@ -97,11 +95,16 @@ final class SessionDataTask: URLSessionDataTask {
                 this.completion?(data, response, nil)
             }
             
-            // Create interaction
-            let filteredRequest = this.session.filter.beforeRecordRequest(this.request)
-            let filteredResponseTuple = this.session.filter.beforeRecordResponse(response,data)
-            this.interaction = Interaction(request: filteredRequest, response: filteredResponseTuple.0, responseData: filteredResponseTuple.1)
-            this.session.finishTask(this, interaction: this.interaction!, playback: false)
+            // Create interaction unless the response has been filtered out
+            if let (filteredResponse, filteredData) = this.session.filter.filter(response: response, withData: data) {
+                // persist the interaction
+                this.interaction = Interaction(request: filteredRequest, response: filteredResponse, responseData: filteredData)
+                this.session.finishTask(this, interaction: this.interaction!, playback: false)
+            } else {
+                // do not persist the interaction if the filtered response was nil
+                this.interaction = Interaction(request: filteredRequest, response: response, responseData: data)
+                this.session.finishTask(this, interaction: this.interaction!, playback: true)
+            }
         })
         task.resume()
     }
