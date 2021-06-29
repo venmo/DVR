@@ -22,7 +22,7 @@ class FilterTests: XCTestCase {
         var response = Foundation.HTTPURLResponse(
             url: URL(string: "https://www.example/com")!,
             statusCode: 200,
-            httpVersion: "1.2",
+            httpVersion: "",
             headerFields: ["header1": "value1", "header2": "value2", "header3": "value3"]
         )
         return response!
@@ -79,7 +79,7 @@ class FilterTests: XCTestCase {
             let newResponse = Foundation.HTTPURLResponse(
                 url: httpResponse.url!,
                 statusCode: httpResponse.statusCode,
-                httpVersion: "1.2",
+                httpVersion: "",
                 headerFields: newHeaders
             )
             let newData: Data? = nil
@@ -89,8 +89,7 @@ class FilterTests: XCTestCase {
         let headers = (cleanedResponse as! Foundation.HTTPURLResponse).allHeaderFields
         XCTAssertNil(headers["header1"])
         XCTAssertEqual(headers["header2"] as! String, "redacted")
-        XCTAssertEqual(headers["header3"] as! String, "header3+stuff3")
+        XCTAssertEqual(headers["header3"] as! String, "header3+value3")
         XCTAssertEqual(headers["header4"] as! String, "value4")
-
     }
 }

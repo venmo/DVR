@@ -74,6 +74,34 @@ public struct Filter {
         }
     }
 
+    func filterHeaders(for response: inout Foundation.URLResponse) {
+        // return early if response is not HTTPURLResponse or has no headers
+        guard let httpResponse = response as? Foundation.HTTPURLResponse,
+              httpResponse.allHeaderFields.isEmpty == false else {
+            return
+        }
+        var headers = Dictionary(uniqueKeysWithValues: httpResponse.allHeaderFields.map { ($0 as! String, $1 as! String) })
+        for (key, filter) in filterHeaders ?? [:] {
+            guard let match = headers[key] else {
+                continue
+            }
+            switch filter {
+            case .remove:
+                headers[key] = nil
+            case let .replace(replacement):
+                headers[key] = replacement
+            case let .closure(function):
+                headers[key] = function(key, match)
+            }
+        }
+        response = Foundation.HTTPURLResponse(
+            url: httpResponse.url!,
+            statusCode: httpResponse.statusCode,
+            httpVersion: "",
+            headerFields: headers
+        ) ?? response
+    }
+
     func filterQueryParams(for request: inout URLRequest) {
         // return early if request has no query params
         guard let url = request.url,
@@ -124,8 +152,7 @@ public struct Filter {
     func filter(response: Foundation.URLResponse, withData data: Data?) -> (Foundation.URLResponse, Data?)? {
         var filtered = response
         var filteredData = data
-        // TODO: Filter response headers
-        // filterHeaders(for: &filtered)
+        filterHeaders(for: &filtered)
         if let responseFilter = beforeRecordResponse {
             if let filterValues = responseFilter(filtered, filteredData) {
                 filtered = filterValues.0
