@@ -101,7 +101,7 @@ extension Interaction {
         guard let request = dictionary["request"] as? [String: Any],
             let response = dictionary["response"] as? [String: Any],
             let recordedAt = dictionary["recorded_at"] as? TimeInterval else { return nil }
-
+        
         self.request = NSMutableURLRequest(dictionary: request) as URLRequest
         self.response = HTTPURLResponse(dictionary: response)
         self.recordedAt = Date(timeIntervalSince1970: recordedAt)

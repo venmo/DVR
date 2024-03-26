@@ -18,13 +18,13 @@ struct Cassette {
 
     // MARK: - Functions
 
-    func interactionForRequest(_ request: URLRequest, headersToCheck: [String] = []) -> Interaction? {
+    func interactionForRequest(_ request: URLRequest, headersToCheck: [String] = [], paramsToIgnore: [String] = []) -> Interaction? {
         var match: Interaction?
         for interaction in interactions {
             let interactionRequest = interaction.request
 
             if interactionRequest.httpMethod == request.httpMethod &&
-                interactionRequest.url == request.url &&
+                interactionRequest.hasParamsEqualToThatOfRequest(request, ignoreParams: paramsToIgnore) &&
                 interactionRequest.hasHTTPBodyEqualToThatOfRequest(request)  {
 
                 // Overwrite the current match if the required headers are equal.
@@ -82,5 +82,28 @@ private extension URLRequest {
             }
         }
         return true
+    }
+    
+    func hasParamsEqualToThatOfRequest(_ request: URLRequest, ignoreParams: [String] = []) -> Bool {
+        if url == request.url { return true }
+            
+        let request1 = createRequest(withoutKeys: ignoreParams)
+        let request2 = request.createRequest(withoutKeys: ignoreParams)
+        
+        if request1.url == request2.url { return true }
+        
+        return false
+    }
+
+    func createRequest(withoutKeys: [String]) -> URLRequest {
+        var newRequest = self
+        guard let oldURL = url else { return newRequest }
+        
+        if var urlComponents = URLComponents(url: oldURL, resolvingAgainstBaseURL: false) {
+            urlComponents.queryItems = urlComponents.queryItems?.filter {  !withoutKeys.contains($0.name) }
+            newRequest.url = urlComponents.url
+        }
+        
+        return newRequest
     }
 }

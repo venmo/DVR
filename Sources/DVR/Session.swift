@@ -15,6 +15,7 @@ open class Session: URLSession {
 
     private let testBundle: Bundle
     private let headersToCheck: [String]
+    private let paramsToIgnore: [String]
 
     private var recording = false
     private var needsPersistence = false
@@ -28,12 +29,18 @@ open class Session: URLSession {
 
     // MARK: - Initializers
 
-    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: Bundle = Session.defaultTestBundle!, backingSession: URLSession = URLSession.shared, headersToCheck: [String] = []) {
+    public init(outputDirectory: String = "~/Desktop/DVR/", 
+                cassetteName: String,
+                testBundle: Bundle = Session.defaultTestBundle!,
+                backingSession: URLSession = URLSession.shared,
+                headersToCheck: [String] = [],
+                paramsToIgnore: [String] = []) {
         self.outputDirectory = outputDirectory
         self.cassetteName = cassetteName
         self.testBundle = testBundle
         self.backingSession = backingSession
         self.headersToCheck = headersToCheck
+        self.paramsToIgnore = paramsToIgnore
         super.init()
     }
 

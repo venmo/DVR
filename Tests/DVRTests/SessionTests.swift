@@ -108,6 +108,30 @@ class SessionTests: XCTestCase {
 
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testTextPlaybackWithParams() {
+        let session = Session(cassetteName: "text", paramsToIgnore: ["key"])
+        // session.recordingEnabled = false
+
+        var request = URLRequest(url: URL(string: "http://api.tomtom.com/search/2/evsearch?status=Available&key=Wmw0860")!)
+        request.httpMethod = "POST"
+        request.httpBody = "Some text.".data(using: String.Encoding.utf8)
+        request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
+
+        let expectation = self.expectation(description: "Network")
+
+        session.dataTask(with: request, completionHandler: { data, response, error in
+            XCTAssertEqual("hello", String(data: data!, encoding: String.Encoding.utf8))
+
+            let httpResponse = response as! Foundation.HTTPURLResponse
+            XCTAssertEqual(200, httpResponse.statusCode)
+
+            expectation.fulfill()
+        }) .resume()
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
 
     func testDownload() {
         let expectation = self.expectation(description: "Network")
@@ -235,6 +259,28 @@ class SessionTests: XCTestCase {
 
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testRecordingWithIgnoredParams() {
+        let expectation = self.expectation(description: "didCompleteWithError")
+
+        let request = URLRequest(url: URL(string: "http://cdn.contentful.com/spaces/cfexampleapi/entries")!)
+
+        let config = URLSessionConfiguration.default
+        let backingSession = URLSession(configuration: config)
+        let session = Session(cassetteName: "failed-request-example",
+                              backingSession: backingSession,
+                              paramsToIgnore: ["apiKey"])
+
+        let task = session.dataTask(with: request) { (_, urlResponse, _) in
+            XCTAssertNotEqual(200, (urlResponse as? Foundation.HTTPURLResponse)?.statusCode)
+            XCTAssertEqual(401, (urlResponse as? Foundation.HTTPURLResponse)?.statusCode)
+            expectation.fulfill()
+        }
+        task.resume()
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
 
     func testSameRequestWithDifferentHeaders() {
         let configuration = URLSessionConfiguration.default
