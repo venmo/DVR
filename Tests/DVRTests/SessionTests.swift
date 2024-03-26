@@ -108,6 +108,58 @@ class SessionTests: XCTestCase {
 
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testTextPlaybackWithAllParamsWithoutIgnoredParameter() {
+        let session = Session(cassetteName: "response-headers")
+
+        let request = URLRequest(url: URL(string: "https://httpbin.org/response-headers?apiKey=val&format=json")!)
+        let expectation = self.expectation(description: "Network")
+
+        session.dataTask(with: request, completionHandler: { data, response, error in
+            let httpResponse = response as? Foundation.HTTPURLResponse
+            XCTAssertEqual(200, httpResponse?.statusCode)
+            
+            guard let data else { XCTFail("data is nil"); return }
+            
+            guard let JSONDict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                XCTFail("JSONDict is nil"); return
+            }
+            
+            XCTAssertEqual(JSONDict["Content-Length"] as? String, "110")
+            XCTAssertEqual(JSONDict["Content-Type"] as? String, "application/json")
+            XCTAssertEqual(JSONDict["apiKey"] as? String, "val")
+            XCTAssertEqual(JSONDict["format"] as? String, "json")
+            expectation.fulfill()
+        }).resume()
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testTextPlaybackWithAllParamsWithIgnoredParameter() {
+        let session = Session(cassetteName: "response-headers-without-apikey", parametersToIgnore: ["apiKey"])
+
+        let request = URLRequest(url: URL(string: "https://httpbin.org/response-headers?apiKey=val&format=json")!)
+        let expectation = self.expectation(description: "Network")
+
+        session.dataTask(with: request, completionHandler: { data, response, error in
+            let httpResponse = response as? Foundation.HTTPURLResponse
+            XCTAssertEqual(200, httpResponse?.statusCode)
+            
+            guard let data else { XCTFail("data is nil"); return }
+            
+            guard let JSONDict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                XCTFail("JSONDict is nil"); return
+            }
+            
+            XCTAssertEqual(JSONDict["Content-Length"] as? String, "110")
+            XCTAssertEqual(JSONDict["Content-Type"] as? String, "application/json")
+            XCTAssertEqual(JSONDict["apiKey"] as? String, nil)
+            XCTAssertEqual(JSONDict["format"] as? String, "json")
+            expectation.fulfill()
+        }).resume()
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
 
     func testDownload() {
         let expectation = self.expectation(description: "Network")
@@ -269,4 +321,29 @@ class SessionTests: XCTestCase {
 
         wait(for: [firstExpectation, secondExpectation], timeout: 3.0)
     }
+    
+    
+    func testTextPlaybackWithParams() {
+        let session = Session(cassetteName: "text-with-param", parametersToIgnore: ["key"])
+        session.recordingEnabled = false
+
+        var request = URLRequest(url: URL(string: "http://example.com?status=Available&key=Wmw0860")!)
+        request.httpMethod = "POST"
+        request.httpBody = "Some text.".data(using: String.Encoding.utf8)
+        request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
+
+        let expectation = self.expectation(description: "Network")
+
+        session.dataTask(with: request, completionHandler: { data, response, error in
+            XCTAssertEqual("hello", String(data: data!, encoding: String.Encoding.utf8))
+
+            let httpResponse = response as! Foundation.HTTPURLResponse
+            XCTAssertEqual(200, httpResponse.statusCode)
+
+            expectation.fulfill()
+        }).resume()
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
 }

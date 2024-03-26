@@ -15,12 +15,15 @@ open class Session: URLSession {
 
     private let testBundle: Bundle
     private let headersToCheck: [String]
+    private let parametersToIgnore: [String]
 
     private var recording = false
     private var needsPersistence = false
     private var outstandingTasks = [URLSessionTask]()
     private var completedInteractions = [Interaction]()
     private var completionBlock: (() -> Void)?
+    
+    private(set) var requestSavedForBackingSession: URLRequest?
 
     override open var delegate: URLSessionDelegate? {
         return backingSession.delegate
@@ -28,12 +31,18 @@ open class Session: URLSession {
 
     // MARK: - Initializers
 
-    public init(outputDirectory: String = "~/Desktop/DVR/", cassetteName: String, testBundle: Bundle = Session.defaultTestBundle!, backingSession: URLSession = URLSession.shared, headersToCheck: [String] = []) {
+    public init(outputDirectory: String = "~/Desktop/DVR/", 
+                cassetteName: String,
+                testBundle: Bundle = Session.defaultTestBundle!,
+                backingSession: URLSession = URLSession.shared,
+                headersToCheck: [String] = [],
+                parametersToIgnore: [String] = []) {
         self.outputDirectory = outputDirectory
         self.cassetteName = cassetteName
         self.testBundle = testBundle
         self.backingSession = backingSession
         self.headersToCheck = headersToCheck
+        self.parametersToIgnore = parametersToIgnore
         super.init()
     }
 
@@ -86,6 +95,7 @@ open class Session: URLSession {
         recording = false
         outstandingTasks.removeAll()
         backingSession.invalidateAndCancel()
+        requestSavedForBackingSession = nil
     }
 
 
@@ -159,14 +169,18 @@ open class Session: URLSession {
     // MARK: - Private
 
     private func addDataTask(_ request: URLRequest, completionHandler: ((Data?, Foundation.URLResponse?, NSError?) -> Void)? = nil) -> URLSessionDataTask {
-        let modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
+        var modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
+        requestSavedForBackingSession = modifiedRequest
+        modifiedRequest = modifiedRequest.createRequest(withoutKeys: parametersToIgnore)
         let task = SessionDataTask(session: self, request: modifiedRequest, headersToCheck: headersToCheck, completion: completionHandler)
         addTask(task)
         return task
     }
 
     private func addDownloadTask(_ request: URLRequest, completionHandler: SessionDownloadTask.Completion? = nil) -> URLSessionDownloadTask {
-        let modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
+        var modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
+        requestSavedForBackingSession = modifiedRequest
+        modifiedRequest = modifiedRequest.createRequest(withoutKeys: parametersToIgnore)
         let task = SessionDownloadTask(session: self, request: modifiedRequest, completion: completionHandler)
         addTask(task)
         return task
@@ -175,6 +189,8 @@ open class Session: URLSession {
     private func addUploadTask(_ request: URLRequest, fromData data: Data?, completionHandler: SessionUploadTask.Completion? = nil) -> URLSessionUploadTask {
         var modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
         modifiedRequest = data.map(modifiedRequest.appending) ?? modifiedRequest
+        requestSavedForBackingSession = modifiedRequest
+        modifiedRequest = modifiedRequest.createRequest(withoutKeys: parametersToIgnore)
         let task = SessionUploadTask(session: self, request: modifiedRequest, completion: completionHandler)
         addTask(task.dataTask)
         return task

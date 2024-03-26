@@ -1,0 +1,31 @@
+{
+  "name" : "response-headers-without-apikey",
+  "interactions" : [
+    {
+      "recorded_at" : 1711474650.8948321,
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Content-Length" : "110",
+          "Date" : "Tue, 26 Mar 2024 17:37:30 GMT",
+          "Access-Control-Allow-Origin" : "*",
+          "Content-Type" : "application\/json",
+          "format" : "json",
+          "Server" : "gunicorn\/19.9.0",
+          "access-control-allow-credentials" : "true",
+          "apikey" : "val"
+        },
+        "body" : {
+          "format" : "json",
+          "Content-Length" : "110",
+          "Content-Type" : "application\/json"
+        },
+        "url" : "https:\/\/httpbin.org\/response-headers?format=json"
+      },
+      "request" : {
+        "url" : "https:\/\/httpbin.org\/response-headers?format=json",
+        "method" : "GET"
+      }
+    }
+  ]
+}
