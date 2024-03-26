@@ -39,6 +39,12 @@
 		72D43A022BB305CD009C32E4 /* text-with-param.json in Resources */ = {isa = PBXBuildFile; fileRef = 72D43A012BB305CD009C32E4 /* text-with-param.json */; };
 		72D43A032BB305CD009C32E4 /* text-with-param.json in Resources */ = {isa = PBXBuildFile; fileRef = 72D43A012BB305CD009C32E4 /* text-with-param.json */; };
 		72D43A042BB305CD009C32E4 /* text-with-param.json in Resources */ = {isa = PBXBuildFile; fileRef = 72D43A012BB305CD009C32E4 /* text-with-param.json */; };
+		72D43A0A2BB31704009C32E4 /* EVSearchNoKey.json in Resources */ = {isa = PBXBuildFile; fileRef = 72D43A092BB31704009C32E4 /* EVSearchNoKey.json */; };
+		72D43A0B2BB31704009C32E4 /* EVSearchNoKey.json in Resources */ = {isa = PBXBuildFile; fileRef = 72D43A092BB31704009C32E4 /* EVSearchNoKey.json */; };
+		72D43A0C2BB31704009C32E4 /* EVSearchNoKey.json in Resources */ = {isa = PBXBuildFile; fileRef = 72D43A092BB31704009C32E4 /* EVSearchNoKey.json */; };
+		72D43A0E2BB327D0009C32E4 /* EVSearch.json in Resources */ = {isa = PBXBuildFile; fileRef = 72D43A0D2BB327D0009C32E4 /* EVSearch.json */; };
+		72D43A0F2BB327D0009C32E4 /* EVSearch.json in Resources */ = {isa = PBXBuildFile; fileRef = 72D43A0D2BB327D0009C32E4 /* EVSearch.json */; };
+		72D43A102BB327D0009C32E4 /* EVSearch.json in Resources */ = {isa = PBXBuildFile; fileRef = 72D43A0D2BB327D0009C32E4 /* EVSearch.json */; };
 		B19D62651CB1860400E16D11 /* SessionUploadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D62641CB1860400E16D11 /* SessionUploadTask.swift */; };
 		BB946590224BBCEA0004F29B /* json-example.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862971F7D44E200CB2625 /* json-example.json */; };
 		BB946591224BBCEA0004F29B /* multiple.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7862951F7D44E200CB2625 /* multiple.json */; };
@@ -118,6 +124,8 @@
 		3690A07B1B33AA3B00731222 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3690A0841B33AA3C00731222 /* DVRTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DVRTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72D43A012BB305CD009C32E4 /* text-with-param.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "text-with-param.json"; sourceTree = "<group>"; };
+		72D43A092BB31704009C32E4 /* EVSearchNoKey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EVSearchNoKey.json; sourceTree = "<group>"; };
+		72D43A0D2BB327D0009C32E4 /* EVSearch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EVSearch.json; sourceTree = "<group>"; };
 		B19D62641CB1860400E16D11 /* SessionUploadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionUploadTask.swift; sourceTree = "<group>"; };
 		BB9465A1224BC2620004F29B /* failed-request-example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "failed-request-example.json"; sourceTree = "<group>"; };
 		DB256BA82666AEBB006689A9 /* different-headers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "different-headers.json"; sourceTree = "<group>"; };
@@ -276,6 +284,8 @@
 				72D43A012BB305CD009C32E4 /* text-with-param.json */,
 				ED7862941F7D44E200CB2625 /* upload-data.json */,
 				ED7862931F7D44E200CB2625 /* upload-file.json */,
+				72D43A092BB31704009C32E4 /* EVSearchNoKey.json */,
+				72D43A0D2BB327D0009C32E4 /* EVSearch.json */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -493,9 +503,11 @@
 			files = (
 				72D43A042BB305CD009C32E4 /* text-with-param.json in Resources */,
 				BB94659A224BBCEB0004F29B /* json-example.json in Resources */,
+				72D43A102BB327D0009C32E4 /* EVSearch.json in Resources */,
 				BB94659B224BBCEB0004F29B /* multiple.json in Resources */,
 				BB94659D224BBCEB0004F29B /* text.json in Resources */,
 				DB256BAB2666AEBB006689A9 /* different-headers.json in Resources */,
+				72D43A0C2BB31704009C32E4 /* EVSearchNoKey.json in Resources */,
 				BB94659E224BBCEB0004F29B /* upload-file.json in Resources */,
 				ED7862AD1F7D44EB00CB2625 /* example.json in Resources */,
 				BB94659C224BBCEB0004F29B /* testfile.txt in Resources */,
@@ -517,9 +529,11 @@
 			files = (
 				72D43A022BB305CD009C32E4 /* text-with-param.json in Resources */,
 				BB946590224BBCEA0004F29B /* json-example.json in Resources */,
+				72D43A0E2BB327D0009C32E4 /* EVSearch.json in Resources */,
 				BB946591224BBCEA0004F29B /* multiple.json in Resources */,
 				BB946593224BBCEA0004F29B /* text.json in Resources */,
 				DB256BA92666AEBB006689A9 /* different-headers.json in Resources */,
+				72D43A0A2BB31704009C32E4 /* EVSearchNoKey.json in Resources */,
 				BB946594224BBCEA0004F29B /* upload-file.json in Resources */,
 				ED78629F1F7D44EA00CB2625 /* example.json in Resources */,
 				BB946592224BBCEA0004F29B /* testfile.txt in Resources */,
@@ -541,9 +555,11 @@
 			files = (
 				72D43A032BB305CD009C32E4 /* text-with-param.json in Resources */,
 				BB946595224BBCEB0004F29B /* json-example.json in Resources */,
+				72D43A0F2BB327D0009C32E4 /* EVSearch.json in Resources */,
 				BB946596224BBCEB0004F29B /* multiple.json in Resources */,
 				BB946598224BBCEB0004F29B /* text.json in Resources */,
 				DB256BAA2666AEBB006689A9 /* different-headers.json in Resources */,
+				72D43A0B2BB31704009C32E4 /* EVSearchNoKey.json in Resources */,
 				BB946599224BBCEB0004F29B /* upload-file.json in Resources */,
 				ED7862A61F7D44EB00CB2625 /* example.json in Resources */,
 				BB946597224BBCEB0004F29B /* testfile.txt in Resources */,

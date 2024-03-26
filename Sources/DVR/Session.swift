@@ -22,6 +22,8 @@ open class Session: URLSession {
     private var outstandingTasks = [URLSessionTask]()
     private var completedInteractions = [Interaction]()
     private var completionBlock: (() -> Void)?
+    
+    private(set) var requestSavedForBackingSession: URLRequest?
 
     override open var delegate: URLSessionDelegate? {
         return backingSession.delegate
@@ -93,6 +95,7 @@ open class Session: URLSession {
         recording = false
         outstandingTasks.removeAll()
         backingSession.invalidateAndCancel()
+        requestSavedForBackingSession = nil
     }
 
 
@@ -167,6 +170,7 @@ open class Session: URLSession {
 
     private func addDataTask(_ request: URLRequest, completionHandler: ((Data?, Foundation.URLResponse?, NSError?) -> Void)? = nil) -> URLSessionDataTask {
         var modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
+        requestSavedForBackingSession = modifiedRequest
         modifiedRequest = modifiedRequest.createRequest(withoutKeys: parametersToIgnore)
         let task = SessionDataTask(session: self, request: modifiedRequest, headersToCheck: headersToCheck, completion: completionHandler)
         addTask(task)
@@ -175,6 +179,7 @@ open class Session: URLSession {
 
     private func addDownloadTask(_ request: URLRequest, completionHandler: SessionDownloadTask.Completion? = nil) -> URLSessionDownloadTask {
         var modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
+        requestSavedForBackingSession = modifiedRequest
         modifiedRequest = modifiedRequest.createRequest(withoutKeys: parametersToIgnore)
         let task = SessionDownloadTask(session: self, request: modifiedRequest, completion: completionHandler)
         addTask(task)
@@ -184,6 +189,7 @@ open class Session: URLSession {
     private func addUploadTask(_ request: URLRequest, fromData data: Data?, completionHandler: SessionUploadTask.Completion? = nil) -> URLSessionUploadTask {
         var modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
         modifiedRequest = data.map(modifiedRequest.appending) ?? modifiedRequest
+        requestSavedForBackingSession = modifiedRequest
         modifiedRequest = modifiedRequest.createRequest(withoutKeys: parametersToIgnore)
         let task = SessionUploadTask(session: self, request: modifiedRequest, completion: completionHandler)
         addTask(task.dataTask)

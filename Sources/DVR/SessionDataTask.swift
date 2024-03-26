@@ -73,11 +73,13 @@ final class SessionDataTask: URLSessionDataTask {
         if session.recordingEnabled == false {
             fatalError("[DVR] Recording is disabled.")
         }
+        
+        let request = session.requestSavedForBackingSession ?? request
 
         let task = session.backingSession.dataTask(with: request, completionHandler: { [weak self] data, response, error in
 
             //Ensure we have a response
-            guard let response = response else {
+            guard let response else {
                 fatalError("[DVR] Failed to record because the task returned a nil response.")
             }
 

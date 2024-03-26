@@ -281,7 +281,6 @@ class SessionTests: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
     }
 
-
     func testSameRequestWithDifferentHeaders() {
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = ["testSessionHeader": "testSessionHeaderValue"]
@@ -315,4 +314,48 @@ class SessionTests: XCTestCase {
 
         wait(for: [firstExpectation, secondExpectation], timeout: 3.0)
     }
+    
+    func testTestEVSearchNoKey() throws {
+        let session = Session(cassetteName: "EVSearchNoKey", parametersToIgnore: ["key"])
+        
+        let url = try XCTUnwrap  (URL(string:"https://api.tomtom.com/search/2/evsearch?radius=5000&lon=4.909466&limit=2&lat=52.377271&key=Wmw0860huQmJ1bw25TMGM3YTPVAfT2Us&connectorSet=&accessTypes=Public"))
+        
+        let request = URLRequest(url: url)
+        
+        let firstExpectation = self.expectation(description: "request 1 completed")
+        session.dataTask(with: request, completionHandler: { data, response, error in
+            let text = String(data: data!, encoding: String.Encoding.utf8)
+
+            let httpResponse = response as! Foundation.HTTPURLResponse
+            XCTAssertEqual(200, httpResponse.statusCode)
+            XCTAssertGreaterThan(text?.count ?? 0, 1)
+
+            firstExpectation.fulfill()
+        }) .resume()
+        
+        
+        wait(for: [firstExpectation], timeout: 10.0)
+    }
+    
+    func testTestEVSearch() throws {
+        let session = Session(cassetteName: "EVSearch", parametersToIgnore: ["key"])
+        
+        let url = try XCTUnwrap  (URL(string:"https://api.tomtom.com/search/2/evsearch?radius=5000&lon=4.909466&limit=2&lat=52.377271&key=Wmw0860huQmJ1bw25TMGM3YTPVAfT2Us&connectorSet=&accessTypes=Public"))
+        
+        let request = URLRequest(url: url)
+        
+        let firstExpectation = self.expectation(description: "request 1 completed")
+        session.dataTask(with: request, completionHandler: { data, response, error in
+            let text = String(data: data!, encoding: String.Encoding.utf8)
+
+            let httpResponse = response as! Foundation.HTTPURLResponse
+            XCTAssertEqual(200, httpResponse.statusCode)
+
+            firstExpectation.fulfill()
+        }) .resume()
+        
+        
+        wait(for: [firstExpectation], timeout: 10.0)
+    }
+
 }
