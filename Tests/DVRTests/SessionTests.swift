@@ -110,10 +110,10 @@ class SessionTests: XCTestCase {
     }
     
     func testTextPlaybackWithParams() {
-        let session = Session(cassetteName: "text", paramsToIgnore: ["key"])
-        // session.recordingEnabled = false
+        let session = Session(cassetteName: "text-with-param", parametersToIgnore: ["key"])
+        session.recordingEnabled = false
 
-        var request = URLRequest(url: URL(string: "http://api.tomtom.com/search/2/evsearch?status=Available&key=Wmw0860")!)
+        var request = URLRequest(url: URL(string: "http://example.com?status=Available&key=Wmw0860")!)
         request.httpMethod = "POST"
         request.httpBody = "Some text.".data(using: String.Encoding.utf8)
         request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
@@ -269,7 +269,7 @@ class SessionTests: XCTestCase {
         let backingSession = URLSession(configuration: config)
         let session = Session(cassetteName: "failed-request-example",
                               backingSession: backingSession,
-                              paramsToIgnore: ["apiKey"])
+                              parametersToIgnore: ["apiKey"])
 
         let task = session.dataTask(with: request) { (_, urlResponse, _) in
             XCTAssertNotEqual(200, (urlResponse as? Foundation.HTTPURLResponse)?.statusCode)

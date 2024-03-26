@@ -15,7 +15,7 @@ open class Session: URLSession {
 
     private let testBundle: Bundle
     private let headersToCheck: [String]
-    private let paramsToIgnore: [String]
+    private let parametersToIgnore: [String]
 
     private var recording = false
     private var needsPersistence = false
@@ -34,13 +34,13 @@ open class Session: URLSession {
                 testBundle: Bundle = Session.defaultTestBundle!,
                 backingSession: URLSession = URLSession.shared,
                 headersToCheck: [String] = [],
-                paramsToIgnore: [String] = []) {
+                parametersToIgnore: [String] = []) {
         self.outputDirectory = outputDirectory
         self.cassetteName = cassetteName
         self.testBundle = testBundle
         self.backingSession = backingSession
         self.headersToCheck = headersToCheck
-        self.paramsToIgnore = paramsToIgnore
+        self.parametersToIgnore = parametersToIgnore
         super.init()
     }
 
@@ -166,14 +166,16 @@ open class Session: URLSession {
     // MARK: - Private
 
     private func addDataTask(_ request: URLRequest, completionHandler: ((Data?, Foundation.URLResponse?, NSError?) -> Void)? = nil) -> URLSessionDataTask {
-        let modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
+        var modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
+        modifiedRequest = modifiedRequest.createRequest(withoutKeys: parametersToIgnore)
         let task = SessionDataTask(session: self, request: modifiedRequest, headersToCheck: headersToCheck, completion: completionHandler)
         addTask(task)
         return task
     }
 
     private func addDownloadTask(_ request: URLRequest, completionHandler: SessionDownloadTask.Completion? = nil) -> URLSessionDownloadTask {
-        let modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
+        var modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
+        modifiedRequest = modifiedRequest.createRequest(withoutKeys: parametersToIgnore)
         let task = SessionDownloadTask(session: self, request: modifiedRequest, completion: completionHandler)
         addTask(task)
         return task
@@ -182,6 +184,7 @@ open class Session: URLSession {
     private func addUploadTask(_ request: URLRequest, fromData data: Data?, completionHandler: SessionUploadTask.Completion? = nil) -> URLSessionUploadTask {
         var modifiedRequest = backingSession.configuration.httpAdditionalHeaders.map(request.appending) ?? request
         modifiedRequest = data.map(modifiedRequest.appending) ?? modifiedRequest
+        modifiedRequest = modifiedRequest.createRequest(withoutKeys: parametersToIgnore)
         let task = SessionUploadTask(session: self, request: modifiedRequest, completion: completionHandler)
         addTask(task.dataTask)
         return task

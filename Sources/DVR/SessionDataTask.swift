@@ -12,6 +12,7 @@ final class SessionDataTask: URLSessionDataTask {
     weak var session: Session!
     let request: URLRequest
     let headersToCheck: [String]
+    let parametersToIgnore: [String]
     let completion: Completion?
     private let queue = DispatchQueue(label: "com.venmo.DVR.sessionDataTaskQueue", attributes: [])
     private var interaction: Interaction?
@@ -27,10 +28,15 @@ final class SessionDataTask: URLSessionDataTask {
 
     // MARK: - Initializers
 
-    init(session: Session, request: URLRequest, headersToCheck: [String] = [], completion: (Completion)? = nil) {
+    init(session: Session, 
+         request: URLRequest,
+         headersToCheck: [String] = [],
+         parametersToIgnore: [String] = [],
+         completion: (Completion)? = nil) {
         self.session = session
         self.request = request
         self.headersToCheck = headersToCheck
+        self.parametersToIgnore = parametersToIgnore
         self.completion = completion
     }
 
@@ -45,7 +51,9 @@ final class SessionDataTask: URLSessionDataTask {
         let cassette = session.cassette
 
         // Find interaction
-        if let interaction = session.cassette?.interactionForRequest(request, headersToCheck: headersToCheck) {
+        if let interaction = session.cassette?.interactionForRequest(request, 
+                                                                     headersToCheck: headersToCheck,
+                                                                     parametersToIgnore: parametersToIgnore) {
             self.interaction = interaction
             // Forward completion
             if let completion = completion {
@@ -58,7 +66,7 @@ final class SessionDataTask: URLSessionDataTask {
         }
 
         if cassette != nil {
-            fatalError("[DVR] Invalid request. The request was not found in the cassette.")
+            fatalError("[DVR] Invalid request: \(request). The request was not found in the cassette with name: \(cassette?.name ?? "nil")")
         }
 
         // Cassette is missing. Record.
