@@ -109,29 +109,57 @@ class SessionTests: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
     }
     
-    func testTextPlaybackWithParams() {
-        let session = Session(cassetteName: "text-with-param", parametersToIgnore: ["key"])
-        session.recordingEnabled = false
+    func testTextPlaybackWithAllParamsWithoutIgnoredParameter() {
+        let session = Session(cassetteName: "response-headers")
 
-        var request = URLRequest(url: URL(string: "http://example.com?status=Available&key=Wmw0860")!)
-        request.httpMethod = "POST"
-        request.httpBody = "Some text.".data(using: String.Encoding.utf8)
-        request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
-
+        let request = URLRequest(url: URL(string: "https://httpbin.org/response-headers?apiKey=val&format=json")!)
         let expectation = self.expectation(description: "Network")
 
         session.dataTask(with: request, completionHandler: { data, response, error in
-            XCTAssertEqual("hello", String(data: data!, encoding: String.Encoding.utf8))
-
-            let httpResponse = response as! Foundation.HTTPURLResponse
-            XCTAssertEqual(200, httpResponse.statusCode)
-
+            let httpResponse = response as? Foundation.HTTPURLResponse
+            XCTAssertEqual(200, httpResponse?.statusCode)
+            
+            guard let data else { XCTFail("data is nil"); return }
+            
+            guard let JSONDict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                XCTFail("JSONDict is nil"); return
+            }
+            
+            XCTAssertEqual(JSONDict["Content-Length"] as? String, "110")
+            XCTAssertEqual(JSONDict["Content-Type"] as? String, "application/json")
+            XCTAssertEqual(JSONDict["apiKey"] as? String, "val")
+            XCTAssertEqual(JSONDict["format"] as? String, "json")
             expectation.fulfill()
-        }) .resume()
+        }).resume()
 
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testTextPlaybackWithAllParamsWithIgnoredParameter() {
+        let session = Session(cassetteName: "response-headers-without-apikey", parametersToIgnore: ["apiKey"])
 
+        let request = URLRequest(url: URL(string: "https://httpbin.org/response-headers?apiKey=val&format=json")!)
+        let expectation = self.expectation(description: "Network")
+
+        session.dataTask(with: request, completionHandler: { data, response, error in
+            let httpResponse = response as? Foundation.HTTPURLResponse
+            XCTAssertEqual(200, httpResponse?.statusCode)
+            
+            guard let data else { XCTFail("data is nil"); return }
+            
+            guard let JSONDict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                XCTFail("JSONDict is nil"); return
+            }
+            
+            XCTAssertEqual(JSONDict["Content-Length"] as? String, "110")
+            XCTAssertEqual(JSONDict["Content-Type"] as? String, "application/json")
+            XCTAssertEqual(JSONDict["apiKey"] as? String, nil)
+            XCTAssertEqual(JSONDict["format"] as? String, "json")
+            expectation.fulfill()
+        }).resume()
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
 
     func testDownload() {
         let expectation = self.expectation(description: "Network")
@@ -259,27 +287,6 @@ class SessionTests: XCTestCase {
 
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
-    func testRecordingWithIgnoredParams() {
-        let expectation = self.expectation(description: "didCompleteWithError")
-
-        let request = URLRequest(url: URL(string: "http://cdn.contentful.com/spaces/cfexampleapi/entries")!)
-
-        let config = URLSessionConfiguration.default
-        let backingSession = URLSession(configuration: config)
-        let session = Session(cassetteName: "failed-request-example",
-                              backingSession: backingSession,
-                              parametersToIgnore: ["apiKey"])
-
-        let task = session.dataTask(with: request) { (_, urlResponse, _) in
-            XCTAssertNotEqual(200, (urlResponse as? Foundation.HTTPURLResponse)?.statusCode)
-            XCTAssertEqual(401, (urlResponse as? Foundation.HTTPURLResponse)?.statusCode)
-            expectation.fulfill()
-        }
-        task.resume()
-
-        waitForExpectations(timeout: 1, handler: nil)
-    }
 
     func testSameRequestWithDifferentHeaders() {
         let configuration = URLSessionConfiguration.default
@@ -314,27 +321,29 @@ class SessionTests: XCTestCase {
 
         wait(for: [firstExpectation, secondExpectation], timeout: 3.0)
     }
-        
-    func testEVSearch() throws {
-        let session = Session(cassetteName: "EVSearch", parametersToIgnore: ["key"])
-        
-        let url = try XCTUnwrap  (URL(string:"https://api.tomtom.com/search/2/evsearch?radius=5000&lon=4.909466&limit=2&lat=52.377271&key=INSERT_IN_RECORDING&connectorSet=&accessTypes=Public"))
-        
-        let request = URLRequest(url: url)
-        
-        let firstExpectation = self.expectation(description: "request 1 completed")
+    
+    
+    func testTextPlaybackWithParams() {
+        let session = Session(cassetteName: "text-with-param", parametersToIgnore: ["key"])
+        session.recordingEnabled = false
+
+        var request = URLRequest(url: URL(string: "http://example.com?status=Available&key=Wmw0860")!)
+        request.httpMethod = "POST"
+        request.httpBody = "Some text.".data(using: String.Encoding.utf8)
+        request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
+
+        let expectation = self.expectation(description: "Network")
+
         session.dataTask(with: request, completionHandler: { data, response, error in
-            let text = String(data: data!, encoding: String.Encoding.utf8)
+            XCTAssertEqual("hello", String(data: data!, encoding: String.Encoding.utf8))
 
             let httpResponse = response as! Foundation.HTTPURLResponse
             XCTAssertEqual(200, httpResponse.statusCode)
-            XCTAssertGreaterThan(text?.count ?? 0, 1)
 
-            firstExpectation.fulfill()
-        }) .resume()
-        
-        
-        wait(for: [firstExpectation], timeout: 10.0)
+            expectation.fulfill()
+        }).resume()
+
+        waitForExpectations(timeout: 1, handler: nil)
     }
 
 }
